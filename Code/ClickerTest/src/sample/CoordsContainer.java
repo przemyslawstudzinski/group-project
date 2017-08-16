@@ -1,11 +1,11 @@
 package sample;
 
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class CoordsContainer
 {
-    public static ArrayList<Coords> coordsList = new ArrayList<Coords>();
+    public static LinkedHashMap<Coords, Long> coordsMap = new LinkedHashMap<Coords, Long>();
 
     public class Coords
     {

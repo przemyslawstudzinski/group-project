@@ -7,11 +7,17 @@ import javafx.scene.control.Button;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Controller {
 
     @FXML
+    private Button recordButton;
+    @FXML
     private Button replayButton;
+    @FXML
     private static Robot bot;
 
     public Controller() throws AWTException {
@@ -26,21 +32,23 @@ public class Controller {
         System.out.println("Replay: " + x + " " + y);
     }
 
+    @FXML protected void handleRecordButton(ActionEvent event) throws InterruptedException, AWTException {
+        SystemHook lis = new SystemHook();
+        lis.start();
+        Thread.sleep(50);
+    }
+
     @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, AWTException {
-        ArrayList<CoordsContainer.Coords> coords = new ArrayList<>();
-        for (CoordsContainer.Coords c : CoordsContainer.coordsList)
+        LinkedHashMap<CoordsContainer.Coords, Long> coordsMapCopy = new LinkedHashMap<CoordsContainer.Coords, Long>();
+        for (Map.Entry<CoordsContainer.Coords, Long> entry : CoordsContainer.coordsMap.entrySet())
         {
-            coords.add(c);
+            coordsMapCopy.put(entry.getKey(),entry.getValue());
         }
-        for (CoordsContainer.Coords c : coords)
+
+        for (Map.Entry<CoordsContainer.Coords, Long> entry : coordsMapCopy.entrySet())
         {
-            click(c.x, c.y);
-            //
-            //
-            //IMPORTANT TODO - HANDLE DOUBLECLICK (CURRENTLY 2000 MS DELAY PREVENTS US FROM RECORDING DOUBLECLICK)
-            //
-            //
-            Thread.sleep(2000);
+            click(entry.getKey().x, entry.getKey().y);
+            Thread.sleep(entry.getValue());
         }
 
     }
