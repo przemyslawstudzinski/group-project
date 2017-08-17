@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -13,15 +14,13 @@ import java.util.Map;
 
 public class Controller {
 
-    @FXML
-    private Button recordButton;
-    @FXML
-    private Button replayButton;
-    @FXML
     private static Robot bot;
+    private SystemHook mouseListener;
+    private Process lockerProcess = null;
 
     public Controller() throws AWTException {
         bot = new Robot();
+        mouseListener = new SystemHook();
     }
 
     public static void click(int x, int y) throws AWTException, InterruptedException {
@@ -29,16 +28,26 @@ public class Controller {
         bot.mousePress(InputEvent.BUTTON1_MASK);
         Thread.sleep(10);
         bot.mouseRelease(InputEvent.BUTTON1_MASK);
-        System.out.println("Replay: " + x + " " + y);
+        System.out.println("Replayed click: " + x + " " + y);
+    }
+
+    @FXML protected void lockKeyboard(ActionEvent event) throws InterruptedException, AWTException, IOException {
+        ProcessBuilder lockerProcessBuilder = new ProcessBuilder("Dependencies\\Keyboard And Mouse Locker\\KeyFreeze_x64.exe");
+        lockerProcess = lockerProcessBuilder.start();
+    }
+
+    @FXML protected void unlockKeyboard(ActionEvent event) throws InterruptedException, AWTException {
+        if (lockerProcess != null)
+            lockerProcess.destroy();
     }
 
     @FXML protected void handleRecordButton(ActionEvent event) throws InterruptedException, AWTException {
-        SystemHook lis = new SystemHook();
-        lis.start();
+        mouseListener.start();
         Thread.sleep(50);
     }
 
     @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, AWTException {
+        mouseListener.interrupt();
         LinkedHashMap<CoordsContainer.Coords, Long> coordsMapCopy = new LinkedHashMap<CoordsContainer.Coords, Long>();
         for (Map.Entry<CoordsContainer.Coords, Long> entry : CoordsContainer.coordsMap.entrySet())
         {

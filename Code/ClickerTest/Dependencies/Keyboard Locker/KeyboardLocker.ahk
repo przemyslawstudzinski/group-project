@@ -1,16 +1,4 @@
-﻿;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; THE KEYBOARD LOCKER                                       ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; This script will disable the keyboard when the user       ;
-; presses Ctrl+Alt+L. The keyboard is reenabled if the user ;
-; types in the string "unlock".                             ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Originally written by Lexikos:                            ;
-;  http://www.autohotkey.com/forum/post-147849.html#147849  ;
-; Modifications by Trevor Bekolay for the How-To Geek       ;
-;  http://www.howtogeek.com/                                ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+﻿
 #Persistent
 FileInstall, enabled.ico, enabled.ico, 0
 FileInstall, disabled.ico, disabled.ico, 0

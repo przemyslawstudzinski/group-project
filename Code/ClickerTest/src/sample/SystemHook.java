@@ -11,23 +11,17 @@ public class SystemHook extends Thread {
 
     public void attachMouseListener()
     {
-        GlobalMouseHook mouseHook = new GlobalMouseHook(); // add true to the constructor, to switch to raw input mode
+        GlobalMouseHook mouseHook = new GlobalMouseHook();
         System.out.println("Global mouse hook successfully started, press [middle] mouse button to shutdown.");
 
         mouseHook.addMouseListener(new GlobalMouseAdapter() {
             @Override public void mousePressed(GlobalMouseEvent event)  {
                 if ((event.getButtons()&GlobalMouseEvent.BUTTON_LEFT) !=GlobalMouseEvent.BUTTON_NO)
                 {
+                    System.out.println("Recorded click at: " + event.getX() + " " + event.getY());
                     CoordsContainer.coordsMap.put(new CoordsContainer().new Coords(event.getX(),event.getY()),System.currentTimeMillis() - clickTime);
                     clickTime = System.currentTimeMillis();
                 }
-
-                else if((event.getButtons()&GlobalMouseEvent.BUTTON_LEFT)!=GlobalMouseEvent.BUTTON_NO
-                        && (event.getButtons()&GlobalMouseEvent.BUTTON_RIGHT)!=GlobalMouseEvent.BUTTON_NO)
-                    System.out.println("Both mouse buttons are currenlty pressed!");
-                else if(event.getButton()==GlobalMouseEvent.BUTTON_MIDDLE)
-                    run = false;
-
             }
         });
 

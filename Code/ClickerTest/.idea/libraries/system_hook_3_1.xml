@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="system-hook-3.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/system-hook-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Dependencies/system-hook-3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
