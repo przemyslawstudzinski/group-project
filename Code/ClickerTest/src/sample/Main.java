@@ -7,12 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
-import java.util.ArrayList;
-
-import lc.kra.system.mouse.GlobalMouseHook;
-import lc.kra.system.mouse.event.GlobalMouseAdapter;
-import lc.kra.system.mouse.event.GlobalMouseEvent;
 
 public class Main extends Application {
 

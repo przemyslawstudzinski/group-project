@@ -49,19 +49,10 @@ public class Controller {
         Thread.sleep(50);
     }
 
-    @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, AWTException {
-        //mouseListener.interrupt();
-        LinkedHashMap<CoordsContainer.Coords, Long> coordsMapCopy = new LinkedHashMap<CoordsContainer.Coords, Long>();
-        for (Map.Entry<CoordsContainer.Coords, Long> entry : CoordsContainer.coordsMap.entrySet())
-        {
-            coordsMapCopy.put(entry.getKey(),entry.getValue());
-        }
-
-        for (Map.Entry<CoordsContainer.Coords, Long> entry : coordsMapCopy.entrySet())
-        {
-            click(entry.getKey().x, entry.getKey().y);
-            Thread.sleep(entry.getValue());
-        }
-
+    @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, AWTException, IOException {
+        // co jak będzie na tym samym kompie? wtedy mouselistener klienta załapie też button z serwera (replay clicks)
+        PrintWriter out = new PrintWriter(server.activeHandler.getSocket().getOutputStream(), true);
+        out.println("stoprecord");
+        Thread.sleep(50);
     }
 }
