@@ -14,7 +14,6 @@ public class Client extends Thread {
         try {
             s = new Socket("127.0.0.1", 9090);
             input = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            mouseListener = new SystemHook();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,6 +26,7 @@ public class Client extends Thread {
                 if (response != null) {
                     if (response.equals("record")) {
                         System.out.println(response);
+                        mouseListener = new SystemHook();
                         mouseListener.start();
                     }
                     if (response.equals("stoprecord")) {
