@@ -12,11 +12,13 @@ public class ServerHandler extends Thread {
     private BufferedReader input;
     private ArrayList<String> recordedClicks;
     private Serializer serializer;
+    private Deserializer deserializer;
 
     ServerHandler(Socket s, int n) {
         this.socket = s;
         this.recordedClicks = new ArrayList<>();
         this.serializer = new Serializer(n);
+        this.deserializer = new Deserializer(n);
     }
 
     public Socket getSocket() {
@@ -29,6 +31,10 @@ public class ServerHandler extends Thread {
 
     public Serializer getSerializer() {
         return this.serializer;
+    }
+
+    public Deserializer getDeserializer() {
+        return this.deserializer;
     }
 
     public void run() {

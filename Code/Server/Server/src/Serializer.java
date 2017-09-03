@@ -1,17 +1,15 @@
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Serializer {
 
@@ -31,7 +29,6 @@ public class Serializer {
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
-
         this.doc = docBuilder.newDocument();
         this.root = doc.createElement("Action");
         root.setAttribute("id", String.valueOf(num));
@@ -39,8 +36,19 @@ public class Serializer {
     }
 
     public void addChild(String resp) {
+
+        String[] responseTokens = resp.split(" ");
         Element click = doc.createElement("Click");
-        click.appendChild(doc.createTextNode(resp));
+        Element xCord = doc.createElement("X");
+        xCord.appendChild(doc.createTextNode(responseTokens[0]));
+        Element yCord = doc.createElement("Y");
+        yCord.appendChild(doc.createTextNode(responseTokens[1]));
+        Element delay = doc.createElement("Delay");
+        delay.appendChild(doc.createTextNode(responseTokens[2]));
+
+        click.appendChild(xCord);
+        click.appendChild(yCord);
+        click.appendChild(delay);
         root.appendChild(click);
     }
 
@@ -52,13 +60,28 @@ public class Serializer {
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
         }
+        t.setOutputProperty(OutputKeys.INDENT, "yes");
+        t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         DOMSource src = new DOMSource(this.doc);
-        StreamResult res = new StreamResult(new File(String.valueOf(num) + ".xml"));
+        if (!Files.exists(Paths.get("Actions"))) {
+            try {
+                File dir = new File("Actions");
+                dir.mkdirs();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        StreamResult res = new StreamResult(new File("Actions" + File.separator + String.valueOf(num) + ".xml"));
 
         try {
             t.transform(src, res);
         } catch (TransformerException e) {
             e.printStackTrace();
         }
+    }
+
+    public void loadFile()
+    {
+
     }
 }

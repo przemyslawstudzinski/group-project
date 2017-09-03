@@ -31,11 +31,14 @@ public class Server extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                listener.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            if (listener != null)
+                try {
+                    listener.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
         }
     }
 }

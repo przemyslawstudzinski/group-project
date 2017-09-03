@@ -1,6 +1,11 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.io.File;
@@ -56,15 +61,28 @@ public class Controller {
         server.activeHandler.getSerializer().saveFile();
     }
 
-    @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, IOException {
+    @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, IOException, ParserConfigurationException, SAXException {
         // start scenario; send data to specified clients
         // now we send to all clients, in future clients will be specified in gui
-        for (ServerHandler sh : server.allHandlers) {
+        NodeList nodesList = server.activeHandler.getDeserializer().loadFile();
+        PrintWriter out = new PrintWriter(server.activeHandler.getSocket().getOutputStream(), true);
+        for (int i = 0; i < nodesList.getLength(); ++i) {
+            Node nNode = nodesList.item(i);
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) nNode;
+                String message = "replay ";
+                message += eElement.getElementsByTagName("X").item(0).getTextContent() + " ";
+                message += eElement.getElementsByTagName("Y").item(0).getTextContent() + " ";
+                message += eElement.getElementsByTagName("Delay").item(0).getTextContent();
+                out.println(message);
+            }
+        }
+        /*for (ServerHandler sh : server.allHandlers) {
             PrintWriter out = new PrintWriter(sh.getSocket().getOutputStream(), true);
             for (String s : sh.getRecordedClicks()) {
                 out.println("replay " + s);
             }
             Thread.sleep(50);
-        }
+        }*/
     }
 }
