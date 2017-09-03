@@ -1,3 +1,5 @@
+import com.sun.corba.se.spi.activation.ServerAlreadyInstalled;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,10 +11,12 @@ public class ServerHandler extends Thread {
     private Socket socket;
     private BufferedReader input;
     private ArrayList<String> recordedClicks;
+    private Serializer serializer;
 
-    ServerHandler(Socket s) {
+    ServerHandler(Socket s, int n) {
         this.socket = s;
         this.recordedClicks = new ArrayList<>();
+        this.serializer = new Serializer(n);
     }
 
     public Socket getSocket() {
@@ -20,7 +24,11 @@ public class ServerHandler extends Thread {
     }
 
     public ArrayList<String> getRecordedClicks() {
-        return recordedClicks;
+        return this.recordedClicks;
+    }
+
+    public Serializer getSerializer() {
+        return this.serializer;
     }
 
     public void run() {
@@ -33,7 +41,7 @@ public class ServerHandler extends Thread {
                     if (response != null) {
                         System.out.println(response);
                         // save recorded clicks
-                        recordedClicks.add(response);
+                        serializer.addChild(response);
                     }
                 } catch (IOException e) {
                     return;

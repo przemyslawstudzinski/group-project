@@ -45,6 +45,7 @@ public class Controller {
         PrintWriter out = new PrintWriter(server.activeHandler.getSocket().getOutputStream(), true);
         out.println("record");
         Thread.sleep(50);
+        server.activeHandler.getSerializer().createDoc();
     }
 
     @FXML protected void handleStopButton(ActionEvent event) throws IOException, InterruptedException {
@@ -52,6 +53,7 @@ public class Controller {
         PrintWriter out = new PrintWriter(server.activeHandler.getSocket().getOutputStream(), true);
         out.println("stoprecord");
         Thread.sleep(50);
+        server.activeHandler.getSerializer().saveFile();
     }
 
     @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, IOException {
