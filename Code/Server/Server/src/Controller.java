@@ -3,11 +3,9 @@ import javafx.fxml.FXML;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Controller {
 
@@ -32,7 +30,7 @@ public class Controller {
     }
 
     @FXML protected void lockKeyboard(ActionEvent event) throws InterruptedException, AWTException, IOException {
-        ProcessBuilder lockerProcessBuilder = new ProcessBuilder("Dependencies\\Keyboard And Mouse Locker\\KeyFreeze_x64.exe");
+        ProcessBuilder lockerProcessBuilder = new ProcessBuilder("Dependencies" + File.separator + "Keyboard And Mouse Locker" + File.separator + "KeyFreeze_x64.exe");
         lockerProcess = lockerProcessBuilder.start();
     }
 
@@ -41,7 +39,7 @@ public class Controller {
             lockerProcess.destroy();
     }
 
-    @FXML protected void handleRecordButton(ActionEvent event) throws InterruptedException, AWTException, IOException {
+    @FXML protected void handleRecordButton(ActionEvent event) throws InterruptedException, IOException {
         //mouseListener.start();
         // server informs client about start of recording
         PrintWriter out = new PrintWriter(server.activeHandler.getSocket().getOutputStream(), true);
@@ -49,10 +47,22 @@ public class Controller {
         Thread.sleep(50);
     }
 
-    @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, AWTException, IOException {
+    @FXML protected void handleStopButton(ActionEvent event) throws IOException, InterruptedException {
         // co jak będzie na tym samym kompie? wtedy mouselistener klienta załapie też button z serwera (replay clicks)
         PrintWriter out = new PrintWriter(server.activeHandler.getSocket().getOutputStream(), true);
         out.println("stoprecord");
         Thread.sleep(50);
+    }
+
+    @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, IOException {
+        // start scenario; send data to specified clients
+        // now we send to all clients, in future clients will be specified in gui
+        for (ServerHandler sh : server.allHandlers) {
+            PrintWriter out = new PrintWriter(sh.getSocket().getOutputStream(), true);
+            for (String s : sh.getRecordedClicks()) {
+                out.println("replay " + s);
+            }
+            Thread.sleep(50);
+        }
     }
 }
