@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TabPane prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Przeprowadz badanie">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextField layoutX="94.0" layoutY="92.0" prefHeight="25.0" prefWidth="265.0" />
+                                <ComboBox layoutX="96.0" layoutY="123.0"  prefHeight="25.0" prefWidth="85.0" />
+                                <Label layoutX="23.0" layoutY="123.0" prefHeight="25.0" prefWidth="67.0" text="Wiek:" />
+                                <Label layoutX="21.0" layoutY="92.0" prefHeight="25.0" prefWidth="70.0" text="Nazwisko:" />
+                                <Label layoutX="22.0" layoutY="60.0" prefHeight="25.0" prefWidth="68.0" text="Imię:" />
+                                <TextField layoutX="94.0" layoutY="60.0" prefHeight="25.0" prefWidth="265.0" />
+                                <Label layoutX="21.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Dane osoby badanej">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="23.0" layoutY="167.0" prefHeight="25.0" prefWidth="188.0" text="Wybierz scenariusz badania:">
+                                    <effect>
+                                        <Bloom />
+                                    </effect>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ListView layoutX="25.0" layoutY="192.0" prefHeight="200.0" prefWidth="600.0" />
+                                <ComboBox layoutX="472.0" layoutY="60.0" prefHeight="25.0" prefWidth="157.0" promptText="dr inż. Michał Wróbel" />
+                                <Label layoutX="472.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button layoutX="325.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Dodaj scenariusz">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="21.0" layoutY="28.0" prefHeight="25.0" prefWidth="98.0" text="Nazwa:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <TextField layoutX="94.0" layoutY="28.0" prefHeight="25.0" prefWidth="300.0" />
+                                <Button layoutX="344.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="-&gt;" />
+                                <Button layoutX="344.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
+                                <ListView layoutX="24.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
+                                <Label layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania:">
+                                    <effect>
+                                        <Bloom />
+                                    </effect>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ListView layoutX="400.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
+                                <Button layoutX="726.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" rotate="90.0" text="&gt;" />
+                                <Button layoutX="726.0" layoutY="174.0" mnemonicParsing="false" rotate="90.0" text="&lt;" textAlignment="CENTER" />
+                                <Button layoutX="556.0" layoutY="378.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                                <Button layoutX="285.0" layoutY="425.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Dodaj akcje">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TextField layoutX="23.0" layoutY="67.0" prefHeight="25.0" prefWidth="300.0" />
+                                <Label layoutX="25.0" layoutY="33.0" prefHeight="25.0" prefWidth="98.0" text="Nazwa:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="25.0" layoutY="130.0" prefHeight="25.0" prefWidth="98.0" text="Odbiorca:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ComboBox layoutX="215.0" layoutY="130.0" prefHeight="25.0" prefWidth="104.0" promptText="PC 1" />
+                                <Label layoutX="27.0" layoutY="189.0" prefHeight="25.0" prefWidth="192.0" text="Rozpocznij nagrywanie akcji:">
+                                    <effect>
+                                        <Bloom />
+                                    </effect>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button layoutX="25.0" layoutY="246.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Start" />
+                                <Button layoutX="159.0" layoutY="246.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Koniec" />
+                                <Label layoutX="23.0" layoutY="327.0" prefHeight="25.0" prefWidth="257.0" text="Czynności wykonywane po zakończeniu:">
+                                    <effect>
+                                        <Bloom />
+                                    </effect>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <CheckBox layoutX="179.0" layoutY="383.0" mnemonicParsing="false" text="Zamnij system " />
+                                <CheckBox layoutX="23.0" layoutY="383.0" mnemonicParsing="false" text="Zamnij program" />
+                                <Separator layoutX="380.0" layoutY="42.0" orientation="VERTICAL" prefHeight="319.0" prefWidth="0.0" />
+                                <Button layoutX="498.0" layoutY="384.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                                <Label layoutX="429.0" layoutY="43.0" prefHeight="25.0" prefWidth="138.0" text="Opis:">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <TextArea layoutX="428.0" layoutY="79.0" prefHeight="89.0" prefWidth="283.0" />
+                                <Label layoutX="429.0" layoutY="201.0" prefHeight="25.0" prefWidth="205.0" text="Blokuj interfejs podczas trwania: ">
+                                    <effect>
+                                        <Bloom />
+                                    </effect>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Slider layoutX="486.0" layoutY="269.0" prefHeight="14.0" prefWidth="53.0" />
+                                <Label layoutX="599.0" layoutY="263.0" prefHeight="25.0" prefWidth="23.0" text="ON" />
+                                <Label layoutX="429.0" layoutY="263.0" prefHeight="25.0" prefWidth="27.0" text="OFF" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Pomoc">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</Pane>
