@@ -4,28 +4,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Controller {
 
-    private static Robot bot;
+
     private SystemHook mouseListener;
+    private Clicker clicker;
     private Process lockerProcess = null;
 
     public Controller() throws AWTException {
-        bot = new Robot();
         mouseListener = new SystemHook();
-    }
-
-    public static void click(int x, int y) throws AWTException, InterruptedException {
-        bot.mouseMove(x, y);
-        bot.mousePress(InputEvent.BUTTON1_MASK);
-        Thread.sleep(10);
-        bot.mouseRelease(InputEvent.BUTTON1_MASK);
-        System.out.println("Replayed click: " + x + " " + y);
     }
 
     @FXML protected void lockKeyboard(ActionEvent event) throws InterruptedException, AWTException, IOException {
@@ -40,21 +33,22 @@ public class Controller {
 
     @FXML protected void handleRecordButton(ActionEvent event) throws InterruptedException, AWTException {
         mouseListener.start();
-        Thread.sleep(50);
+        Thread.sleep(1);
     }
 
     @FXML protected void handleReplayButton(ActionEvent event) throws InterruptedException, AWTException {
         mouseListener.interrupt();
-        LinkedHashMap<CoordsContainer.Coords, Long> coordsMapCopy = new LinkedHashMap<CoordsContainer.Coords, Long>();
-        for (Map.Entry<CoordsContainer.Coords, Long> entry : CoordsContainer.coordsMap.entrySet())
+        Clicker c = new Clicker();
+        List<ClicksContainer.Click> clicksListCopy = new ArrayList<ClicksContainer.Click>();
+        for (ClicksContainer.Click cl : ClicksContainer.clicksList)
         {
-            coordsMapCopy.put(entry.getKey(),entry.getValue());
+            clicksListCopy.add(cl);
         }
 
-        for (Map.Entry<CoordsContainer.Coords, Long> entry : coordsMapCopy.entrySet())
+        for (ClicksContainer.Click clk : clicksListCopy)
         {
-            click(entry.getKey().x, entry.getKey().y);
-            Thread.sleep(entry.getValue());
+            Thread.sleep(clk.delay);
+            c.click(clk);
         }
 
     }

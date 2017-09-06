@@ -18,17 +18,28 @@ public class SystemHook extends Thread {
             @Override public void mousePressed(GlobalMouseEvent event)  {
                 if ((event.getButtons()&GlobalMouseEvent.BUTTON_LEFT) !=GlobalMouseEvent.BUTTON_NO)
                 {
-                    System.out.println("Recorded click at: " + event.getX() + " " + event.getY());
-                    CoordsContainer.coordsMap.put(new CoordsContainer().new Coords(event.getX(),event.getY()),System.currentTimeMillis() - clickTime);
+                    long delay = System.currentTimeMillis() - clickTime;
+                    System.out.println("Recorded click at: " + event.getX() + " " + event.getY() + " " + delay);
+                    if (delay > 600)
+                        ClicksContainer.clicksList.add(new ClicksContainer().new Click(event.getX(),event.getY(),delay,false));
+                    else
+                    {
+                        ClicksContainer.Click doubleClick = ClicksContainer.clicksList.remove(ClicksContainer.clicksList.size() - 1);
+                        doubleClick.isDouble = true;
+                        ClicksContainer.clicksList.add(doubleClick);
+                    }
                     clickTime = System.currentTimeMillis();
                 }
             }
         });
 
         try {
-            while(run) Thread.sleep(10);
+            while(run) Thread.sleep(1);
         } catch(InterruptedException e) { /* nothing to do here */ }
-        finally { mouseHook.shutdownHook(); }
+        finally {
+            mouseHook.shutdownHook();
+            run = false;
+        }
     }
 
     public void run(){
