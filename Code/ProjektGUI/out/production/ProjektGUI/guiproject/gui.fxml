@@ -8,8 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" fx:controller="guiproject.Controller" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiproject.Controller">
     <children>
         <TabPane prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -58,8 +57,8 @@
                                     </font>
                                 </Label>
                                 <TextField layoutX="94.0" layoutY="28.0" prefHeight="25.0" prefWidth="300.0" />
-                                <Button onAction="#moveActionToRight" layoutX="344.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="-&gt;" />
-                                <Button onAction="#moveActionToLeft" layoutX="344.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
+                                <Button layoutX="344.0" layoutY="174.0" mnemonicParsing="false" onAction="#moveActionToRight" prefHeight="25.0" prefWidth="32.0" text="-&gt;" />
+                                <Button layoutX="344.0" layoutY="254.0" mnemonicParsing="false" onAction="#moveActionToLeft" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
                                 <ListView fx:id="allActionListView" layoutX="24.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
                                 <Label layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania:">
                                     <effect>
@@ -70,10 +69,10 @@
                                     </font>
                                 </Label>
                                 <ListView fx:id="chosenActionsListView" layoutX="400.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
-                                <Button onAction="#moveActionToDown" layoutX="726.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" rotate="90.0" text="&gt;" />
-                                <Button onAction="#moveActionToUp" layoutX="726.0" layoutY="174.0" mnemonicParsing="false" rotate="90.0" text="&lt;" textAlignment="CENTER" />
-                                <Button layoutX="556.0" layoutY="378.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
-                                <Button layoutX="285.0" layoutY="425.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                                <Button layoutX="726.0" layoutY="254.0" mnemonicParsing="false" onAction="#moveActionToDown" prefHeight="25.0" prefWidth="25.0" rotate="90.0" text="&gt;" />
+                                <Button layoutX="726.0" layoutY="174.0" mnemonicParsing="false" onAction="#moveActionToUp" rotate="90.0" text="&lt;" textAlignment="CENTER" />
+                                <Button layoutX="550.0" layoutY="370.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                                <Button layoutX="325.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -115,7 +114,7 @@
                                 <CheckBox layoutX="179.0" layoutY="383.0" mnemonicParsing="false" text="Zamnij system " />
                                 <CheckBox layoutX="23.0" layoutY="383.0" mnemonicParsing="false" text="Zamnij program" />
                                 <Separator layoutX="380.0" layoutY="42.0" orientation="VERTICAL" prefHeight="319.0" prefWidth="0.0" />
-                                <Button layoutX="498.0" layoutY="384.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                                <Button layoutX="550.0" layoutY="370.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
                                 <Label layoutX="429.0" layoutY="43.0" prefHeight="25.0" prefWidth="138.0" text="Opis:">
                                     <font>
                                         <Font size="14.0" />
