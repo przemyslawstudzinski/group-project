@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,6 +48,15 @@ public class Controller implements Initializable {
 
     @FXML
     private ComboBox<String> teachersComboBox;
+
+    @FXML
+    private TextField scenarioNameTextField;
+
+    @FXML
+    private TextField actionNameTextField;
+
+    @FXML
+    private TextArea actionDescriptionTextArea;
 
     private final ObservableList<String> allStudies
             = FXCollections.observableArrayList("study1", "study2", "study3", "study4");
@@ -106,16 +116,29 @@ public class Controller implements Initializable {
         });
 
         //name Text Field
+        validLetterTextField(nameTextField);
+
+        //last name Text Field
+        validLetterTextField(lastNameTextField);
+
+        //scenario Name TextField
+        validLetterTextField(scenarioNameTextField);
+
+        //action name Text Field
+        validLetterTextField(actionNameTextField);
+
+        //action Description TextArea
+        actionDescriptionTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\sa-zA-Z*")) {
+                actionDescriptionTextArea.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
+    }
+
+    void validLetterTextField(TextField nameTextField) {
         nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\sa-zA-Z*")) {
                 nameTextField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
-            }
-        });
-
-        //last name Text Field
-        lastNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\sa-zA-Z*")) {
-                lastNameTextField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
             }
         });
     }
