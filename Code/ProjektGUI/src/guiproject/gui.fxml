@@ -130,7 +130,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Slider layoutX="486.0" layoutY="269.0" prefHeight="14.0" prefWidth="53.0" />
+                                <Slider fx:id="onOffSlider" layoutX="486.0" layoutY="269.0" prefHeight="14.0" prefWidth="53.0" />
                                 <Label layoutX="599.0" layoutY="263.0" prefHeight="25.0" prefWidth="23.0" text="ON" />
                                 <Label layoutX="429.0" layoutY="263.0" prefHeight="25.0" prefWidth="27.0" text="OFF" />
                             </children>

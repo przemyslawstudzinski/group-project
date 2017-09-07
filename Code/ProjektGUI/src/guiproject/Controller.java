@@ -7,14 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,6 +31,9 @@ public class Controller implements Initializable {
 
     @FXML
     private ComboBox<String> receiversComboBox;
+
+    @FXML
+    private Slider onOffSlider;
 
     private final ObservableList<String> allStudies
             = FXCollections.observableArrayList("study1", "study2", "study3", "study4");
@@ -56,11 +58,21 @@ public class Controller implements Initializable {
         readReceivers();
         receiversComboBox.setItems(receivers);
         receiversComboBox.getSelectionModel().selectFirst();
+
+        //onOffSlider
+        onOffSlider.setMin(0);
+        onOffSlider.setMax(1);
+        onOffSlider.setValue(0);
+        onOffSlider.setShowTickLabels(false);
+        onOffSlider.setShowTickMarks(false);
+        onOffSlider.setMajorTickUnit(1);
+        onOffSlider.setMinorTickCount(0);
+        onOffSlider.setBlockIncrement(1);
+        onOffSlider.setSnapToTicks(true);
     }
 
     private void readReceivers() {
         try (Stream<String> stream = Files.lines(Paths.get(fileNameOfReceivers))) {
-
             receivers = stream
                     .map(line -> line.substring(line.lastIndexOf(" ") + 1))
                     .collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -69,7 +81,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     void moveActionToRight(ActionEvent event) {
