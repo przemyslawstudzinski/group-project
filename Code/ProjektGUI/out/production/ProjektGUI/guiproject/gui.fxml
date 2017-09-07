@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.ToggleSwitch?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" fx:controller="guiproject.Controller" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiproject.Controller">
     <children>
-        <TabPane prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane prefHeight="539.0" prefWidth="888.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Przeprowadz badanie">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="506.0" prefWidth="855.0">
                             <children>
                                 <TextField layoutX="94.0" layoutY="92.0" prefHeight="25.0" prefWidth="265.0" />
                                 <ComboBox layoutX="96.0" layoutY="123.0" prefHeight="25.0" prefWidth="85.0" />
@@ -37,13 +44,26 @@
                                     </font>
                                 </Label>
                                 <ListView fx:id="allStudiesListView" layoutX="25.0" layoutY="192.0" prefHeight="200.0" prefWidth="600.0" />
-                                <ComboBox layoutX="472.0" layoutY="60.0" prefHeight="25.0" prefWidth="157.0" promptText="dr inż. Michał Wróbel" />
-                                <Label layoutX="472.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania">
+                                <Label layoutX="400.0" layoutY="23.0" prefHeight="25.0" prefWidth="217.0" text="Blokuj peryferia w trakcie badania">
+                                    <effect>
+                                        <Bloom />
+                                    </effect>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ToggleSwitch fx:id="blockPeripherials" layoutX="459.0" layoutY="60.0" prefHeight="14.0" prefWidth="53.0" />
+                                <ComboBox layoutX="640.0" layoutY="60.0" prefHeight="25.0" prefWidth="157.0" promptText="dr inż. Michał Wróbel" />
+                                <Label layoutX="649.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
                                 <Button layoutX="325.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                                <CheckComboBox fx:id="clientsToBlockBox" layoutX="495.0" layoutY="105.0" prefHeight="25.0" prefWidth="83.0" />
+                        <Label layoutX="410.0" layoutY="61.0" text="NIE" />
+                        <Label layoutX="551.0" layoutY="61.0" text="TAK" />
+                        <Label layoutX="411.0" layoutY="109.0" text="BLOKUJ NA: " />
                             </children>
                         </AnchorPane>
                     </content>
@@ -58,8 +78,8 @@
                                     </font>
                                 </Label>
                                 <TextField layoutX="94.0" layoutY="28.0" prefHeight="25.0" prefWidth="300.0" />
-                                <Button onAction="#moveActionToRight" layoutX="344.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="-&gt;" />
-                                <Button onAction="#moveActionToLeft" layoutX="344.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
+                                <Button layoutX="344.0" layoutY="174.0" mnemonicParsing="false" onAction="#moveActionToRight" prefHeight="25.0" prefWidth="32.0" text="-&gt;" />
+                                <Button layoutX="344.0" layoutY="254.0" mnemonicParsing="false" onAction="#moveActionToLeft" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
                                 <ListView fx:id="allActionListView" layoutX="24.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
                                 <Label layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania:">
                                     <effect>
@@ -70,8 +90,8 @@
                                     </font>
                                 </Label>
                                 <ListView fx:id="chosenActionsListView" layoutX="400.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
-                                <Button onAction="#moveActionToDown" layoutX="726.0" layoutY="254.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" rotate="90.0" text="&gt;" />
-                                <Button onAction="#moveActionToUp" layoutX="726.0" layoutY="174.0" mnemonicParsing="false" rotate="90.0" text="&lt;" textAlignment="CENTER" />
+                                <Button layoutX="726.0" layoutY="254.0" mnemonicParsing="false" onAction="#moveActionToDown" prefHeight="25.0" prefWidth="25.0" rotate="90.0" text="&gt;" />
+                                <Button layoutX="726.0" layoutY="174.0" mnemonicParsing="false" onAction="#moveActionToUp" rotate="90.0" text="&lt;" textAlignment="CENTER" />
                                 <Button layoutX="556.0" layoutY="378.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
                                 <Button layoutX="285.0" layoutY="425.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
                             </children>
@@ -94,7 +114,7 @@
                                     </font>
                                 </Label>
                                 <ComboBox layoutX="215.0" layoutY="130.0" prefHeight="25.0" prefWidth="104.0" promptText="PC 1" />
-                                <Label layoutX="27.0" layoutY="189.0" prefHeight="25.0" prefWidth="192.0" text="Rozpocznij nagrywanie akcji:">
+                                <Label layoutX="89.0" layoutY="243.0" prefHeight="25.0" prefWidth="192.0" text="Rozpocznij nagrywanie akcji:">
                                     <effect>
                                         <Bloom />
                                     </effect>
@@ -102,37 +122,16 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="25.0" layoutY="246.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Start" />
-                                <Button layoutX="159.0" layoutY="246.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Koniec" />
-                                <Label layoutX="23.0" layoutY="327.0" prefHeight="25.0" prefWidth="257.0" text="Czynności wykonywane po zakończeniu:">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <CheckBox layoutX="179.0" layoutY="383.0" mnemonicParsing="false" text="Zamnij system " />
-                                <CheckBox layoutX="23.0" layoutY="383.0" mnemonicParsing="false" text="Zamnij program" />
+                                <Button layoutX="53.0" layoutY="293.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="100.0" text="Start" />
+                                <Button layoutX="221.0" layoutY="293.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="100.0" text="Koniec" />
                                 <Separator layoutX="380.0" layoutY="42.0" orientation="VERTICAL" prefHeight="319.0" prefWidth="0.0" />
-                                <Button layoutX="498.0" layoutY="384.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                                <Button layoutX="482.0" layoutY="305.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
                                 <Label layoutX="429.0" layoutY="43.0" prefHeight="25.0" prefWidth="138.0" text="Opis:">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
                                 <TextArea layoutX="428.0" layoutY="79.0" prefHeight="89.0" prefWidth="283.0" />
-                                <Label layoutX="429.0" layoutY="201.0" prefHeight="25.0" prefWidth="205.0" text="Blokuj interfejs podczas trwania: ">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <Slider layoutX="486.0" layoutY="269.0" prefHeight="14.0" prefWidth="53.0" />
-                                <Label layoutX="599.0" layoutY="263.0" prefHeight="25.0" prefWidth="23.0" text="ON" />
-                                <Label layoutX="429.0" layoutY="263.0" prefHeight="25.0" prefWidth="27.0" text="OFF" />
                             </children>
                         </AnchorPane>
                     </content>
