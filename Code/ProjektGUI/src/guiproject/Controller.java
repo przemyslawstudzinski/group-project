@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -31,7 +30,6 @@ public class Controller implements Initializable {
 
     private final ObservableList<String> chosenActions
             = FXCollections.observableArrayList();
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,7 +57,6 @@ public class Controller implements Initializable {
     @FXML
     void moveActionToUp(ActionEvent event) {
         if(chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
-            String selectedItem = chosenActionsListView.getSelectionModel().getSelectedItem();
             int index = chosenActions.indexOf(chosenActionsListView.getSelectionModel().getSelectedItem());
             if(index > 0) {
                 Collections.swap(chosenActions, index, index - 1);
@@ -71,13 +68,11 @@ public class Controller implements Initializable {
     @FXML
     void moveActionToDown(ActionEvent event) {
         if(chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
-            String selectedItem = chosenActionsListView.getSelectionModel().getSelectedItem();
             int index = chosenActions.indexOf(chosenActionsListView.getSelectionModel().getSelectedItem());
             if(index < chosenActions.size() - 1) {
                 Collections.swap(chosenActions, index, index + 1);
                 chosenActionsListView.getSelectionModel().select(index + 1);
             }
         }
-
     }
 }
