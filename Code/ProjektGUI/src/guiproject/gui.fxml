@@ -93,7 +93,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <ComboBox layoutX="215.0" layoutY="130.0" prefHeight="25.0" prefWidth="104.0" promptText="PC 1" />
+                                <ComboBox fx:id="receiversComboBox" layoutX="215.0" layoutY="130.0" prefHeight="25.0" prefWidth="104.0" />
                                 <Label layoutX="27.0" layoutY="189.0" prefHeight="25.0" prefWidth="192.0" text="Rozpocznij nagrywanie akcji:">
                                     <effect>
                                         <Bloom />
