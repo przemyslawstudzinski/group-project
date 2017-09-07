@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,11 +36,26 @@ public class Controller implements Initializable {
     @FXML
     private Slider onOffSlider;
 
+    @FXML
+    private TextField ageTextField;
+
+    @FXML
+    private TextField nameTextField;
+
+    @FXML
+    private TextField lastNameTextField;
+
+    @FXML
+    private ComboBox<String> teachersComboBox;
+
     private final ObservableList<String> allStudies
             = FXCollections.observableArrayList("study1", "study2", "study3", "study4");
 
     private final ObservableList<String> allActions
             = FXCollections.observableArrayList("action1", "action2", "action3", "action4");
+
+    private final ObservableList<String> allTeachers
+            = FXCollections.observableArrayList("dr inż. Michał Wróbel", "dr inż. Michał NieWróbel");
 
     private final ObservableList<String> chosenActions
             = FXCollections.observableArrayList();
@@ -59,6 +75,10 @@ public class Controller implements Initializable {
         receiversComboBox.setItems(receivers);
         receiversComboBox.getSelectionModel().selectFirst();
 
+        //teachers ComboBox
+        teachersComboBox.setItems(allTeachers);
+        teachersComboBox.getSelectionModel().selectFirst();
+
         //onOffSlider
         onOffSlider.setMin(0);
         onOffSlider.setMax(1);
@@ -69,6 +89,35 @@ public class Controller implements Initializable {
         onOffSlider.setMinorTickCount(0);
         onOffSlider.setBlockIncrement(1);
         onOffSlider.setSnapToTicks(true);
+
+        //age TextField
+        ageTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                ageTextField.setText(newValue.replaceAll("[^\\d]", ""));
+            } else if (newValue.length() > 3) {
+                String tmp = newValue.substring(0, 3);
+                ageTextField.setText(tmp);
+            } else if (!newValue.matches("")) {
+                if (Integer.valueOf(newValue) > 199) {
+                    String tmp = newValue.substring(0, 2);
+                    ageTextField.setText(tmp);
+                }
+            }
+        });
+
+        //name Text Field
+        nameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\sa-zA-Z*")) {
+                nameTextField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
+
+        //last name Text Field
+        lastNameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\sa-zA-Z*")) {
+                lastNameTextField.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+            }
+        });
     }
 
     private void readReceivers() {
@@ -100,9 +149,9 @@ public class Controller implements Initializable {
 
     @FXML
     void moveActionToUp(ActionEvent event) {
-        if(chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
+        if (chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
             int index = chosenActions.indexOf(chosenActionsListView.getSelectionModel().getSelectedItem());
-            if(index > 0) {
+            if (index > 0) {
                 Collections.swap(chosenActions, index, index - 1);
                 chosenActionsListView.getSelectionModel().select(index - 1);
             }
@@ -111,9 +160,9 @@ public class Controller implements Initializable {
 
     @FXML
     void moveActionToDown(ActionEvent event) {
-        if(chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
+        if (chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
             int index = chosenActions.indexOf(chosenActionsListView.getSelectionModel().getSelectedItem());
-            if(index < chosenActions.size() - 1) {
+            if (index < chosenActions.size() - 1) {
                 Collections.swap(chosenActions, index, index + 1);
                 chosenActionsListView.getSelectionModel().select(index + 1);
             }
