@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.control.CheckComboBox?>
+<?import org.controlsfx.control.ToggleSwitch?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiproject.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiproject.Controller">
     <children>
         <TabPane prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -16,33 +14,40 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="lastNameTextField" layoutX="94.0" layoutY="92.0" prefHeight="25.0" prefWidth="265.0" />
+                                <TextField fx:id="lastNameTextField" layoutX="94.0" layoutY="92.0" prefHeight="25.0" prefWidth="185.0" />
                                 <TextField fx:id="ageTextField" layoutX="94.0" layoutY="123.0" prefHeight="25.0" prefWidth="50.0" />
                                 <Label layoutX="23.0" layoutY="123.0" prefHeight="25.0" prefWidth="67.0" text="Wiek:" />
                                 <Label layoutX="21.0" layoutY="92.0" prefHeight="25.0" prefWidth="70.0" text="Nazwisko:" />
                                 <Label layoutX="22.0" layoutY="60.0" prefHeight="25.0" prefWidth="68.0" text="Imię:" />
-                                <TextField fx:id="nameTextField" layoutX="94.0" layoutY="60.0" prefHeight="25.0" prefWidth="265.0" />
+                                <TextField fx:id="nameTextField" layoutX="94.0" layoutY="60.0" prefHeight="25.0" prefWidth="185.0" />
                                 <Label layoutX="21.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Dane osoby badanej">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
                                 <Label layoutX="23.0" layoutY="167.0" prefHeight="25.0" prefWidth="188.0" text="Wybierz scenariusz badania:">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
                                 <ListView fx:id="allStudiesListView" layoutX="25.0" layoutY="192.0" prefHeight="200.0" prefWidth="600.0" />
-                                <ComboBox fx:id="teachersComboBox" layoutX="472.0" layoutY="60.0" prefHeight="25.0" prefWidth="157.0" />
-                                <Label layoutX="472.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania">
+                                <Label layoutX="320.0" layoutY="23.0" prefHeight="25.0" prefWidth="217.0" text="Blokuj peryferia w trakcie badania">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <ToggleSwitch fx:id="blockPeripherialsSwitch" layoutX="374.0" layoutY="61.0" prefHeight="14.0" prefWidth="53.0" />
+                                <ComboBox fx:id="teachersComboBox" layoutX="592.0" layoutY="57.0" prefHeight="25.0" prefWidth="157.0" />
+                                <Label layoutX="611.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
                                 <Button layoutX="325.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                                <CheckComboBox fx:id="receiversToBlockMultiComboBox" layoutX="425.0" layoutY="105.0" prefHeight="25.0" prefWidth="83.0" />
+                                <Label layoutX="348.0" layoutY="61.0" text="NIE" />
+                                <Label layoutX="445.0" layoutY="61.0" text="TAK" />
+                                <Label layoutX="341.0" layoutY="109.0" text="Blokuj na: " />
                             </children>
                         </AnchorPane>
                     </content>
@@ -61,9 +66,6 @@
                                 <Button layoutX="344.0" layoutY="254.0" mnemonicParsing="false" onAction="#moveActionToLeft" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
                                 <ListView fx:id="allActionListView" layoutX="24.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
                                 <Label layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania:">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -94,9 +96,6 @@
                                 </Label>
                                 <ComboBox fx:id="receiversComboBox" layoutX="215.0" layoutY="130.0" prefHeight="25.0" prefWidth="104.0" />
                                 <Label layoutX="27.0" layoutY="189.0" prefHeight="25.0" prefWidth="192.0" text="Rozpocznij nagrywanie akcji:">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -104,9 +103,6 @@
                                 <Button layoutX="25.0" layoutY="246.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Start" />
                                 <Button layoutX="159.0" layoutY="246.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Koniec" />
                                 <Label layoutX="23.0" layoutY="327.0" prefHeight="25.0" prefWidth="257.0" text="Czynności wykonywane po zakończeniu:">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -122,14 +118,10 @@
                                 </Label>
                                 <TextArea fx:id="actionDescriptionTextArea" layoutX="428.0" layoutY="79.0" prefHeight="89.0" prefWidth="283.0" />
                                 <Label layoutX="429.0" layoutY="201.0" prefHeight="25.0" prefWidth="205.0" text="Blokuj interfejs podczas trwania: ">
-                                    <effect>
-                                        <Bloom />
-                                    </effect>
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Slider fx:id="onOffSlider" layoutX="486.0" layoutY="269.0" prefHeight="14.0" prefWidth="53.0" />
                                 <Label layoutX="599.0" layoutY="263.0" prefHeight="25.0" prefWidth="23.0" text="ON" />
                                 <Label layoutX="429.0" layoutY="263.0" prefHeight="25.0" prefWidth="27.0" text="OFF" />
                             </children>
