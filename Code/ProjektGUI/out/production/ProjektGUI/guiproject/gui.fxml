@@ -30,7 +30,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <ListView fx:id="allStudiesListView" layoutX="25.0" layoutY="192.0" prefHeight="200.0" prefWidth="600.0" />
+                                <ListView fx:id="allScenariosListView" layoutX="25.0" layoutY="192.0" prefHeight="200.0" prefWidth="600.0" />
                                 <Label layoutX="320.0" layoutY="23.0" prefHeight="25.0" prefWidth="217.0" text="Blokuj peryferia w trakcie badania">
                                     <font>
                                         <Font size="14.0" />
@@ -64,7 +64,7 @@
                                 <TextField fx:id="scenarioNameTextField" layoutX="94.0" layoutY="28.0" prefHeight="25.0" prefWidth="300.0" />
                                 <Button layoutX="344.0" layoutY="174.0" mnemonicParsing="false" onAction="#moveActionToRight" prefHeight="25.0" prefWidth="32.0" text="-&gt;" />
                                 <Button layoutX="344.0" layoutY="254.0" mnemonicParsing="false" onAction="#moveActionToLeft" prefHeight="25.0" prefWidth="32.0" text="&lt;-" textAlignment="CENTER" />
-                                <ListView fx:id="allActionListView" layoutX="24.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
+                                <ListView fx:id="allActionsListView" layoutX="24.0" layoutY="121.0" prefHeight="230.0" prefWidth="300.0" />
                                 <Label layoutX="24.0" layoutY="93.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania:">
                                     <font>
                                         <Font size="14.0" />

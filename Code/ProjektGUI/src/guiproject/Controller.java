@@ -14,24 +14,24 @@ import javafx.scene.control.TextField;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class Controller implements Initializable {
 
     @FXML
-    private ListView<String> allStudiesListView;
+    private ListView<String> allScenariosListView;
 
     @FXML
-    private ListView<String> allActionListView;
+    private ListView<String> allActionsListView;
 
     @FXML
     private ListView<String> chosenActionsListView;
@@ -66,7 +66,7 @@ public class Controller implements Initializable {
     @FXML
     private CheckComboBox<String> receiversToBlockMultiComboBox;
 
-    private final ObservableList<String> allStudies
+    private final ObservableList<String> allScenarios
             = FXCollections.observableArrayList("study1", "study2", "study3", "study4");
 
     private final ObservableList<String> allActions
@@ -80,15 +80,23 @@ public class Controller implements Initializable {
 
     private static final String fileNameOfReceivers = "./Config/receivers.ini";
     private final Map<String, String> receivers = new HashMap<>();
-
+    private final Map<String, File> availableActions = new HashMap();
+    private final Map<String, File> availableScenarios = new HashMap();
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        allStudiesListView.setItems(allStudies);
-        allActionListView.setItems(allActions);
+        try {
+            //load Receivers from .ini file and add them to receivers comboBox
+            //load Actions from XML files
+            //load Scenarios fro XML files
+            loadFiles();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        allActionsListView.getItems().addAll(availableActions.keySet());
+        allScenariosListView.getItems().addAll(availableScenarios.keySet());
         chosenActionsListView.setItems(chosenActions);
-        //load Receivers from .ini file and add them to receivers comboBox
-        setReceivers();
         receiversToBlockMultiComboBox.getItems().addAll(receivers.keySet());
         receiversToBlockMultiComboBox.setDisable(true);
         //enable/disable possibility to block keyboard/mouse input on several receviers
@@ -99,16 +107,21 @@ public class Controller implements Initializable {
                     receiversToBlockMultiComboBox.setDisable(false);
                 else
                     receiversToBlockMultiComboBox.setDisable(true);
-                /*//get IP's of receivers which should have blocked mouse/keyboard during scenario execution
+                //get IP's of receivers which should have blocked mouse/keyboard during scenario execution
                 for (String key : receiversToBlockMultiComboBox.getCheckModel().getCheckedItems())
                     System.out.println(receivers.get(key));
                 //get IP of receiver on which we want to record the action
-                System.out.println(receivers.get(receiversComboBox.getSelectionModel().getSelectedItem()));*/
+                System.out.println(receivers.get(receiversComboBox.getSelectionModel().getSelectedItem()));
+                //get action Files that we want to run
+                for (String key : chosenActionsListView.getItems())
+                    System.out.println(availableActions.get(key));
+                //get scenario Files that we want to run
+                for (String key : allScenariosListView.getSelectionModel().getSelectedItems())
+                    System.out.println(availableScenarios.get(key));
             }
 
         });
-
-
+        
         //teachers ComboBox
         teachersComboBox.setItems(allTeachers);
         teachersComboBox.getSelectionModel().selectFirst();
@@ -161,7 +174,16 @@ public class Controller implements Initializable {
         }
     }
 
-    private void setReceivers() {
+    private void loadXMLs(String path, Map<String,File> map) throws IOException {
+        List<File> actionsFiles = Files.walk(Paths.get(path))
+                .filter(Files::isRegularFile)
+                .map(Path::toFile)
+                .collect(Collectors.toList());
+        for (File f : actionsFiles)
+            map.putIfAbsent(f.getName(), f);
+    }
+    private void loadFiles() throws IOException {
+        //set Receivers
         try {
             Stream<String> lines = Files.lines(Paths.get(fileNameOfReceivers));
             lines.filter(line -> line.contains(" ")).forEach(line -> receivers.putIfAbsent(line.split(" ")[1], line.split(" ")[0]));
@@ -171,13 +193,17 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+            //set Actions
+            loadXMLs("Actions/", availableActions);
+            //set Scenarios
+            loadXMLs("Scenarios/", availableScenarios);
     }
 
     @FXML
     void moveActionToRight(ActionEvent event) {
-        if (allActionListView.getSelectionModel().getSelectedItem() != null) {
-            chosenActions.add(allActionListView.getSelectionModel().getSelectedItem());
-            allActions.remove(allActionListView.getSelectionModel().getSelectedItem());
+        if (allActionsListView.getSelectionModel().getSelectedItem() != null) {
+            chosenActions.add(allActionsListView.getSelectionModel().getSelectedItem());
+            allActions.remove(allActionsListView.getSelectionModel().getSelectedItem());
         }
     }
 
