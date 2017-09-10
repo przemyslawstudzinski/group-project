@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -50,6 +51,9 @@ public class Controller implements Initializable {
 
     @FXML
     private ComboBox<String> teachersComboBox;
+
+    @FXML
+    private CheckBox closeSystemCheckBox;
 
     @FXML
     private TextField scenarioNameTextField;
@@ -257,6 +261,11 @@ public class Controller implements Initializable {
 
     @FXML
     void saveAction(ActionEvent event) {
+        Action action = new Action();
+        action.setName(actionNameTextField.getText());
+        action.setDescription(actionDescriptionTextArea.getText());
+        action.setReceiver(receiversComboBox.getSelectionModel().getSelectedItem());
+
         //TODO
     }
 

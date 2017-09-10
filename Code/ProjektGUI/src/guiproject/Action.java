@@ -10,21 +10,15 @@ public class Action {
 
     Receiver receiver;
 
-    boolean closeProgram;
-
-    boolean closeSystem;
-
     List<Node> nodes;
 
     public Action() {
     }
 
-    public Action(String name, String description, Receiver receiver, boolean closeProgram, boolean closeSystem, List<Node> nodes) {
+    public Action(String name, String description, Receiver receiver, List<Node> nodes) {
         this.name = name;
         this.description = description;
         this.receiver = receiver;
-        this.closeProgram = closeProgram;
-        this.closeSystem = closeSystem;
         this.nodes = nodes;
     }
 
@@ -38,14 +32,6 @@ public class Action {
 
     public void setReceiver(Receiver receiver) {
         this.receiver = receiver;
-    }
-
-    public void setCloseProgram(boolean closeProgram) {
-        this.closeProgram = closeProgram;
-    }
-
-    public void setCloseSystem(boolean closeSystem) {
-        this.closeSystem = closeSystem;
     }
 
     public void setNodes(List<Node> nodes) {
@@ -62,14 +48,6 @@ public class Action {
 
     public Receiver getReceiver() {
         return receiver;
-    }
-
-    public boolean isCloseProgram() {
-        return closeProgram;
-    }
-
-    public boolean isCloseSystem() {
-        return closeSystem;
     }
 
     public List<Node> getNodes() {

@@ -12,6 +12,8 @@ public class Study {
 
     String teacher;
 
+    boolean closeSystem;
+
     Scenario chosenScenario;
 
     List<Receiver> blockedPeripheralsOnReceivers;
@@ -51,6 +53,10 @@ public class Study {
         this.blockedPeripheralsOnReceivers = blockedPeripheralsOnReceivers;
     }
 
+    public void setCloseSystem(boolean closeSystem) {
+        this.closeSystem = closeSystem;
+    }
+
     public String getName() {
         return name;
     }
@@ -73,5 +79,9 @@ public class Study {
 
     public List<Receiver> getBlockedPeripheralsOnReceivers() {
         return blockedPeripheralsOnReceivers;
+    }
+
+    public boolean isCloseSystem() {
+        return closeSystem;
     }
 }
