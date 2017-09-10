@@ -5,11 +5,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Node {
 
-    int corX;
+    private int corX;
 
-    int corY;
+    private int corY;
 
-    int delay;
+    private int delay;
 
     public Node() {
     }

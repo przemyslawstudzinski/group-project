@@ -5,11 +5,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Receiver {
 
-    String name;
+    private String name;
 
-    String ipAddress;
+    private String ipAddress;
 
-    boolean blockedPeripherals;
+    private boolean blockedPeripherals;
 
     public Receiver() {
     }

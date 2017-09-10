@@ -225,7 +225,8 @@ public class Controller implements Initializable {
         //set Receivers
         try {
             Stream<String> lines = Files.lines(Paths.get(fileNameOfReceivers));
-            lines.filter(line -> line.contains(" ")).forEach(line -> allReceivers.add(new Receiver(line.split(" ")[1], line.split(" ")[0])));
+            lines.filter(line -> line.contains(" ")).forEach(
+                    line -> allReceivers.add(new Receiver(line.split(" ")[1], line.split(" ")[0])));
             receiversComboBox.setItems(allReceivers);
             receiversComboBox.getSelectionModel().selectFirst();
         } catch (IOException e) {
@@ -341,7 +342,25 @@ public class Controller implements Initializable {
 
     @FXML
     void runStudy(ActionEvent event) {
+        Study study = new Study();
+        study.setName(nameTextField.getText());
+        study.setLastName(lastNameTextField.getText());
+        study.setAge(ageTextField.getText());
+        study.setCloseSystem(closeSystemCheckBox.isSelected());
+        study.setTeacher(teachersComboBox.getSelectionModel().getSelectedItem());
+        study.setChosenScenario(allScenariosListView.getSelectionModel().getSelectedItem());
+        study.setBlockedPeripheralsOnReceivers(receiversToBlockMultiComboBox.getCheckModel().getCheckedItems());
+
         //TODO
+        //save study?
         //run Study
+
+        nameTextField.clear();
+        lastNameTextField.clear();
+        ageTextField.clear();
+        closeSystemCheckBox.selectedProperty().setValue(false);
+        teachersComboBox.getSelectionModel().selectFirst();
+        allScenariosListView.getSelectionModel().clearSelection();
+        receiversToBlockMultiComboBox.getCheckModel().clearChecks();
     }
 }

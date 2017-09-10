@@ -7,13 +7,13 @@ import java.util.List;
 @XmlRootElement
 public class Action {
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 
-    Receiver receiver;
+    private Receiver receiver;
 
-    List<Node> nodes;
+    private List<Node> nodes;
 
     public Action() {
         nodes = new ArrayList<>();

@@ -1,26 +1,28 @@
 package guiproject;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
 public class Study {
 
-    String name;
+    private String name;
 
-    String lastName;
+    private String lastName;
 
-    String age;
+    private String age;
 
-    String teacher;
+    private String teacher;
 
-    boolean closeSystem;
+    private boolean closeSystem;
 
-    Scenario chosenScenario;
+    private Scenario chosenScenario;
 
-    List<Receiver> blockedPeripheralsOnReceivers;
+    private List<Receiver> blockedPeripheralsOnReceivers;
 
     public Study() {
+        blockedPeripheralsOnReceivers = new ArrayList<>();
     }
 
     public Study(String name, String lastName, String age, String teacher, Scenario chosenScenario) {

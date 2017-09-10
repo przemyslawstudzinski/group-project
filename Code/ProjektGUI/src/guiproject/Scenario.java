@@ -7,11 +7,11 @@ import java.util.List;
 @XmlRootElement
 public class Scenario {
 
-    String name;
+    private String name;
 
-    String description;
+    private String description;
 
-    List<Action> chosenActions;
+    private List<Action> chosenActions;
 
     public Scenario() {
         chosenActions = new ArrayList<>();
