@@ -249,4 +249,19 @@ public class Controller implements Initializable {
             }
         }
     }
+
+    @FXML
+    void saveScenario(ActionEvent event) {
+        //TODO
+    }
+
+    @FXML
+    void saveAction(ActionEvent event) {
+        //TODO
+    }
+
+    @FXML
+    void runStudy(ActionEvent event) {
+        //TODO
+    }
 }

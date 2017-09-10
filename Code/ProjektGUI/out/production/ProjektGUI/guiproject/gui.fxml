@@ -53,7 +53,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="325.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                                <Button onAction="#runStudy" layoutX="325.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
                                 <CheckComboBox fx:id="receiversToBlockMultiComboBox" layoutX="425.0" layoutY="105.0" prefHeight="25.0" prefWidth="83.0" />
                                 <Label layoutX="348.0" layoutY="61.0" text="NIE" />
                                 <Label layoutX="445.0" layoutY="61.0" text="TAK" />
@@ -83,8 +83,7 @@
                                 <ListView fx:id="chosenActionsListView" layoutX="400.0" layoutY="152.0" prefHeight="230.0" prefWidth="300.0" />
                                 <Button layoutX="714.0" layoutY="279.0" mnemonicParsing="false" onAction="#moveActionToDown" prefHeight="25.0" prefWidth="25.0" rotate="90.0" text="&gt;" />
                                 <Button layoutX="714.0" layoutY="223.0" mnemonicParsing="false" onAction="#moveActionToUp" rotate="90.0" text="&lt;" textAlignment="CENTER" />
-                                <Button layoutX="376.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
-                                <Button layoutX="194.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Uruchom" />
+                                <Button onAction="#saveScenario" layoutX="376.0" layoutY="415.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
                                 <Label layoutX="400.0" layoutY="28.0" prefHeight="25.0" prefWidth="138.0" text="Opis:">
                                     <font>
                                         <Font size="14.0" />
@@ -126,7 +125,7 @@
                                 <CheckBox layoutX="179.0" layoutY="383.0" mnemonicParsing="false" text="Zamknij system " />
                                 <CheckBox layoutX="23.0" layoutY="383.0" mnemonicParsing="false" text="Zamknij program" />
                                 <Separator layoutX="380.0" layoutY="42.0" orientation="VERTICAL" prefHeight="319.0" prefWidth="0.0" />
-                                <Button layoutX="492.0" layoutY="345.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                                <Button onAction="#saveAction" layoutX="492.0" layoutY="345.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
                                 <Label layoutX="429.0" layoutY="43.0" prefHeight="25.0" prefWidth="138.0" text="Opis:">
                                     <font>
                                         <Font size="14.0" />
