@@ -61,7 +61,7 @@ public class Controller implements Initializable {
     private TextArea actionDescriptionTextArea;
 
     @FXML
-    private ToggleSwitch blockPeripherialsSwitch;
+    private ToggleSwitch blockPeripheralsSwitch;
 
     @FXML
     private CheckComboBox<String> receiversToBlockMultiComboBox;
@@ -70,23 +70,24 @@ public class Controller implements Initializable {
             = FXCollections.observableArrayList();
 
     private final ObservableList<String> allTeachers
-            = FXCollections.observableArrayList("dr inż. Michał Wróbel", "dr inż. Michał NieWróbel");
+            = FXCollections.observableArrayList();
 
     private final ObservableList<String> chosenActions
             = FXCollections.observableArrayList();
 
     private static final String fileNameOfReceivers = "./Config/receivers.ini";
+    private static final String fileNameOfTeachers = "./Config/teachers.ini";
+
     private final Map<String, String> receivers = new HashMap<>();
     private final Map<String, File> availableActions = new HashMap();
     private final Map<String, File> availableScenarios = new HashMap();
-    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            //load Receivers from .ini file and add them to receivers comboBox
+            //load Receivers and Teachers from .ini file and add them to receivers comboBox
             //load Actions from XML files
-            //load Scenarios fro XML files
+            //load Scenarios fro XML file
             loadFiles();
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,7 +99,7 @@ public class Controller implements Initializable {
         receiversToBlockMultiComboBox.getItems().addAll(receivers.keySet());
         receiversToBlockMultiComboBox.setDisable(true);
         //enable/disable possibility to block keyboard/mouse input on several receviers
-        blockPeripherialsSwitch.selectedProperty().addListener(new ChangeListener< Boolean >() {
+        blockPeripheralsSwitch.selectedProperty().addListener(new ChangeListener< Boolean >() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue)
@@ -180,6 +181,7 @@ public class Controller implements Initializable {
         for (File f : actionsFiles)
             map.putIfAbsent(f.getName(), f);
     }
+
     private void loadFiles() throws IOException {
         //set Receivers
         try {
@@ -191,6 +193,16 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //set Teachers
+        try {
+            Stream<String> stream = Files.lines(Paths.get(fileNameOfTeachers));
+            stream.forEach(line -> allTeachers.add(line));
+            teachersComboBox.setItems(allTeachers);
+            teachersComboBox.getSelectionModel().selectFirst();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
             //set Actions
             loadXMLs("Actions/", availableActions);
             //set Scenarios

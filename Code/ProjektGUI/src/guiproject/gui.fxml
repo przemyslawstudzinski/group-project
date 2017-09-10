@@ -46,7 +46,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <ToggleSwitch fx:id="blockPeripherialsSwitch" layoutX="374.0" layoutY="61.0" prefHeight="14.0" prefWidth="53.0" />
+                                <ToggleSwitch fx:id="blockPeripheralsSwitch" layoutX="374.0" layoutY="61.0" prefHeight="14.0" prefWidth="53.0" />
                                 <ComboBox fx:id="teachersComboBox" layoutX="592.0" layoutY="57.0" prefHeight="25.0" prefWidth="157.0" />
                                 <Label layoutX="611.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania">
                                     <font>
