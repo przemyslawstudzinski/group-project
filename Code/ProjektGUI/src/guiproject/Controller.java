@@ -66,11 +66,8 @@ public class Controller implements Initializable {
     @FXML
     private CheckComboBox<String> receiversToBlockMultiComboBox;
 
-    private final ObservableList<String> allScenarios
-            = FXCollections.observableArrayList("study1", "study2", "study3", "study4");
-
     private final ObservableList<String> allActions
-            = FXCollections.observableArrayList("action1", "action2", "action3", "action4");
+            = FXCollections.observableArrayList();
 
     private final ObservableList<String> allTeachers
             = FXCollections.observableArrayList("dr inż. Michał Wróbel", "dr inż. Michał NieWróbel");
@@ -94,7 +91,8 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        allActionsListView.getItems().addAll(availableActions.keySet());
+        allActions.addAll(availableActions.keySet());
+        allActionsListView.setItems(allActions);
         allScenariosListView.getItems().addAll(availableScenarios.keySet());
         chosenActionsListView.setItems(chosenActions);
         receiversToBlockMultiComboBox.getItems().addAll(receivers.keySet());
