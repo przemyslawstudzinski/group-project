@@ -1,7 +1,9 @@
 package guiproject;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+@XmlRootElement
 public class Action {
 
     String name;
@@ -52,5 +54,10 @@ public class Action {
 
     public List<Node> getNodes() {
         return nodes;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

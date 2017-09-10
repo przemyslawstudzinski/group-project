@@ -15,6 +15,10 @@ import javafx.scene.control.TextField;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -32,10 +36,10 @@ public class Controller implements Initializable {
     private ListView<String> allScenariosListView;
 
     @FXML
-    private ListView<String> allActionsListView;
+    private ListView<Action> allActionsListView;
 
     @FXML
-    private ListView<String> chosenActionsListView;
+    private ListView<Action> chosenActionsListView;
 
     @FXML
     private ComboBox<Receiver> receiversComboBox;
@@ -65,18 +69,21 @@ public class Controller implements Initializable {
     private TextArea actionDescriptionTextArea;
 
     @FXML
+    private TextArea scenarioDescriptionTextArea;
+
+    @FXML
     private ToggleSwitch blockPeripheralsSwitch;
 
     @FXML
     private CheckComboBox<Receiver> receiversToBlockMultiComboBox;
 
-    private final ObservableList<String> allActions
+    private final ObservableList<Action> allActions
             = FXCollections.observableArrayList();
 
     private final ObservableList<String> allTeachers
             = FXCollections.observableArrayList();
 
-    private final ObservableList<String> chosenActions
+    private final ObservableList<Action> chosenActions
             = FXCollections.observableArrayList();
 
     private final ObservableList<Receiver> allReceivers
@@ -85,20 +92,24 @@ public class Controller implements Initializable {
     private static final String fileNameOfReceivers = "./Config/receivers.ini";
     private static final String fileNameOfTeachers = "./Config/teachers.ini";
 
-    private final Map<String, File> availableActions = new HashMap();
+    private static final String actionsPath = "Actions/";
+    private static final String scenariosPath = "Scenarios/";
+
+    private final Map<Action, File> availableActions = new HashMap();
     private final Map<String, File> availableScenarios = new HashMap();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             //load Receivers and Teachers from .ini file and add them to receivers comboBox
-            //load Actions from XML files
             //load Scenarios fro XML file
-            loadFiles();
+            loadConfigFiles();
+            //load Actions from XML files
+            loadActionXMLs(actionsPath, availableActions);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        allActions.addAll(availableActions.keySet());
+
         allActionsListView.setItems(allActions);
         allScenariosListView.getItems().addAll(availableScenarios.keySet());
         chosenActionsListView.setItems(chosenActions);
@@ -106,7 +117,7 @@ public class Controller implements Initializable {
         receiversToBlockMultiComboBox.getItems().addAll(allReceivers);
         receiversToBlockMultiComboBox.setDisable(true);
 
-        //enable/disable possibility to block keyboard/mouse input on several receviers
+        //enable/disable possibility to block keyboard/mouse input on several receivers
         blockPeripheralsSwitch.selectedProperty().addListener(new ChangeListener< Boolean >() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -114,13 +125,9 @@ public class Controller implements Initializable {
                     receiversToBlockMultiComboBox.setDisable(false);
                 else
                     receiversToBlockMultiComboBox.setDisable(true);
-                //get IP's of receivers which should have blocked mouse/keyboard during scenario execution
-                //for (Receiver key : receiversToBlockMultiComboBox.getCheckModel().getCheckedItems())
-                //   System.out.println(receivers.get(key));
-                //get IP of receiver on which we want to record the action
-                //System.out.println(receivers.get(receiversComboBox.getSelectionModel().getSelectedItem()));
+
                 //get action Files that we want to run
-                for (String key : chosenActionsListView.getItems())
+                for (Action key : chosenActionsListView.getItems())
                     System.out.println(availableActions.get(key));
                 //get scenario Files that we want to run
                 for (String key : allScenariosListView.getSelectionModel().getSelectedItems())
@@ -181,16 +188,27 @@ public class Controller implements Initializable {
         }
     }
 
-    private void loadXMLs(String path, Map<String,File> map) throws IOException {
+    private void loadActionXMLs(String path, Map<Action, File> map) throws IOException {
         List<File> actionsFiles = Files.walk(Paths.get(path))
                 .filter(Files::isRegularFile)
                 .map(Path::toFile)
                 .collect(Collectors.toList());
-        for (File f : actionsFiles)
-            map.putIfAbsent(f.getName(), f);
+        for (File file : actionsFiles) {
+            try {
+                JAXBContext jaxbContext = JAXBContext.newInstance(Action.class);
+                Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                Action action = (Action) jaxbUnmarshaller.unmarshal(file);
+                map.putIfAbsent(action, file);
+
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
+        }
+        allActions.clear();
+        allActions.addAll(map.keySet());
     }
 
-    private void loadFiles() throws IOException {
+    private void loadConfigFiles() throws IOException {
         //set Receivers
         try {
             Stream<String> lines = Files.lines(Paths.get(fileNameOfReceivers));
@@ -210,10 +228,8 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        //set Actions
-        loadXMLs("Actions/", availableActions);
         //set Scenarios
-        loadXMLs("Scenarios/", availableScenarios);
+        //loadXMLs("Scenarios/", availableScenarios);
     }
 
     @FXML
@@ -256,21 +272,48 @@ public class Controller implements Initializable {
 
     @FXML
     void saveScenario(ActionEvent event) {
+        Scenario scenario = new Scenario();
+        scenario.setName(scenarioNameTextField.getText());
+        scenario.setDescription(actionDescriptionTextArea.getText());
+        scenario.setChoosenActions(chosenActionsListView.getSelectionModel().getSelectedItems());
         //TODO
     }
 
     @FXML
-    void saveAction(ActionEvent event) {
+    void saveAction(ActionEvent event) throws IOException {
         Action action = new Action();
         action.setName(actionNameTextField.getText());
         action.setDescription(actionDescriptionTextArea.getText());
         action.setReceiver(receiversComboBox.getSelectionModel().getSelectedItem());
 
         //TODO
+        //record actions - create nodes
+
+        String filename =actionNameTextField.getText();
+        try {
+
+            File file = new File("./Actions/" + filename + ".xml");
+            JAXBContext jaxbContext = JAXBContext.newInstance(Action.class);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            // output pretty printed
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+            jaxbMarshaller.marshal(action, file);
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+        allActions.add(action);
+        actionNameTextField.clear();
+        actionDescriptionTextArea.clear();
+        receiversComboBox.getSelectionModel().selectFirst();
     }
 
     @FXML
     void runStudy(ActionEvent event) {
         //TODO
+        //run Study
     }
 }

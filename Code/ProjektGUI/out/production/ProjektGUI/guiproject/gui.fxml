@@ -91,7 +91,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <TextArea fx:id="scenarioDescriptionTexTArea" layoutX="400.0" layoutY="60.0" prefHeight="60.0" prefWidth="300.0" />
+                                <TextArea fx:id="scenarioDescriptionTextArea" layoutX="400.0" layoutY="60.0" prefHeight="60.0" prefWidth="300.0" />
                             </children>
                         </AnchorPane>
                     </content>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>ggg</description>
+    <name>test57686</name>
+    <receiver>
+        <blockedPeripherals>false</blockedPeripherals>
+        <ipAddress>192.178.0.2</ipAddress>
+        <name>B</name>
+    </receiver>
+</action>

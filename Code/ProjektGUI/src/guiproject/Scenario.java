@@ -1,7 +1,10 @@
 package guiproject;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement
 public class Scenario {
 
     String name;
@@ -11,6 +14,7 @@ public class Scenario {
     List<Action> chosenActions;
 
     public Scenario() {
+        chosenActions = new ArrayList<>();
     }
 
     public Scenario(String name, String description, List<Action> choosenActions) {
