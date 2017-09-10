@@ -37,7 +37,7 @@ public class Controller implements Initializable {
     private ListView<String> chosenActionsListView;
 
     @FXML
-    private ComboBox<String> receiversComboBox;
+    private ComboBox<Receiver> receiversComboBox;
 
     @FXML
     private TextField ageTextField;
@@ -64,7 +64,7 @@ public class Controller implements Initializable {
     private ToggleSwitch blockPeripheralsSwitch;
 
     @FXML
-    private CheckComboBox<String> receiversToBlockMultiComboBox;
+    private CheckComboBox<Receiver> receiversToBlockMultiComboBox;
 
     private final ObservableList<String> allActions
             = FXCollections.observableArrayList();
@@ -75,10 +75,12 @@ public class Controller implements Initializable {
     private final ObservableList<String> chosenActions
             = FXCollections.observableArrayList();
 
+    private final ObservableList<Receiver> allReceivers
+            = FXCollections.observableArrayList();
+
     private static final String fileNameOfReceivers = "./Config/receivers.ini";
     private static final String fileNameOfTeachers = "./Config/teachers.ini";
 
-    private final Map<String, String> receivers = new HashMap<>();
     private final Map<String, File> availableActions = new HashMap();
     private final Map<String, File> availableScenarios = new HashMap();
 
@@ -96,8 +98,10 @@ public class Controller implements Initializable {
         allActionsListView.setItems(allActions);
         allScenariosListView.getItems().addAll(availableScenarios.keySet());
         chosenActionsListView.setItems(chosenActions);
-        receiversToBlockMultiComboBox.getItems().addAll(receivers.keySet());
+
+        receiversToBlockMultiComboBox.getItems().addAll(allReceivers);
         receiversToBlockMultiComboBox.setDisable(true);
+
         //enable/disable possibility to block keyboard/mouse input on several receviers
         blockPeripheralsSwitch.selectedProperty().addListener(new ChangeListener< Boolean >() {
             @Override
@@ -107,10 +111,10 @@ public class Controller implements Initializable {
                 else
                     receiversToBlockMultiComboBox.setDisable(true);
                 //get IP's of receivers which should have blocked mouse/keyboard during scenario execution
-                for (String key : receiversToBlockMultiComboBox.getCheckModel().getCheckedItems())
-                    System.out.println(receivers.get(key));
+                //for (Receiver key : receiversToBlockMultiComboBox.getCheckModel().getCheckedItems())
+                //   System.out.println(receivers.get(key));
                 //get IP of receiver on which we want to record the action
-                System.out.println(receivers.get(receiversComboBox.getSelectionModel().getSelectedItem()));
+                //System.out.println(receivers.get(receiversComboBox.getSelectionModel().getSelectedItem()));
                 //get action Files that we want to run
                 for (String key : chosenActionsListView.getItems())
                     System.out.println(availableActions.get(key));
@@ -186,9 +190,8 @@ public class Controller implements Initializable {
         //set Receivers
         try {
             Stream<String> lines = Files.lines(Paths.get(fileNameOfReceivers));
-            lines.filter(line -> line.contains(" ")).forEach(line -> receivers.putIfAbsent(line.split(" ")[1], line.split(" ")[0]));
-            ObservableList<String> receiversList = FXCollections.observableArrayList(receivers.keySet());
-            receiversComboBox.setItems(receiversList);
+            lines.filter(line -> line.contains(" ")).forEach(line -> allReceivers.add(new Receiver(line.split(" ")[1], line.split(" ")[0])));
+            receiversComboBox.setItems(allReceivers);
             receiversComboBox.getSelectionModel().selectFirst();
         } catch (IOException e) {
             e.printStackTrace();
@@ -203,10 +206,10 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-            //set Actions
-            loadXMLs("Actions/", availableActions);
-            //set Scenarios
-            loadXMLs("Scenarios/", availableScenarios);
+        //set Actions
+        loadXMLs("Actions/", availableActions);
+        //set Scenarios
+        loadXMLs("Scenarios/", availableScenarios);
     }
 
     @FXML

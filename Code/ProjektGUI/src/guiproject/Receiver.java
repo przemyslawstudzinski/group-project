@@ -11,6 +11,11 @@ public class Receiver {
     public Receiver() {
     }
 
+    public Receiver(String name, String ipAddress) {
+        this.name = name;
+        this.ipAddress = ipAddress;
+    }
+
     public Receiver(String name, String ipAddress, boolean blockedPeripherals) {
         this.name = name;
         this.ipAddress = ipAddress;
@@ -39,5 +44,10 @@ public class Receiver {
 
     public boolean isBlockedPeripherals() {
         return blockedPeripherals;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
