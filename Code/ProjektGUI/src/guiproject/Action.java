@@ -1,6 +1,7 @@
 package guiproject;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlRootElement
@@ -15,6 +16,7 @@ public class Action {
     List<Node> nodes;
 
     public Action() {
+        nodes = new ArrayList<>();
     }
 
     public Action(String name, String description, Receiver receiver, List<Node> nodes) {

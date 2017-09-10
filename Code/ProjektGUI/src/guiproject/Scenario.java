@@ -46,4 +46,9 @@ public class Scenario {
     public List<Action> getChoosenActions() {
         return chosenActions;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

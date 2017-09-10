@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>8</description>
+    <name>88</name>
+    <receiver>
+        <blockedPeripherals>false</blockedPeripherals>
+        <ipAddress>192.178.0.1</ipAddress>
+        <name>A</name>
+    </receiver>
+</action>
