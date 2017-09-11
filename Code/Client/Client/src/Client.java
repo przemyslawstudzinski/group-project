@@ -2,13 +2,63 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.rmi.ServerError;
+import java.rmi.ServerException;
 
 public class Client extends Thread {
 
-    private static Socket socket;
+    private Socket socket;
     private BufferedReader input;
     private SystemHook mouseListener;
+    private boolean running = true;
+
+    private Thread serverListener = new Thread() {
+        public void run() {
+            try {
+                while (true) {
+                    String response = input.readLine();
+                    if (response != null) {
+                        if (response.equals("record")) {
+                            System.out.println(response);
+                            mouseListener = new SystemHook(socket);
+                            mouseListener.start();
+                        }
+                        if (response.equals("stoprecord")) {
+                            System.out.println(response);
+                            mouseListener.interrupt();
+                        }
+                        if (response.contains("replay")) {
+                            System.out.println(response);
+                        }
+                    }
+                }
+            } catch (SocketException e) {
+                System.out.println("Zamykam socket serverlistenera");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private Thread checkIfAlive = new Thread() {
+        public void run() {
+            try {
+                while (true) {
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    out.println("check");
+                }
+            } catch (IOException e) {
+                running = false;
+            } catch (NullPointerException ex) {
+                running = false;
+            }
+        }
+    };
 
     Client() {
         try {
@@ -21,32 +71,21 @@ public class Client extends Thread {
 
     public void run() {
         try {
-            while (true) {
-                String response = input.readLine();
-                if (response != null) {
-                    if (response.equals("record")) {
-                        System.out.println(response);
-                        mouseListener = new SystemHook(socket);
-                        mouseListener.start();
-                    }
-                    if (response.equals("stoprecord")) {
-                        System.out.println(response);
-                        mouseListener.interrupt();
-                    }
-
-                    if (response.contains("replay")) {
-                        System.out.println(response);
-                    }
-                }
+            checkIfAlive.start();
+            serverListener.start();
+            while (running) {
+                Thread.sleep(0);
             }
-        } catch (IOException e) {
-            return;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } finally {
-            try {
-                System.out.println("ffffff");
-                this.socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!socket.isClosed()) {
+                try {
+                    System.out.println("zamykam klienta");
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

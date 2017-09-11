@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
+import server.ClientHandler;
 import server.Server;
 
 import javax.xml.bind.JAXBContext;
@@ -104,6 +105,10 @@ public class Controller implements Initializable {
 
     private final Map<Action, File> availableActions = new HashMap();
     private final Map<Scenario, File> availableScenarios = new HashMap();
+
+    public void shutdown() throws InterruptedException, IOException {
+        server.running = false;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
