@@ -117,8 +117,8 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="25.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Start" />
-                                <Button layoutX="147.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Koniec" />
+                                <Button fx:id="startRecordingButton" onAction="#startRecording" layoutX="25.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Start" />
+                                <Button fx:id="stopRecordingButton" onAction="#stopRecording" layoutX="147.0" layoutY="259.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="56.0" text="Koniec" />
                                 <Separator layoutX="376.0" layoutY="41.0" orientation="VERTICAL" prefHeight="148.0" prefWidth="7.0" />
                                 <Label layoutX="429.0" layoutY="28.0" prefHeight="25.0" prefWidth="138.0" text="Opis">
                                     <font>

@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
+import server.Server;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,6 +22,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +33,8 @@ import java.util.stream.Stream;
 
 
 public class Controller implements Initializable {
+
+    private static Server server;
 
     @FXML
     private ListView<Scenario> allScenariosListView;
@@ -103,6 +107,9 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        server = new Server();
+        server.start();
+
         try {
             //load Receivers and Teachers from .ini file and add them to receivers comboBox
             loadConfigFiles();
@@ -110,7 +117,7 @@ public class Controller implements Initializable {
             loadActionXMLs(actionsPath, availableActions);
             allActions.addAll(availableActions.keySet());
             allActionsListView.setItems(allActions);
-            //load Scenarios fro XML file
+            //load Scenarios from XML file
             loadScenarioXMLs(scenariosPath, availableScenarios);
             allScenarios.addAll(availableScenarios.keySet());
             allScenariosListView.setItems(allScenarios);
@@ -313,9 +320,7 @@ public class Controller implements Initializable {
         action.setName(actionNameTextField.getText());
         action.setDescription(actionDescriptionTextArea.getText());
         action.setReceiver(receiversComboBox.getSelectionModel().getSelectedItem());
-
-        //TODO
-        //record actions - create nodes
+        action.setNodes(server.client.getRecordedClicks());
 
         String filename = actionNameTextField.getText();
         try {
@@ -362,5 +367,17 @@ public class Controller implements Initializable {
         teachersComboBox.getSelectionModel().selectFirst();
         allScenariosListView.getSelectionModel().clearSelection();
         receiversToBlockMultiComboBox.getCheckModel().clearChecks();
+    }
+
+    @FXML
+    void startRecording(ActionEvent event) throws IOException {
+        PrintWriter out = new PrintWriter(server.client.getSocket().getOutputStream(), true);
+        out.println("record");
+    }
+
+    @FXML
+    void stopRecording(ActionEvent event) throws IOException {
+        PrintWriter out = new PrintWriter(server.client.getSocket().getOutputStream(), true);
+        out.println("stoprecord");
     }
 }

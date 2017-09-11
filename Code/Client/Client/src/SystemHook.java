@@ -12,7 +12,6 @@ public class SystemHook extends Thread {
     private static boolean run = true;
     private static Socket clientSocket;
     private long clickTime = 0;
-    private CoordsContainer coords;
 
     SystemHook(Socket s) {
         this.clientSocket = s;
@@ -21,7 +20,6 @@ public class SystemHook extends Thread {
     public void attachMouseListener() {
         GlobalMouseHook mouseHook = new GlobalMouseHook();
         System.out.println("Global mouse hook successfully started, press [middle] mouse button to shutdown.");
-        coords = new CoordsContainer();
 
         mouseHook.addMouseListener(new GlobalMouseAdapter() {
             @Override
@@ -31,7 +29,6 @@ public class SystemHook extends Thread {
                     int y = event.getY();
                     Long time = System.currentTimeMillis() - clickTime;
                     System.out.println("Recorded click at: " + x + " " + y);
-                    coords.coordsMap.put(new CoordsContainer().new Coords(x, y), time);
                     PrintWriter out = null;
                     try {
                         out = new PrintWriter(clientSocket.getOutputStream(), true);
