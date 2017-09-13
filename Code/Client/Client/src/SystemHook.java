@@ -27,12 +27,12 @@ public class SystemHook extends Thread {
                 if ((event.getButtons() & GlobalMouseEvent.BUTTON_LEFT) != GlobalMouseEvent.BUTTON_NO) {
                     int x = event.getX();
                     int y = event.getY();
-                    Long time = System.currentTimeMillis() - clickTime;
-                    System.out.println("Recorded click at: " + x + " " + y);
+                    Long delay = System.currentTimeMillis() - clickTime;
+                    System.out.println("Recorded click: x: " + x + " y: " + y + " delay " + delay);
                     PrintWriter out = null;
                     try {
                         out = new PrintWriter(clientSocket.getOutputStream(), true);
-                        out.println(x + " " + y + " " + time);
+                        out.println(x + " " + y + " " + delay);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

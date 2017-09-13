@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>Elo</description>
+    <name>B</name>
+    <nodes>
+        <corX>3306</corX>
+        <corY>495</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3202</corX>
+        <corY>583</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3202</corX>
+        <corY>197</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3204</corX>
+        <corY>416</corY>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>2780</corX>
+        <corY>655</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>784</corX>
+        <corY>507</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.178.0.3</ipAddress>
+        <name>C</name>
+    </receiver>
+</action>

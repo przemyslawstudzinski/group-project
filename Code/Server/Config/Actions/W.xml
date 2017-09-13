@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>BAK</description>
+    <name>W</name>
+    <nodes>
+        <corX>2950</corX>
+        <corY>227</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3610</corX>
+        <corY>604</corY>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>2419</corX>
+        <corY>664</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3362</corX>
+        <corY>178</corY>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3482</corX>
+        <corY>669</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>794</corX>
+        <corY>522</corY>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.178.0.2</ipAddress>
+        <name>B</name>
+    </receiver>
+</action>
