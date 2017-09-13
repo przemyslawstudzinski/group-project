@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>ddd</description>
+    <name>hehe</name>
+    <nodes>
+        <corX>633</corX>
+        <corY>404</corY>
+        <delay>1652</delay>
+    </nodes>
+    <nodes>
+        <corX>805</corX>
+        <corY>464</corY>
+        <delay>481</delay>
+    </nodes>
+    <nodes>
+        <corX>1040</corX>
+        <corY>579</corY>
+        <delay>480</delay>
+    </nodes>
+    <nodes>
+        <corX>707</corX>
+        <corY>633</corY>
+        <delay>632</delay>
+    </nodes>
+    <nodes>
+        <corX>736</corX>
+        <corY>494</corY>
+        <delay>1435</delay>
+    </nodes>
+    <receiver>
+        <blockedPeripherals>false</blockedPeripherals>
+        <ipAddress>192.178.0.1</ipAddress>
+        <name>A</name>
+    </receiver>
+</action>

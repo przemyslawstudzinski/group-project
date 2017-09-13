@@ -27,7 +27,7 @@ public class ClientHandler extends Thread {
                         recordedClicks.add(node);
                     }
                 }
-            } catch(SocketException e) {
+            } catch (SocketException e) {
                 System.out.println("Zamykam socket clientlistenera");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -62,7 +62,7 @@ public class ClientHandler extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            if(!socket.isClosed()) {
+            if (!socket.isClosed()) {
                 try {
                     System.out.println("zamykam socket klienta");
                     socket.close();

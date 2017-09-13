@@ -15,13 +15,13 @@ public class Server extends Thread {
     private Thread serverListener = new Thread() {
         public void run() {
             try {
-                while(true) {
+                while (true) {
                     ClientHandler handler = new ClientHandler(listener.accept());
                     allHandlers.add(handler);
                     client = handler;
                     handler.start();
                 }
-            } catch(SocketException e) {
+            } catch (SocketException e) {
                 System.out.println("Zamykam socket serverlistenera");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -52,12 +52,12 @@ public class Server extends Thread {
                 for (ClientHandler handler : allHandlers) {
                     handler.running = false;
                 }
-                System.out.println("zamykam serwer");
-                try {
-                    listener.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            System.out.println("zamykam serwer");
+            try {
+                listener.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
     }

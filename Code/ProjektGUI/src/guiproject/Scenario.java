@@ -31,7 +31,7 @@ public class Scenario {
         this.description = description;
     }
 
-    public void setChoosenActions(List<Action> chosenActions) {
+    public void setChosenActions(List<Action> chosenActions) {
         this.chosenActions = chosenActions;
     }
 
@@ -43,7 +43,7 @@ public class Scenario {
         return description;
     }
 
-    public List<Action> getChoosenActions() {
+    public List<Action> getChosenActions() {
         return chosenActions;
     }
 

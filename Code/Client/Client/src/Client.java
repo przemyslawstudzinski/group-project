@@ -71,12 +71,24 @@ public class Client extends Thread {
 
     public void run() {
         try {
-            checkIfAlive.start();
-            serverListener.start();
-            while (running) {
-                Thread.sleep(0);
+            while (true) {
+                String response = input.readLine();
+                if (response != null) {
+                    if (response.equals("record")) {
+                        System.out.println(response);
+                        mouseListener = new SystemHook(socket);
+                        mouseListener.start();
+                    }
+                    if (response.equals("stoprecord")) {
+                        System.out.println(response);
+                        mouseListener.interrupt();
+                    }
+                    if (response.contains("replay")) {
+                        System.out.println(response);
+                    }
+                }
             }
-        } catch (InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (!socket.isClosed()) {

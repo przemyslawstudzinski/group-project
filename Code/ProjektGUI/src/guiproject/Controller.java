@@ -14,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
-import server.ClientHandler;
 import server.Server;
 
 import javax.xml.bind.JAXBContext;
@@ -135,7 +134,7 @@ public class Controller implements Initializable {
         receiversToBlockMultiComboBox.setDisable(true);
 
         //enable/disable possibility to block keyboard/mouse input on several receivers
-        blockPeripheralsSwitch.selectedProperty().addListener(new ChangeListener< Boolean >() {
+        blockPeripheralsSwitch.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue)
@@ -144,12 +143,12 @@ public class Controller implements Initializable {
                     receiversToBlockMultiComboBox.setDisable(true);
             }
         });
-        
+
         //teachers ComboBox
         teachersComboBox.setItems(allTeachers);
         teachersComboBox.getSelectionModel().selectFirst();
         //name Text Field
-        validateTextField(nameTextField,"textOnly");
+        validateTextField(nameTextField, "textOnly");
         //last name Text Field
         validateTextField(lastNameTextField, "textOnly");
         //age Text Field
@@ -161,18 +160,14 @@ public class Controller implements Initializable {
     }
 
 
-    void validateTextField(TextField field, String validationType)
-    {
-        if (validationType.equals("textOnly"))
-        {
+    void validateTextField(TextField field, String validationType) {
+        if (validationType.equals("textOnly")) {
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("\\sa-zA-Z*")) {
                     field.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
                 }
             });
-        }
-        else if (validationType.equals("numberOnly"))
-        {
+        } else if (validationType.equals("numberOnly")) {
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("\\d*")) {
                     field.setText(newValue.replaceAll("[^\\d]", ""));
@@ -186,9 +181,7 @@ public class Controller implements Initializable {
                     }
                 }
             });
-        }
-        else if (validationType.equals("filename"))
-        {
+        } else if (validationType.equals("filename")) {
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("[-_. A-Za-z0-9]")) {
                     field.setText(newValue.replaceAll("[^-_. A-Za-z0-9]", ""));
@@ -298,7 +291,7 @@ public class Controller implements Initializable {
         Scenario scenario = new Scenario();
         scenario.setName(scenarioNameTextField.getText());
         scenario.setDescription(scenarioDescriptionTextArea.getText());
-        scenario.setChoosenActions(chosenActionsListView.getItems());
+        scenario.setChosenActions(chosenActionsListView.getItems());
         String filename = scenarioNameTextField.getText();
         try {
             File file = new File("./" + scenariosPath + filename + ".xml");
@@ -361,7 +354,9 @@ public class Controller implements Initializable {
         study.setChosenScenario(allScenariosListView.getSelectionModel().getSelectedItem());
         study.setBlockedPeripheralsOnReceivers(receiversToBlockMultiComboBox.getCheckModel().getCheckedItems());
 
-        //TODO
+        File chosenScenario = availableScenarios.get(study.getChosenScenario());
+
+        //TODO przeczytaj xml ze scenario - znajdz wybrane akcje - czytaj akcje
         //save study?
         //run Study
 

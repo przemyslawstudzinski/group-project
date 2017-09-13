@@ -43,7 +43,8 @@ public class SystemHook extends Thread {
 
         try {
             while (run) Thread.sleep(10);
-        } catch (InterruptedException e) {} finally {
+        } catch (InterruptedException e) {
+        } finally {
             mouseHook.shutdownHook();
         }
     }
