@@ -6,11 +6,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Node {
 
     private int corX;
-
     private int corY;
-
     private long delay;
-
     private boolean isDouble;
 
     public Node() {
@@ -31,11 +28,13 @@ public class Node {
         this.corY = corY;
     }
 
-    public void setDelay(int delay) {
+    public void setDelay(long delay) {
         this.delay = delay;
     }
 
-    public void setIsDouble(boolean isDouble) { this.isDouble = isDouble; }
+    public void setIsDouble(boolean isDouble) {
+        this.isDouble = isDouble;
+    }
 
     public int getCorX() {
         return corX;
@@ -49,5 +48,7 @@ public class Node {
         return delay;
     }
 
-    public boolean getIsDouble() { return isDouble; }
+    public boolean getIsDouble() {
+        return isDouble;
+    }
 }

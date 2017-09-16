@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gui.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();

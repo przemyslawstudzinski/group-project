@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>B</description>
+    <name>A</name>
+    <nodes>
+        <corX>1404</corX>
+        <corY>258</corY>
+        <delay>1681</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1584</corX>
+        <corY>422</corY>
+        <delay>2615</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>796</corX>
+        <corY>558</corY>
+        <delay>6233</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1580</corX>
+        <corY>420</corY>
+        <delay>2842</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>2942</corX>
+        <corY>592</corY>
+        <delay>1462</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>127.0.0.1</ipAddress>
+        <name>A</name>
+    </receiver>
+</action>

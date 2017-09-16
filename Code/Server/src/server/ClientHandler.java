@@ -28,16 +28,15 @@ public class ClientHandler extends Thread {
                         //Long.parseLong(data[2]) contains click delay
                         if (Long.parseLong(data[2]) > 600)
                             recordedClicks.add(node);
-                        else
-                        {
-                            Node doubleClickNode = recordedClicks.remove(recordedClicks.size() -1);
+                        else {
+                            Node doubleClickNode = recordedClicks.remove(recordedClicks.size() - 1);
                             doubleClickNode.setIsDouble(true);
                             recordedClicks.add(doubleClickNode);
                         }
                     }
                 }
-            } catch(SocketException e) {
-                System.out.println("Zamykam socket clientlistenera");
+            } catch (SocketException e) {
+                System.out.println("Closing clientlistener socket");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -71,9 +70,9 @@ public class ClientHandler extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            if(!socket.isClosed()) {
+            if (!socket.isClosed()) {
                 try {
-                    System.out.println("zamykam socket klienta");
+                    System.out.println("Closing client socker");
                     socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();

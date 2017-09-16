@@ -14,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
-import server.ClientHandler;
 import server.Server;
 
 import javax.xml.bind.JAXBContext;
@@ -124,10 +123,12 @@ public class Controller implements Initializable {
             loadActionFiles(actionsPath, availableActions);
             allActions.addAll(availableActions.keySet());
             allActionsListView.setItems(allActions);
+            allActionsListView.getSelectionModel().selectFirst();
             //load Scenarios from XML file
             loadScenarioFiles(scenariosPath, availableScenarios);
             allScenarios.addAll(availableScenarios.keySet());
             allScenariosListView.setItems(allScenarios);
+            allScenariosListView.getSelectionModel().selectFirst();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -229,9 +230,8 @@ public class Controller implements Initializable {
             BufferedReader br = new BufferedReader(isr);
 
             while ((line = br.readLine()) != null) {
-                String textToSet = line.split(":",0)[1];
-                switch (line.split(":",0)[0])
-                {
+                String textToSet = line.split(":", 0)[1];
+                switch (line.split(":", 0)[0]) {
                     case "name":
                         scenario.setName(textToSet);
                         break;
@@ -326,6 +326,7 @@ public class Controller implements Initializable {
         allActions.addAll(chosenActions);
         chosenActions.removeAll();
         chosenActionsListView.getItems().clear();
+        allActionsListView.getSelectionModel().selectFirst();
     }
 
     void saveAction() throws IOException {
@@ -362,8 +363,7 @@ public class Controller implements Initializable {
         saveAction();
     }
 
-    @FXML
-    void runStudy(ActionEvent event) {
+    Study prepareStudy() {
         Study study = new Study();
         study.setName(nameTextField.getText());
         study.setLastName(lastNameTextField.getText());
@@ -372,12 +372,12 @@ public class Controller implements Initializable {
         study.setTeacher(teachersComboBox.getSelectionModel().getSelectedItem());
         String scenarioToRun = allScenariosListView.getSelectionModel().getSelectedItem();
         study.setChosenScenario(availableScenarios.get(scenarioToRun));
+        study.setBlockPeripherals(blockPeripheralsSwitch.isSelected());
         study.setBlockedPeripheralsOnReceivers(receiversToBlockMultiComboBox.getCheckModel().getCheckedItems());
+        return study;
+    }
 
-        //TODO
-        //run Study
-        //save/log study
-
+    void finishStudy() {
         nameTextField.clear();
         lastNameTextField.clear();
         ageTextField.clear();
@@ -386,7 +386,21 @@ public class Controller implements Initializable {
         allScenariosListView.getSelectionModel().clearSelection();
         receiversToBlockMultiComboBox.getCheckModel().clearChecks();
         blockPeripheralsSwitch.setSelected(false);
+        allScenariosListView.getSelectionModel().selectFirst();
+    }
 
+    @FXML
+    void runStudy(ActionEvent event) {
+        Study study = prepareStudy();
+        new Thread(() -> {
+            try {
+                study.runThisStudy(server);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        finishStudy();
     }
 
     @FXML

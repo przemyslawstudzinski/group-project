@@ -9,7 +9,8 @@ public class Receiver {
 
     private String ipAddress;
 
-    public Receiver() {}
+    public Receiver() {
+    }
 
     public Receiver(String name, String ipAddress) {
         this.name = name;

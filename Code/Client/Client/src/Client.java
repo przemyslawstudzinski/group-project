@@ -1,14 +1,9 @@
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
+import org.apache.commons.io.FileUtils;
+
+import java.awt.*;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.rmi.ServerError;
-import java.rmi.ServerException;
 
 public class Client extends Thread {
 
@@ -16,6 +11,49 @@ public class Client extends Thread {
     private BufferedReader input;
     private SystemHook mouseListener;
     private boolean running = true;
+    private Process lockerProcess = null;
+    private boolean closeSystem = false;
+
+
+    private void lockPeripherals(boolean lockKeyboard, boolean lockMouseAndKeyboard) throws InterruptedException, AWTException, IOException {
+        String lockerPath = "Dependencies" + File.separator + "Keyboard And Mouse Locker" + File.separator;
+        ProcessBuilder lockerProcessBuilder = new ProcessBuilder(lockerPath + "KeyFreeze_x64.exe");
+        File configSource = null;
+        if (lockKeyboard)
+            configSource = new File(lockerPath + "BlockKeyboard.ini");
+        else if (lockMouseAndKeyboard)
+            configSource = new File(lockerPath + "BlockMouseAndKeyboard.ini");
+        File configDestination = new File(lockerPath + "KeyFreeze.ini");
+        if (configDestination.exists())
+            configDestination.delete();
+        FileUtils.copyFile(configSource, configDestination);
+        lockerProcess = lockerProcessBuilder.start();
+    }
+
+    private void unlockPeripherals() throws InterruptedException, AWTException {
+        if (lockerProcess != null)
+            lockerProcess.destroy();
+    }
+
+    private void replayAction() throws IOException, AWTException, InterruptedException {
+        Clicker clicker = new Clicker();
+        while (true) {
+            String response = input.readLine();
+            if (response.equals("lockKeyboard"))
+                lockPeripherals(/*lockKeyboard*/ true, /*lockMouseAndKeyboard*/ false);
+            else if (response.equals("closeSystem"))
+                closeSystem = true;
+            else if (response.equals("stopreplay")) {
+                System.out.println(response);
+                unlockPeripherals();
+                return;
+            } else if (response.contains("click")) {
+                String[] data = response.split(" ");
+                clicker.click(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Boolean.parseBoolean(data[3]));
+            }
+        }
+    }
+
 
     private Thread serverListener = new Thread() {
         public void run() {
@@ -32,14 +70,22 @@ public class Client extends Thread {
                             System.out.println(response);
                             mouseListener.interrupt();
                         }
-                        if (response.contains("replay")) {
+                        if (response.equals("replay")) {
                             System.out.println(response);
+                            replayAction();
+                        }
+                        if (response.equals("blockMouseAndKeyboard")) {
+                            lockPeripherals(/*lockKeyboard*/ false, /*lockMouseAndKeyboard*/ true);
                         }
                     }
                 }
             } catch (SocketException e) {
                 System.out.println("Zamykam socket serverlistenera");
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (AWTException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -81,7 +127,7 @@ public class Client extends Thread {
         } finally {
             if (!socket.isClosed()) {
                 try {
-                    System.out.println("zamykam klienta");
+                    System.out.println("Closing client");
                     socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();

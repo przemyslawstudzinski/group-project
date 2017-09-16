@@ -5,7 +5,6 @@ import lc.kra.system.mouse.event.GlobalMouseEvent;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Map;
 
 public class SystemHook extends Thread {
 
@@ -43,7 +42,8 @@ public class SystemHook extends Thread {
 
         try {
             while (run) Thread.sleep(10);
-        } catch (InterruptedException e) {} finally {
+        } catch (InterruptedException e) {
+        } finally {
             mouseHook.shutdownHook();
         }
     }
