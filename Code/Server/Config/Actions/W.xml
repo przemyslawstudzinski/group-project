@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>S</description>
+    <name>W</name>
+    <nodes>
+        <corX>416</corX>
+        <corY>54</corY>
+        <delay>6726</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1343</corX>
+        <corY>15</corY>
+        <delay>2000</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>505</corX>
+        <corY>44</corY>
+        <delay>1422</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1346</corX>
+        <corY>14</corY>
+        <delay>1672</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>670</corX>
+        <corY>63</corY>
+        <delay>1203</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1337</corX>
+        <corY>14</corY>
+        <delay>2109</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>127.0.0.1</ipAddress>
+        <name>A</name>
+    </receiver>
+</action>
