@@ -96,23 +96,48 @@ public class Study {
         return chosenScenario;
     }
 
-    public void runThisStudy(Server server) throws IOException, InterruptedException {
-        PrintWriter out = new PrintWriter(server.client.getSocket().getOutputStream(), true);
+
+    private boolean ReceiverAvailable(Receiver r) {
+        if (Controller.server.connectedClientsMap.containsKey(r.getIpAddress()))
+            return true;
+        return false;
+    }
+
+    private void sendRunActionsSignals() throws IOException {
         for (Action a : this.getChosenScenario().getChosenActions()) {
-            out.println("replay");
-            //check if we want to block peripherials on client where action will run
-            if (this.blockKeyboard)
-                out.println("lockKeyboard");
-            if (this.closeSystem)
-                out.println("closeSystem");
-            for (Node n : a.getNodes()) {
-                out.println("click" + " " + n.getCorX() + " " + n.getCorY() + " " + n.getIsDouble());
-                Thread.sleep(n.getDelay());
-            }
-            out.println("stopreplay");
-            if (this.blockPeripherals && this.blockedPeripheralsOnReceivers.contains(a.getReceiver()))
-                out.println("lockMouseAndKeyboard");
+            if (ReceiverAvailable(a.getReceiver())) {
+                PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(a.getReceiver().getIpAddress()).getSocket().getOutputStream(), true);
+                out.println("replay");
+                if (this.blockKeyboard)
+                    out.println("lockKeyboard");
+                if (this.closeSystem)
+                    out.println("closeSystem");
+                for (Node n : a.getNodes()) {
+                    out.println("click" + " " + n.getCorX() + " " + n.getCorY() + " " + n.getIsDouble() + " " + n.getDelay());
+                }
+                out.println("stopreplay");
+                System.out.println("Details about action " + a.getName() + " have been sent to receiver " + a.getReceiver().getName() + "!");
+            } else
+                System.out.println("Can't run action " + a.getName() + " on receiver: " + a.getReceiver().getName() + "! Receiver is not connected to server!");
         }
+    }
+
+    private void sendLockPeripheralsSignals() throws IOException {
+        if (this.blockPeripherals) {
+            for (Receiver r : this.blockedPeripheralsOnReceivers) {
+                if (ReceiverAvailable(r)) {
+                    PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
+                    out.println("lockMouseAndKeyboard");
+                    System.out.println("LockPeripherals signal has been sent to receiver " + r.getName() + " !");
+                } else
+                    System.out.println("Can't send LockPeripherals signal to receiver " + r.getName() + "! Receiver is not connected to server!");
+            }
+        }
+    }
+
+    public void runThisStudy(Server server) throws IOException, InterruptedException {
+        sendRunActionsSignals();
+        sendLockPeripheralsSignals();
         //save/log study
     }
 }

@@ -3,12 +3,12 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server extends Thread {
     private ServerSocket listener;
-    public ClientHandler client;                    // communicate with specified client
-    public ArrayList<ClientHandler> allHandlers;    // communicate with all clients
+    public Map<String, ClientHandler> connectedClientsMap = new HashMap();
     public boolean running = true;
 
     // in this thread we are waiting for clients to connect
@@ -17,8 +17,8 @@ public class Server extends Thread {
             try {
                 while (true) {
                     ClientHandler handler = new ClientHandler(listener.accept());
-                    allHandlers.add(handler);
-                    client = handler;
+                    String clientIP = handler.getSocket().getRemoteSocketAddress().toString().replaceAll("/","").split(":")[0];
+                    connectedClientsMap.put(clientIP, handler);
                     handler.start();
                 }
             } catch (SocketException e) {
@@ -32,7 +32,7 @@ public class Server extends Thread {
     public Server() {
         try {
             listener = new ServerSocket(9090);
-            allHandlers = new ArrayList<>();
+            //allHandlers = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,15 +43,15 @@ public class Server extends Thread {
             serverListener.start();
             // run server as long as gui window won't be closed
             while (running) {
-                Thread.sleep(0);
+                Thread.sleep(1);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             if (!listener.isClosed())
-                for (ClientHandler handler : allHandlers) {
-                    handler.running = false;
-                }
+                //for (ClientHandler handler : allHandlers) {
+                //    handler.running = false;
+               // }
             System.out.println("Closing server");
             try {
                 listener.close();

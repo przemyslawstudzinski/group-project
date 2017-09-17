@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>a</description>
+    <name>Odpal katalog</name>
+    <nodes>
+        <corX>66</corX>
+        <corY>43</corY>
+        <delay>6891</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1341</corX>
+        <corY>12</corY>
+        <delay>2422</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.168.0.9</ipAddress>
+        <name>Nie_Localhost</name>
+    </receiver>
+</action>

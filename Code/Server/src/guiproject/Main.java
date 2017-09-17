@@ -16,7 +16,7 @@ public class Main extends Application {
         Parent root = loader.load();
         Controller controller = loader.getController();
         primaryStage.setTitle("Serwer");
-        primaryStage.setScene(new Scene(root, 800, 500));
+        primaryStage.setScene(new Scene(root, 900, 550));
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> {
             try {

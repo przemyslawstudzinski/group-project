@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>Akcja2_Local</description>
+    <name>Akcja2_Local</name>
+    <nodes>
+        <corX>67</corX>
+        <corY>667</corY>
+        <delay>1312</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1896</corX>
+        <corY>12</corY>
+        <delay>3441</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>765</corX>
+        <corY>485</corY>
+        <delay>1812</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.168.0.2</ipAddress>
+        <name>Localhost</name>
+    </receiver>
+</action>

@@ -4,6 +4,10 @@ import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class Client extends Thread {
 
@@ -13,7 +17,9 @@ public class Client extends Thread {
     private boolean running = true;
     private Process lockerProcess = null;
     private boolean closeSystem = false;
-
+    private String serverIP = "";
+    private static final String configDirectory = "Config" + File.separator;
+    private static final String serverIPFilename = configDirectory + File.separator + "server_ip.ini";
 
     private void lockPeripherals(boolean lockKeyboard, boolean lockMouseAndKeyboard) throws InterruptedException, AWTException, IOException {
         String lockerPath = "Dependencies" + File.separator + "Keyboard And Mouse Locker" + File.separator;
@@ -50,6 +56,7 @@ public class Client extends Thread {
             } else if (response.contains("click")) {
                 String[] data = response.split(" ");
                 clicker.click(Integer.parseInt(data[1]), Integer.parseInt(data[2]), Boolean.parseBoolean(data[3]));
+                Thread.sleep(Long.parseLong(data[4]));
             }
         }
     }
@@ -74,7 +81,8 @@ public class Client extends Thread {
                             System.out.println(response);
                             replayAction();
                         }
-                        if (response.equals("blockMouseAndKeyboard")) {
+                        if (response.equals("lockMouseAndKeyboard")) {
+                            System.out.println(response);
                             lockPeripherals(/*lockKeyboard*/ false, /*lockMouseAndKeyboard*/ true);
                         }
                     }
@@ -106,9 +114,19 @@ public class Client extends Thread {
         }
     };
 
+    private void loadConfigFiles() {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(serverIPFilename), Charset.forName("UTF-8"));
+            serverIP = lines.get(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     Client() {
         try {
-            socket = new Socket("127.0.0.1", 9090);
+            loadConfigFiles();
+            socket = new Socket(serverIP, 9090);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();

@@ -13,7 +13,6 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private BufferedReader input;
     private ArrayList<Node> recordedClicks;
-    public boolean running = true;
 
     private Thread clientListener = new Thread() {
         public void run() {
@@ -64,15 +63,15 @@ public class ClientHandler extends Thread {
     public void run() {
         try {
             clientListener.start();
-            while (running) {
-                Thread.sleep(0);
+            while (true) {
+                Thread.sleep(1);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             if (!socket.isClosed()) {
                 try {
-                    System.out.println("Closing client socker");
+                    System.out.println("Closing client socket");
                     socket.close();
                 } catch (IOException e) {
                     e.printStackTrace();

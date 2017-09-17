@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>B</description>
+    <name>B</name>
+    <nodes>
+        <corX>1391</corX>
+        <corY>145</corY>
+        <delay>1896</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>2283</corX>
+        <corY>329</corY>
+        <delay>2633</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>3152</corX>
+        <corY>208</corY>
+        <delay>2190</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>2673</corX>
+        <corY>562</corY>
+        <delay>6496</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.168.0.2</ipAddress>
+        <name>Localhost</name>
+    </receiver>
+</action>

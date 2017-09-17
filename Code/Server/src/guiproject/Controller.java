@@ -33,8 +33,6 @@ import java.util.stream.Stream;
 
 public class Controller implements Initializable {
 
-    private static Server server;
-
     @FXML
     private ListView<String> allScenariosListView;
 
@@ -103,9 +101,13 @@ public class Controller implements Initializable {
     private static final String scenariosPath = configDirectory + File.separator + "Scenarios" + File.separator;
     private static final String studiesPath = configDirectory + File.separator + "Studies" + File.separator;
 
-
     private final Map<String, Action> availableActions = new HashMap();
     private final Map<String, Scenario> availableScenarios = new HashMap();
+
+
+    public static Server server;
+
+    public String actionClient = "";
 
     public void shutdown() throws InterruptedException, IOException {
         server.running = false;
@@ -136,6 +138,12 @@ public class Controller implements Initializable {
         chosenActionsListView.setItems(chosenActions);
         receiversToBlockMultiComboBox.getItems().addAll(allReceivers);
         receiversToBlockMultiComboBox.setDisable(true);
+        actionClient = receiversComboBox.getSelectionModel().getSelectedItem().getIpAddress();
+
+
+        receiversComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) ->
+                actionClient = newValue.getIpAddress()
+        );
 
         //enable/disable possibility to block keyboard/mouse input on several receivers
         blockPeripheralsSwitch.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -334,7 +342,7 @@ public class Controller implements Initializable {
         action.setName(actionNameTextField.getText());
         action.setDescription(actionDescriptionTextArea.getText());
         action.setReceiver(receiversComboBox.getSelectionModel().getSelectedItem());
-        action.setNodes(server.client.getRecordedClicks());
+        action.setNodes(server.connectedClientsMap.get(actionClient).getRecordedClicks());
 
         String filename = actionNameTextField.getText();
         try {
@@ -347,24 +355,40 @@ public class Controller implements Initializable {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-
         loadActionFiles(actionsPath, availableActions);
         allActions.add(action.getName());
         actionNameTextField.clear();
         actionDescriptionTextArea.clear();
+        server.connectedClientsMap.get(actionClient).getRecordedClicks().clear();
         receiversComboBox.getSelectionModel().selectFirst();
-        server.client.getRecordedClicks().clear();
+    }
+
+    boolean actionClientAvailable() {
+        if (server.connectedClientsMap.containsKey(actionClient))
+            return true;
+        return false;
     }
 
     @FXML
     void stopRecording(ActionEvent event) throws IOException {
-        PrintWriter out = new PrintWriter(server.client.getSocket().getOutputStream(), true);
-        out.println("stoprecord");
-        saveAction();
+        if (actionClientAvailable()) {
+            PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
+            out.println("stoprecord");
+            saveAction();
+        } else
+            System.out.println("Choosen receiver is not currently connected to server!");
     }
 
-    Study prepareStudy() {
-        Study study = new Study();
+    @FXML
+    void startRecording(ActionEvent event) throws IOException {
+        if (actionClientAvailable()) {
+            PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
+            out.println("record");
+        } else
+            System.out.println("Choosen receiver is not currently connected to server!");
+    }
+
+    void prepareStudy(Study study) {
         study.setName(nameTextField.getText());
         study.setLastName(lastNameTextField.getText());
         study.setAge(ageTextField.getText());
@@ -374,7 +398,6 @@ public class Controller implements Initializable {
         study.setChosenScenario(availableScenarios.get(scenarioToRun));
         study.setBlockPeripherals(blockPeripheralsSwitch.isSelected());
         study.setBlockedPeripheralsOnReceivers(receiversToBlockMultiComboBox.getCheckModel().getCheckedItems());
-        return study;
     }
 
     void finishStudy() {
@@ -390,23 +413,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void runStudy(ActionEvent event) {
-        Study study = prepareStudy();
-        new Thread(() -> {
-            try {
-                study.runThisStudy(server);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-
+    void runStudy(ActionEvent event) throws IOException, InterruptedException {
+        final Study study = new Study();
+        prepareStudy(study);
+        StudyThread studyThread = new StudyThread(study, server);
+        studyThread.run();
         finishStudy();
-    }
-
-    @FXML
-    void startRecording(ActionEvent event) throws IOException {
-        PrintWriter out = new PrintWriter(server.client.getSocket().getOutputStream(), true);
-        out.println("record");
     }
 
 }
