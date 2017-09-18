@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>dawdadad</description>
+    <name>Wdadada</name>
+    <nodes>
+        <corX>75</corX>
+        <corY>59</corY>
+        <delay>2077</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1613</corX>
+        <corY>238</corY>
+        <delay>1834</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>684</corX>
+        <corY>582</corY>
+        <delay>1585</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.168.0.2</ipAddress>
+        <name>Localhost</name>
+    </receiver>
+</action>

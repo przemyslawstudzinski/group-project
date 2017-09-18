@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>456</description>
+    <name>456</name>
+    <nodes>
+        <corX>60</corX>
+        <corY>42</corY>
+        <delay>2369</delay>
+        <isDouble>true</isDouble>
+    </nodes>
+    <nodes>
+        <corX>1573</corX>
+        <corY>268</corY>
+        <delay>3517</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <nodes>
+        <corX>2330</corX>
+        <corY>577</corY>
+        <delay>1545</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.168.0.2</ipAddress>
+        <name>Localhost</name>
+    </receiver>
+</action>
