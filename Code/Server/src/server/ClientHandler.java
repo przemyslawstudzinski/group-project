@@ -1,6 +1,6 @@
 package server;
 
-import guiproject.Node;
+import gui.Node;
 
 import java.io.BufferedReader;
 import java.io.IOException;
