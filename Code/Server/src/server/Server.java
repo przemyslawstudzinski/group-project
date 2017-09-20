@@ -49,9 +49,9 @@ public class Server extends Thread {
             e.printStackTrace();
         } finally {
             if (!listener.isClosed())
-                //for (ClientHandler handler : allHandlers) {
-                //    handler.running = false;
-               // }
+                for (ClientHandler handler : connectedClientsMap.values()) {
+                    handler.running = false;
+                }
             System.out.println("Closing server");
             try {
                 listener.close();

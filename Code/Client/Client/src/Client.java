@@ -85,6 +85,9 @@ public class Client extends Thread {
                             System.out.println(response);
                             lockPeripherals(/*lockKeyboard*/ false, /*lockMouseAndKeyboard*/ true);
                         }
+                        if (response.equals("close")) {
+                            running = false;
+                        }
                     }
                 }
             } catch (SocketException e) {
@@ -135,7 +138,6 @@ public class Client extends Thread {
 
     public void run() {
         try {
-            checkIfAlive.start();
             serverListener.start();
             while (running) {
                 Thread.sleep(0);
@@ -147,6 +149,7 @@ public class Client extends Thread {
                 try {
                     System.out.println("Closing client");
                     socket.close();
+                    System.exit(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

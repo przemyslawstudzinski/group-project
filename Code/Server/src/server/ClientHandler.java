@@ -5,6 +5,7 @@ import guiproject.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private BufferedReader input;
     private ArrayList<Node> recordedClicks;
+    public boolean running = true;
 
     private Thread clientListener = new Thread() {
         public void run() {
@@ -63,7 +65,7 @@ public class ClientHandler extends Thread {
     public void run() {
         try {
             clientListener.start();
-            while (true) {
+            while (running) {
                 Thread.sleep(1);
             }
         } catch (InterruptedException e) {
@@ -71,6 +73,8 @@ public class ClientHandler extends Thread {
         } finally {
             if (!socket.isClosed()) {
                 try {
+                    PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                    out.println("close");
                     System.out.println("Closing client socket");
                     socket.close();
                 } catch (IOException e) {
