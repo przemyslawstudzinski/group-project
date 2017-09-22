@@ -19,6 +19,7 @@ public class OutputConsole {
         Text t = new Text("> " + s + "\n");
         t.setFont(Font.font(fontFamily, size));
         console.getChildren().add(t);
+        console.requestFocus();
     }
 
     void writeErrorLine(String s) {

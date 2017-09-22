@@ -1,0 +1,85 @@
+.tooltip {
+    -fx-background-color: #1F7F89;
+    -fx-font-size: 12;
+}
+
+.button:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+
+.label {
+    -fx-font-size: 14;
+}
+
+.txtFlow {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+    -fx-focus-color: transparent;
+}
+
+#startRecordingButton {
+    -fx-background-image: url('Images/record.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 100 100;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#stopRecordingButton {
+    -fx-background-image: url('Images/stop.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 100 100;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#runScenarioButton {
+    -fx-background-image: url('Images/play.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 100 100;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#infoButton {
+    -fx-background-image: url('Images/info.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 100 100;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#moveRightButton {
+    -fx-background-image: url('Images/arrow_right.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 40 40;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#moveLeftButton {
+    -fx-background-image: url('Images/arrow_left.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 40 40;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#moveUpButton {
+    -fx-background-image: url('Images/arrow_up.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 40 40;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#moveDownButton {
+    -fx-background-image: url('Images/arrow_down.png');
+    -fx-background-color: transparent;
+     -fx-background-size: 40 40;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}

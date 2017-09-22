@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.TextFlow;
+import javafx.util.Callback;
+import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
 import server.Server;
@@ -18,6 +20,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -29,6 +33,30 @@ import java.util.stream.Stream;
 
 
 public class Controller implements Initializable {
+
+    @FXML
+    private Button startRecordingButton;
+
+    @FXML
+    private Button stopRecordingButton;
+
+    @FXML
+    private Button runScenarioButton;
+
+    @FXML
+    private Button infoButton;
+
+    @FXML
+    private Button moveRightButton;
+
+    @FXML
+    private Button moveLeftButton;
+
+    @FXML
+    private Button moveUpButton;
+
+    @FXML
+    private Button moveDownButton;
 
     @FXML
     private ListView<String> allScenariosListView;
@@ -117,6 +145,82 @@ public class Controller implements Initializable {
         server.running = false;
     }
 
+    private static void updateTooltipBehavior(double openDelay, double visibleDuration, double closeDelay, boolean hideOnExit) {
+        try {
+            Field fieldBehavior = Tooltip.class.getDeclaredField("BEHAVIOR");
+            fieldBehavior.setAccessible(true);
+            Object objBehavior = fieldBehavior.get(null);
+            Constructor<?> constructor = objBehavior.getClass().getDeclaredConstructor(
+                    Duration.class, Duration.class, Duration.class, boolean.class
+            );
+            constructor.setAccessible(true);
+            Object tooltipBehavior = constructor.newInstance(
+                    new Duration(openDelay), new Duration(visibleDuration),
+                    new Duration(closeDelay), hideOnExit
+            );
+            fieldBehavior.set(null, tooltipBehavior);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+
+    private void assignTooltips() {
+        updateTooltipBehavior(50, 10000, 50, true);
+
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Rozpocznij nagrywanie akcji");
+        startRecordingButton.setTooltip(tooltip);
+        tooltip = new Tooltip();
+        tooltip.setText("Zakończ nagrywanie akcji");
+        stopRecordingButton.setTooltip(tooltip);
+        tooltip = new Tooltip();
+        tooltip.setText("Uruchom badanie");
+        runScenarioButton.setTooltip(tooltip);
+        tooltip = new Tooltip();
+        tooltip.setText("StudiController v. 1.0");
+        infoButton.setTooltip(tooltip);
+
+        tooltip = new Tooltip();
+        tooltip.setText("Dodaj akcję do scenariusza");
+        moveRightButton.setTooltip(tooltip);
+        tooltip = new Tooltip();
+        tooltip.setText("Usuń akcję ze scenariusza");
+        moveLeftButton.setTooltip(tooltip);
+        tooltip = new Tooltip();
+        tooltip.setText("Przesuń akcję w górę");
+        moveUpButton.setTooltip(tooltip);
+        tooltip = new Tooltip();
+        tooltip.setText("Przesuń akcję w dół");
+        moveDownButton.setTooltip(tooltip);
+
+
+        allScenariosListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            public ListCell<String> call(ListView<String> param) {
+                Tooltip tooltip = new Tooltip();
+                final ListCell<String> cell = new ListCell<String>() {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item);
+                            String tooltipText = "";
+                            int index = 1;
+                            for (Action a : availableScenarios.get(item).getChosenActions()) {
+                                tooltipText += Integer.toString(index) + ". Akcja: " + a.getName() + ", odbiorca: " + a.getReceiver().getName() + "\n";
+                                index++;
+                            }
+                            tooltip.setText(tooltipText);
+                            setTooltip(tooltip);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         server = new Server();
@@ -177,11 +281,12 @@ public class Controller implements Initializable {
         validateTextField(actionNameTextField, "filename");
 
         //logScrollPanel.vvalueProperty().bind(textFlow.heightProperty());
+        assignTooltips();
     }
 
+
     @FXML
-    void clearConsole()
-    {
+    void clearConsole() {
         textFlow.getChildren().clear();
     }
 
@@ -295,7 +400,9 @@ public class Controller implements Initializable {
     void moveActionToRight(ActionEvent event) {
         if (allActionsListView.getSelectionModel().getSelectedItem() != null) {
             chosenActions.add(allActionsListView.getSelectionModel().getSelectedItem());
+            outputConsole.writeLine("Dodano akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " do scenariusza!" );
             allActions.remove(allActionsListView.getSelectionModel().getSelectedItem());
+
         }
     }
 
@@ -303,7 +410,9 @@ public class Controller implements Initializable {
     void moveActionToLeft(ActionEvent event) {
         if (chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
             allActions.add(chosenActionsListView.getSelectionModel().getSelectedItem());
+            outputConsole.writeLine("Usunięto akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " ze scenariusza!" );
             chosenActions.remove(chosenActionsListView.getSelectionModel().getSelectedItem());
+
         }
     }
 
@@ -387,23 +496,24 @@ public class Controller implements Initializable {
     }
 
     @FXML
+    void startRecording(ActionEvent event) throws IOException {
+        if (actionClientAvailable()) {
+            PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
+            out.println("record");
+        } else
+            outputConsole.writeErrorLine("[Nagrywanie] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
+    }
+
+    @FXML
     void stopRecording(ActionEvent event) throws IOException {
         if (actionClientAvailable()) {
             PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
             out.println("stoprecord");
             saveAction();
         } else
-            outputConsole.writeErrorLine("Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
+            outputConsole.writeErrorLine("[Koniec nagrywania] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
     }
 
-    @FXML
-    void startRecording(ActionEvent event) throws IOException {
-        if (actionClientAvailable()) {
-            PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
-            out.println("record");
-        } else
-            outputConsole.writeErrorLine("Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
-    }
 
     void prepareStudy(Study study) {
         study.setName(nameTextField.getText());

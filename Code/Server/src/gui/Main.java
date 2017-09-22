@@ -22,8 +22,11 @@ public class Main extends Application {
         controller = loader.getController();
         appIcon = new Image(getClass().getResourceAsStream("Images" + File.separator + "icon.png"));
         primaryStage.setTitle("Serwer");
+        primaryStage.setResizable(false);
         primaryStage.getIcons().add(appIcon);
-        primaryStage.setScene(new Scene(root, 800, 700));
+        Scene scene = new Scene(root, 800, 700);
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("gui/style.css").toExternalForm());
+        primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> {
             try {
