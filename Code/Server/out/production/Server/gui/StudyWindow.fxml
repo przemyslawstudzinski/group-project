@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="340.0" prefWidth="600.0">
+         <children>
+            <Button layoutX="236.0" layoutY="234.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="145.0" text="Zatrzymaj" />
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

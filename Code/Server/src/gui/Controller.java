@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
@@ -543,9 +544,15 @@ public class Controller implements Initializable {
     void runStudy(ActionEvent event) throws IOException, InterruptedException {
         final Study study = new Study();
         prepareStudy(study);
-        StudyThread studyThread = new StudyThread(study, server);
+        Stage primaryStage = (Stage) runScenarioButton.getScene().getWindow();
+
+        StudyThread studyThread = new StudyThread(study, server, primaryStage);
+        closeCurrentWindow(event);
         studyThread.run();
         finishStudy();
     }
 
+    private void closeCurrentWindow(ActionEvent event) {
+        ((javafx.scene.Node)(event.getSource())).getScene().getWindow().hide();
+    }
 }

@@ -17,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("gui.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         Parent root = loader.load();
         controller = loader.getController();
         appIcon = new Image(getClass().getResourceAsStream("Images" + File.separator + "icon.png"));
