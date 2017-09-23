@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<action>
+    <description>AAA</description>
+    <name>dawda</name>
+    <nodes>
+        <corX>819</corX>
+        <corY>451</corY>
+        <delay>5792</delay>
+        <isDouble>false</isDouble>
+    </nodes>
+    <receiver>
+        <ipAddress>192.168.0.2</ipAddress>
+        <name>Localhost</name>
+    </receiver>
+</action>

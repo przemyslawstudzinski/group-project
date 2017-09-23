@@ -443,10 +443,10 @@ public class Controller implements Initializable {
         // move up only if there are min. 2 actions
         if (chosenActionsListView.getSelectionModel().getSelectedItem() != null && chosenActions.size() > 1) {
             int index = chosenActions.indexOf(chosenActionsListView.getSelectionModel().getSelectedItem());
+            outputConsole.writeLine("Zmieniono kolejność akcji " + chosenActionsListView.getSelectionModel().getSelectedItem() + ": przesunięto w górę");
             if (index > 0) {
                 Collections.swap(chosenActions, index, index - 1);
                 chosenActionsListView.getSelectionModel().select(index - 1);
-                outputConsole.writeLine("Zmieniono kolejność akcji: przesunięto w górę");
             }
         }
     }
@@ -456,10 +456,10 @@ public class Controller implements Initializable {
         // move up only if there are min. 2 actions
         if (chosenActionsListView.getSelectionModel().getSelectedItem() != null && chosenActions.size() > 1) {
             int index = chosenActions.indexOf(chosenActionsListView.getSelectionModel().getSelectedItem());
+            outputConsole.writeLine("Zmieniono kolejność akcji " + chosenActionsListView.getSelectionModel().getSelectedItem() + ": przesunięto w dół");
             if (index < chosenActions.size() - 1) {
                 Collections.swap(chosenActions, index, index + 1);
                 chosenActionsListView.getSelectionModel().select(index + 1);
-                outputConsole.writeLine("Zmieniono kolejność akcji: przesunięto w dół");
             }
         }
     }
