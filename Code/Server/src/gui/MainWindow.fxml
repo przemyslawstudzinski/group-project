@@ -130,6 +130,38 @@
                                           prefHeight="60.0" prefWidth="300.0"/>
                                 <Label layoutX="23.0" layoutY="123.0" prefHeight="25.0" prefWidth="140.0"
                                        text="Dostępne akcje"/>
+                                <fx:define>
+                                    <RequiredField fx:id="requiredScenarioNameTextField">
+                                        <srcControl>
+                                            <fx:reference source="scenarioNameTextField"></fx:reference>
+                                        </srcControl>
+                                    </RequiredField>
+                                    <RequiredField fx:id="requiredScenarioDescriptionTextArea">
+                                        <srcControl>
+                                            <fx:reference source="scenarioDescriptionTextArea"></fx:reference>
+                                        </srcControl>
+                                    </RequiredField>
+                                    <RequiredField fx:id="requiredChosenActionsListView">
+                                        <srcControl>
+                                            <fx:reference source="chosenActionsListView"></fx:reference>
+                                        </srcControl>
+                                    </RequiredField>
+                                </fx:define>
+                                <ErrorLabel message="Proszę uzupełnij nazwę scenariusza!" layoutX="21.0" layoutY="80.0">
+                                    <validator>
+                                        <fx:reference source="requiredScenarioNameTextField"></fx:reference>
+                                    </validator>
+                                </ErrorLabel>
+                                <ErrorLabel message="Proszę uzupełnij opis scenariusza!" layoutX="436.0" layoutY="110.0">
+                                    <validator>
+                                        <fx:reference source="requiredScenarioDescriptionTextArea"></fx:reference>
+                                    </validator>
+                                </ErrorLabel>
+                                <ErrorLabel message="Proszę wybierz akcję!" layoutX="311.0" layoutY="380.0">
+                                    <validator>
+                                        <fx:reference source="requiredChosenActionsListView"></fx:reference>
+                                    </validator>
+                                </ErrorLabel>
                             </children>
                         </AnchorPane>
                     </content>
@@ -156,6 +188,28 @@
                                 <Button fx:id="stopRecordingButton" layoutX="219.0" layoutY="252.0"
                                         mnemonicParsing="false" onAction="#stopRecording" prefHeight="102.0"
                                         prefWidth="106.0"/>
+                                <fx:define>
+                                    <RequiredField fx:id="requiredActionNameTextField">
+                                        <srcControl>
+                                            <fx:reference source="actionNameTextField"></fx:reference>
+                                        </srcControl>
+                                    </RequiredField>
+                                    <RequiredField fx:id="requiredActionDescriptionTextArea">
+                                        <srcControl>
+                                            <fx:reference source="actionDescriptionTextArea"></fx:reference>
+                                        </srcControl>
+                                    </RequiredField>
+                                </fx:define>
+                                <ErrorLabel message="Proszę uzupełnij nazwę akcji!" layoutX="25.0" layoutY="85.0">
+                                    <validator>
+                                        <fx:reference source="requiredActionNameTextField"></fx:reference>
+                                    </validator>
+                                </ErrorLabel>
+                                <ErrorLabel message="Proszę uzupełnij opis akcji!" layoutX="427.0" layoutY="135.0">
+                                    <validator>
+                                        <fx:reference source="requiredActionDescriptionTextArea"></fx:reference>
+                                    </validator>
+                                </ErrorLabel>
                             </children>
                         </AnchorPane>
                     </content>

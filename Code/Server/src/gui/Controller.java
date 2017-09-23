@@ -148,6 +148,13 @@ public class Controller implements Initializable {
     public RequiredField requiredAgeTextField;
     public RequiredField requiredTeachersComboBox;
 
+    public RequiredField requiredScenarioNameTextField;
+    public RequiredField requiredScenarioDescriptionTextArea;
+    public RequiredField requiredChosenActionsListView;
+
+
+    public RequiredField requiredActionNameTextField;
+    public RequiredField requiredActionDescriptionTextArea;
 
     public void shutdown() throws InterruptedException, IOException {
         server.running = false;
@@ -409,7 +416,7 @@ public class Controller implements Initializable {
     void moveActionToRight(ActionEvent event) {
         if (allActionsListView.getSelectionModel().getSelectedItem() != null) {
             chosenActions.add(allActionsListView.getSelectionModel().getSelectedItem());
-            outputConsole.writeLine("Dodano akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " do scenariusza!" );
+            outputConsole.writeLine("Dodano akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " do scenariusza!");
             allActions.remove(allActionsListView.getSelectionModel().getSelectedItem());
 
         }
@@ -419,7 +426,7 @@ public class Controller implements Initializable {
     void moveActionToLeft(ActionEvent event) {
         if (chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
             allActions.add(chosenActionsListView.getSelectionModel().getSelectedItem());
-            outputConsole.writeLine("Usunięto akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " ze scenariusza!" );
+            outputConsole.writeLine("Usunięto akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " ze scenariusza!");
             chosenActions.remove(chosenActionsListView.getSelectionModel().getSelectedItem());
 
         }
@@ -451,25 +458,53 @@ public class Controller implements Initializable {
         }
     }
 
+    boolean validateEmptyFieldsOnScenarioTab() {
+        requiredScenarioNameTextField.eval();
+        requiredScenarioDescriptionTextArea.eval();
+        if (chosenActionsListView.getItems().size() == 0) {
+            requiredChosenActionsListView.setHasErrors(true);
+        } else {
+            requiredChosenActionsListView.setHasErrors(false);
+        }
+
+        if (requiredScenarioNameTextField.getHasErrors()
+                || requiredScenarioDescriptionTextArea.getHasErrors()
+                || requiredChosenActionsListView.getHasErrors()) {
+            return false;
+        }
+        return true;
+    }
 
     @FXML
     void saveScenario(ActionEvent event) throws IOException {
-        Scenario scenario = new Scenario();
-        scenario.setName(scenarioNameTextField.getText());
-        scenario.setDescription(scenarioDescriptionTextArea.getText());
-        List<Action> actionsForScenario = new ArrayList<Action>();
-        for (String chosenAction : chosenActions)
-            actionsForScenario.add(availableActions.get(chosenAction));
-        scenario.setChosenActions(actionsForScenario);
-        scenario.saveToFile(scenariosPath);
-        loadScenarioFiles(scenariosPath, availableScenarios);
-        allScenarios.add(scenario.getName());
-        scenarioNameTextField.clear();
-        scenarioDescriptionTextArea.clear();
-        allActions.addAll(chosenActions);
-        chosenActions.removeAll();
-        chosenActionsListView.getItems().clear();
-        allActionsListView.getSelectionModel().selectFirst();
+        if (validateEmptyFieldsOnScenarioTab()) {
+            Scenario scenario = new Scenario();
+            scenario.setName(scenarioNameTextField.getText());
+            scenario.setDescription(scenarioDescriptionTextArea.getText());
+            List<Action> actionsForScenario = new ArrayList<Action>();
+            for (String chosenAction : chosenActions)
+                actionsForScenario.add(availableActions.get(chosenAction));
+            scenario.setChosenActions(actionsForScenario);
+            scenario.saveToFile(scenariosPath);
+            loadScenarioFiles(scenariosPath, availableScenarios);
+            allScenarios.add(scenario.getName());
+            scenarioNameTextField.clear();
+            scenarioDescriptionTextArea.clear();
+            allActions.addAll(chosenActions);
+            chosenActions.removeAll();
+            chosenActionsListView.getItems().clear();
+            allActionsListView.getSelectionModel().selectFirst();
+        }
+    }
+
+    boolean validateEmptyFieldsOnActionTab() {
+        requiredActionNameTextField.eval();
+        requiredActionDescriptionTextArea.eval();
+        if (requiredActionNameTextField.getHasErrors()
+                || requiredActionDescriptionTextArea.getHasErrors()) {
+            return false;
+        }
+        return true;
     }
 
     void saveAction() throws IOException {
@@ -507,8 +542,10 @@ public class Controller implements Initializable {
     @FXML
     void startRecording(ActionEvent event) throws IOException {
         if (actionClientAvailable()) {
-            PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
-            out.println("record");
+            if (validateEmptyFieldsOnActionTab()) {
+                PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
+                out.println("record");
+            }
         } else
             outputConsole.writeErrorLine("[Nagrywanie] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
     }
@@ -552,11 +589,9 @@ public class Controller implements Initializable {
         requiredNameTextField.eval();
         requiredLastNameTextField.eval();
         requiredAgeTextField.eval();
-        requiredTeachersComboBox.eval();
         if (requiredNameTextField.getHasErrors()
                 || requiredLastNameTextField.getHasErrors()
-                || requiredAgeTextField.getHasErrors()
-                || requiredTeachersComboBox.getHasErrors()) {
+                || requiredAgeTextField.getHasErrors()) {
             return false;
         }
         return true;
@@ -577,6 +612,6 @@ public class Controller implements Initializable {
     }
 
     private void closeCurrentWindow(ActionEvent event) {
-        ((javafx.scene.Node)(event.getSource())).getScene().getWindow().hide();
+        ((javafx.scene.Node) (event.getSource())).getScene().getWindow().hide();
     }
 }
