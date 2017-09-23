@@ -1,5 +1,6 @@
 package gui;
 
+import com.pixelduke.javafx.validation.RequiredField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -142,9 +143,16 @@ public class Controller implements Initializable {
 
     public String actionClient = "";
 
+    public RequiredField requiredNameTextField;
+    public RequiredField requiredLastNameTextField;
+    public RequiredField requiredAgeTextField;
+    public RequiredField requiredTeachersComboBox;
+
+
     public void shutdown() throws InterruptedException, IOException {
         server.running = false;
     }
+
 
     private static void updateTooltipBehavior(double openDelay, double visibleDuration, double closeDelay, boolean hideOnExit) {
         try {
@@ -540,16 +548,32 @@ public class Controller implements Initializable {
         allScenariosListView.getSelectionModel().selectFirst();
     }
 
+    boolean validateEmptyFieldsOnStudyTab() {
+        requiredNameTextField.eval();
+        requiredLastNameTextField.eval();
+        requiredAgeTextField.eval();
+        requiredTeachersComboBox.eval();
+        if (requiredNameTextField.getHasErrors()
+                || requiredLastNameTextField.getHasErrors()
+                || requiredAgeTextField.getHasErrors()
+                || requiredTeachersComboBox.getHasErrors()) {
+            return false;
+        }
+        return true;
+    }
+
     @FXML
     void runStudy(ActionEvent event) throws IOException, InterruptedException {
-        final Study study = new Study();
-        prepareStudy(study);
-        Stage primaryStage = (Stage) runScenarioButton.getScene().getWindow();
+        if (validateEmptyFieldsOnStudyTab()) {
+            final Study study = new Study();
+            prepareStudy(study);
+            Stage primaryStage = (Stage) runScenarioButton.getScene().getWindow();
 
-        StudyThread studyThread = new StudyThread(study, server, primaryStage);
-        closeCurrentWindow(event);
-        studyThread.run();
-        finishStudy();
+            StudyThread studyThread = new StudyThread(study, server, primaryStage);
+            closeCurrentWindow(event);
+            studyThread.run();
+            finishStudy();
+        }
     }
 
     private void closeCurrentWindow(ActionEvent event) {

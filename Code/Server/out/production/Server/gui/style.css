@@ -20,6 +20,11 @@
     -fx-focus-color: transparent;
 }
 
+.error-label
+{
+    -fx-text-fill: red;
+}
+
 #startRecordingButton {
     -fx-background-image: url('Images/record.png');
     -fx-background-color: transparent;
