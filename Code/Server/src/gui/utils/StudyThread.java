@@ -33,7 +33,7 @@ public class StudyThread implements Runnable {
 
     public void createStudyWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/StudyWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/StudyWindow.fxml"));
             Parent root = loader.load();
             Stage newStage = new Stage();
             newStage.setTitle("Study");

@@ -148,6 +148,7 @@ public class Controller implements Initializable {
     public static Server server;
 
     public String actionClient = "";
+    private boolean isRecording;
 
     public RequiredField requiredNameTextField;
     public RequiredField requiredLastNameTextField;
@@ -551,6 +552,7 @@ public class Controller implements Initializable {
             if (validateEmptyFieldsOnActionTab()) {
                 PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
                 out.println("record");
+                isRecording = true;
             }
         } else
             outputConsole.writeErrorLine("[Nagrywanie] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
@@ -558,12 +560,15 @@ public class Controller implements Initializable {
 
     @FXML
     void stopRecording(ActionEvent event) throws IOException {
-        if (actionClientAvailable()) {
-            PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
-            out.println("stoprecord");
-            saveAction();
-        } else
-            outputConsole.writeErrorLine("[Koniec nagrywania] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
+        if (isRecording) {
+            if (actionClientAvailable()) {
+                PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
+                out.println("stoprecord");
+                saveAction();
+                isRecording = false;
+            } else
+                outputConsole.writeErrorLine("[Koniec nagrywania] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
+        }
     }
 
 
