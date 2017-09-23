@@ -59,7 +59,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
         <entry file="file://$PROJECT_DIR$/src/gui/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="407">
@@ -70,36 +69,20 @@
                 <element signature="e#7800#7801#0" expanded="true" />
                 <element signature="e#18518#18526#0" expanded="true" />
               </folding>
-=======
-        <entry file="file://$PROJECT_DIR$/src/gui/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="439" column="133" lean-forward="false" selection-start-line="439" selection-start-column="133" selection-end-line="439" selection-end-column="133" />
-              <folding />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
       <file leaf-file-name="Scenario.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/model/Scenario.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
               <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-=======
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/gui/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
       <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/model/Node.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -160,31 +143,8 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
               <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-=======
-      <file leaf-file-name="StudyWindow.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/StudyWindow.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainWindow.fxml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/MainWindow.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder">
-            <state />
           </provider>
         </entry>
       </file>
@@ -303,9 +263,9 @@
         <option value="$PROJECT_DIR$/src/gui/StudyThread.java" />
         <option value="$PROJECT_DIR$/Config/receivers.ini" />
         <option value="$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/ErrorLabel.class" />
+        <option value="$PROJECT_DIR$/src/gui/style.css" />
         <option value="$PROJECT_DIR$/src/gui/MainWindow.fxml" />
         <option value="$PROJECT_DIR$/src/gui/Controller.java" />
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
         <option value="$PROJECT_DIR$/src/gui/Action.java" />
         <option value="$PROJECT_DIR$/Config/Scenarios/A.cfg" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
@@ -319,18 +279,15 @@
         <option value="$PROJECT_DIR$/src/gui/utils/Server.java" />
         <option value="$PROJECT_DIR$/src/gui/utils/ClientHandler.java" />
         <option value="$PROJECT_DIR$/src/gui/utils/OutputConsole.java" />
-=======
-        <option value="$PROJECT_DIR$/src/gui/style.css" />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="164" />
+    <option name="y" value="159" />
+    <option name="width" value="1598" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectReloadState">
     <option name="STATE" value="0" />
@@ -350,10 +307,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -430,6 +383,10 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -631,7 +588,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21247357" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21247357" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -710,16 +667,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
-=======
-    <entry file="file://$PROJECT_DIR$/Config/teachers.ini" />
-    <entry file="file://$PROJECT_DIR$/Actions/action1.xml.txt" />
-    <entry file="file://$PROJECT_DIR$/Actions/action1.xml — kopia.txt" />
-    <entry file="file://$PROJECT_DIR$/Actions/action1.xml — kopia (4).txt" />
-    <entry file="file://$PROJECT_DIR$/Actions/action1.xml — kopia (3).txt" />
-    <entry file="file://$PROJECT_DIR$/Actions/qqqqqqqq.xml" />
-    <entry file="file://$PROJECT_DIR$/Actions/test234.xml" />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
     <entry file="file://$PROJECT_DIR$/Actions/rrrrr.xml" />
     <entry file="file://$PROJECT_DIR$/Scenarios/mmm.xml" />
     <entry file="file://$PROJECT_DIR$/Scenarios/cccc.xml" />
@@ -795,6 +742,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="1109" column="0" lean-forward="false" selection-start-line="1109" selection-start-column="0" selection-end-line="1109" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -828,18 +776,8 @@
     </entry>
     <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/style.css">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
         <state relative-caret-position="68">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-=======
-        <state relative-caret-position="170">
-          <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#321#322#0" expanded="true" />
-            <element signature="e#349#350#0" expanded="true" />
-          </folding>
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
         </state>
       </provider>
     </entry>
@@ -853,17 +791,9 @@
     </entry>
     <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/IValidationDisplay.class">
       <provider selected="true" editor-type-id="text-editor">
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
         <state relative-caret-position="68">
           <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
           <folding />
-=======
-        <state relative-caret-position="205">
-          <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
         </state>
       </provider>
     </entry>
@@ -899,7 +829,6 @@
         </state>
       </provider>
     </entry>
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
     <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/ValidatorBase.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -909,9 +838,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Config/Actions/123.xml">
-=======
-    <entry file="file://$PROJECT_DIR$/Config/receivers.ini">
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="27" lean-forward="true" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
@@ -919,7 +845,6 @@
         </state>
       </provider>
     </entry>
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
     <entry file="file://$PROJECT_DIR$/Config/Actions/5.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -929,10 +854,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Config/Scenarios/1111.cfg">
-=======
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/style.css" />
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/javafx-src.zip!/javafx/scene/control/TextInputControl.java">
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -940,7 +861,6 @@
         </state>
       </provider>
     </entry>
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
     <entry file="file://$PROJECT_DIR$/src/gui/view/MainWindow.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -964,23 +884,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/IValidationDisplay.class" />
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/RegexValidator.class" />
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/CardinalityValidator.class" />
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/ErrorLabel.class" />
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/RequiredField.class" />
-    <entry file="jar://$PROJECT_DIR$/Dependencies/FXValidation.jar!/com/pixelduke/javafx/validation/ValidatorBase.class" />
-    <entry file="file://$PROJECT_DIR$/src/gui/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="439" column="133" lean-forward="false" selection-start-line="439" selection-start-column="133" selection-end-line="439" selection-end-column="133" />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< 4a985183133e82bd98482d044f8bdcbb7a89594e
     <entry file="file://$PROJECT_DIR$/Config/Scenarios/rr.cfg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1110,35 +1017,6 @@
             <element signature="e#334#335#0" expanded="true" />
             <element signature="e#362#363#0" expanded="true" />
           </folding>
-=======
-    <entry file="file://$PROJECT_DIR$/src/gui/StudyWindow.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/MainWindow.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
->>>>>>> Change root app background, disable blue glowing frame around javafx controls
         </state>
       </provider>
     </entry>
