@@ -14,6 +14,7 @@ public class ClientHandler extends Thread {
     private Socket socket;
     private BufferedReader input;
     private ArrayList<Node> recordedClicks;
+    private String IP = "";
     public boolean running = true;
 
     private Thread clientListener = new Thread() {
@@ -38,6 +39,7 @@ public class ClientHandler extends Thread {
                 }
             } catch (SocketException e) {
                 System.out.println("Closing clientlistener socket");
+                Server.connectedClientsMap.remove(IP);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,6 +58,10 @@ public class ClientHandler extends Thread {
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public void setIP(String IP) {
+        this.IP = IP;
     }
 
     public ArrayList<Node> getRecordedClicks() {

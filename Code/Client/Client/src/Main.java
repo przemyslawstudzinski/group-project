@@ -22,7 +22,7 @@ public class Main {
             }
         });
         trayPopupMenu.add(close);
-        TrayIcon trayIcon = new TrayIcon(appIcon, "Client", trayPopupMenu);
+        TrayIcon trayIcon = new TrayIcon(appIcon, "StudiController v1.0 - Klient", trayPopupMenu);
         trayIcon.setImageAutoSize(true);
         try {
             systemTray.add(trayIcon);

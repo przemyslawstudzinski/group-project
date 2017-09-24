@@ -1,5 +1,8 @@
 package server.utils;
 
+import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -10,9 +13,15 @@ public class OutputConsole {
     private final int size = 15;
 
     private TextFlow console;
-
-    public OutputConsole(TextFlow tf) {
+    public OutputConsole(ScrollPane scrollPane, TextFlow tf) {
         console = tf;
+        console.getChildren().addListener(
+                (ListChangeListener<Node>) ((change) -> {
+                    console.layout();
+                    scrollPane.layout();
+                    scrollPane.setVvalue(1.0f);
+                }));
+        scrollPane.setContent(console);
     }
 
     public void writeLine(String s) {

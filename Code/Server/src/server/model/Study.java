@@ -1,7 +1,9 @@
 package server.model;
 
 import server.controller.Controller;
+import server.utils.OutputConsole;
 import server.utils.Server;
+import server.utils.StudyThread;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.IOException;
@@ -20,30 +22,16 @@ public class Study {
 
     private String teacher;
 
-    private boolean closeSystem;
-
     private Scenario chosenScenario;
 
-    private boolean blockKeyboard = true;
+    public boolean blockPeripherals;
 
-    private boolean blockPeripherals;
-
-    private List<Receiver> blockedPeripheralsOnReceivers;
+    public List<Receiver> blockedPeripheralsOnReceivers;
 
     public Study() {
         this.blockedPeripheralsOnReceivers = new ArrayList<Receiver>();
     }
 
-
-    public Study(String name, String lastName, String age, String teacher, Scenario chosenScenario) {
-        this.blockedPeripheralsOnReceivers = new ArrayList<Receiver>();
-        this.name = name;
-        this.lastName = lastName;
-        this.age = age;
-        this.teacher = teacher;
-        this.chosenScenario = chosenScenario;
-
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -73,72 +61,51 @@ public class Study {
         this.blockedPeripheralsOnReceivers = blockedPeripheralsOnReceivers;
     }
 
-    public void setCloseSystem(boolean closeSystem) {
-        this.closeSystem = closeSystem;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public String getTeacher() {
-        return teacher;
-    }
-
     public Scenario getChosenScenario() {
         return chosenScenario;
     }
 
-
-    private boolean ReceiverAvailable(Receiver r) {
-        if (Controller.server.connectedClientsMap.containsKey(r.getIpAddress()))
-            return true;
-        return false;
+    private boolean allReceiversAvailable() {
+        for (Action a : this.getChosenScenario().getChosenActions()) {
+            Receiver r = a.getReceiver();
+            if (!Controller.server.connectedClientsMap.containsKey(r.getIpAddress()))
+                return false;
+        }
+        return true;
     }
 
-    private void sendRunActionsSignals() throws IOException {
-        for (Action a : this.getChosenScenario().getChosenActions()) {
-            if (ReceiverAvailable(a.getReceiver())) {
-                PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(a.getReceiver().getIpAddress()).getSocket().getOutputStream(), true);
-                out.println("replay");
-                if (this.blockKeyboard)
+
+    private void sendDataToReceivers(OutputConsole console) throws IOException {
+        if (allReceiversAvailable()) {
+            for (Action a : this.getChosenScenario().getChosenActions()) {
+                {
+                    PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(a.getReceiver().getIpAddress()).getSocket().getOutputStream(), true);
+                    out.println("replay");
                     out.println("lockKeyboard");
-                if (this.closeSystem)
-                    out.println("closeSystem");
-                for (Node n : a.getNodes()) {
-                    out.println("click" + " " + n.getCorX() + " " + n.getCorY() + " " + n.getIsDouble() + " " + n.getDelay());
+                    for (Node n : a.getNodes()) {
+                        out.println("click" + " " + n.getCorX() + " " + n.getCorY() + " " + n.getIsDouble() + " " + n.getDelay());
+                    }
+                    out.println("stopreplay");
                 }
-                out.println("stopreplay");
-                System.out.println("Details about action " + a.getName() + " have been sent to receiver " + a.getReceiver().getName() + "!");
-            } else
-                System.out.println("Can't run action " + a.getName() + " on receiver: " + a.getReceiver().getName() + "! Receiver is not connected to server!");
+            }
+            sendLockPeripheralsSignals();
+            console.writeErrorLine("Uruchomiono badanie!");
+        } else {
+            StudyThread.canRunStudy = false;
+            console.writeErrorLine("Nie można uruchomić badania, gdyż jeden z odbiorców akcji nie jest połączony z serwerem");
         }
     }
 
     private void sendLockPeripheralsSignals() throws IOException {
         if (this.blockPeripherals) {
             for (Receiver r : this.blockedPeripheralsOnReceivers) {
-                if (ReceiverAvailable(r)) {
-                    PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
-                    out.println("lockMouseAndKeyboard");
-                    System.out.println("LockPeripherals signal has been sent to receiver " + r.getName() + " !");
-                } else
-                    System.out.println("Can't send LockPeripherals signal to receiver " + r.getName() + "! Receiver is not connected to server!");
+               PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
+                out.println("lockMouseAndKeyboard");
             }
         }
     }
 
-    public void runThisStudy(Server server) throws IOException, InterruptedException {
-        sendRunActionsSignals();
-        sendLockPeripheralsSignals();
-        //TODO: save/log study
+    public void runThisStudy(OutputConsole console) throws IOException, InterruptedException {
+        sendDataToReceivers(console);
     }
 }

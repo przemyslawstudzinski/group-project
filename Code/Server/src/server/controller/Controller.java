@@ -27,6 +27,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -132,28 +133,30 @@ public class Controller implements Initializable {
     private final ObservableList<Receiver> allReceivers
             = FXCollections.observableArrayList();
 
+    private final ObservableList<Receiver> receiversToBlock
+            = FXCollections.observableArrayList();
+
     private static final String configDirectory = "Config" + File.separator;
     private static final String fileNameOfReceivers = configDirectory + File.separator + "receivers.ini";
     private static final String fileNameOfTeachers = configDirectory + File.separator + "teachers.ini";
 
     private static final String actionsPath = configDirectory + File.separator + "Actions" + File.separator;
     private static final String scenariosPath = configDirectory + File.separator + "Scenarios" + File.separator;
-    private static final String studiesPath = configDirectory + File.separator + "Studies" + File.separator;
 
     private final Map<String, Action> availableActions = new HashMap();
     private final Map<String, Scenario> availableScenarios = new HashMap();
 
     private OutputConsole outputConsole;
 
+    private boolean isRecording;
+
     public static Server server;
 
     public String actionClient = "";
-    private boolean isRecording;
 
     public RequiredField requiredNameTextField;
     public RequiredField requiredLastNameTextField;
     public RequiredField requiredAgeTextField;
-    public RequiredField requiredTeachersComboBox;
 
     public RequiredField requiredScenarioNameTextField;
     public RequiredField requiredScenarioDescriptionTextArea;
@@ -166,7 +169,6 @@ public class Controller implements Initializable {
     public void shutdown() throws InterruptedException, IOException {
         server.running = false;
     }
-
 
     private static void updateTooltipBehavior(double openDelay, double visibleDuration, double closeDelay, boolean hideOnExit) {
         try {
@@ -201,7 +203,7 @@ public class Controller implements Initializable {
         tooltip.setText("Uruchom badanie");
         runScenarioButton.setTooltip(tooltip);
         tooltip = new Tooltip();
-        tooltip.setText("StudiController v. 1.0");
+        tooltip.setText("StudiController v1.0 beta");
         infoButton.setTooltip(tooltip);
 
         tooltip = new Tooltip();
@@ -243,13 +245,20 @@ public class Controller implements Initializable {
         });
     }
 
-
+private void updateReceiversToBlock()
+{
+    receiversToBlockMultiComboBox.getItems().clear();
+    receiversToBlock.clear();
+    for (Action a : availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()).getChosenActions()) {
+        receiversToBlock.add(a.getReceiver());
+    }
+    receiversToBlockMultiComboBox.getItems().addAll(receiversToBlock);
+}
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        server = new Server();
+        outputConsole = new OutputConsole(logScrollPanel, textFlow);
+        server = new Server(outputConsole);
         server.start();
-
-        outputConsole = new OutputConsole(textFlow);
 
         try {
             //load Receivers and Teachers from .ini file and add them to receivers comboBox
@@ -269,7 +278,14 @@ public class Controller implements Initializable {
         }
 
         chosenActionsListView.setItems(chosenActions);
-        receiversToBlockMultiComboBox.getItems().addAll(allReceivers);
+
+        allScenariosListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+               updateReceiversToBlock();
+            }
+        });
+
         receiversToBlockMultiComboBox.setDisable(true);
         actionClient = receiversComboBox.getSelectionModel().getSelectedItem().getIpAddress();
 
@@ -303,7 +319,7 @@ public class Controller implements Initializable {
         //action Name Text Field
         validateTextField(actionNameTextField, "filename");
 
-        //logScrollPanel.vvalueProperty().bind(textFlow.heightProperty());
+        updateReceiversToBlock();
         assignTooltips();
     }
 
@@ -433,7 +449,7 @@ public class Controller implements Initializable {
     void moveActionToLeft(ActionEvent event) {
         if (chosenActionsListView.getSelectionModel().getSelectedItem() != null) {
             allActions.add(chosenActionsListView.getSelectionModel().getSelectedItem());
-            outputConsole.writeLine("Usunięto akcję " + allActionsListView.getSelectionModel().getSelectedItem() + " ze scenariusza!");
+            outputConsole.writeLine("Usunięto akcję " + chosenActionsListView.getSelectionModel().getSelectedItem() + " ze scenariusza!");
             chosenActions.remove(chosenActionsListView.getSelectionModel().getSelectedItem());
 
         }
@@ -526,7 +542,6 @@ public class Controller implements Initializable {
             File file = new File(actionsPath + filename + ".xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(Action.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            // output pretty printed
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(action, file);
         } catch (JAXBException e) {
@@ -576,21 +591,17 @@ public class Controller implements Initializable {
         study.setName(nameTextField.getText());
         study.setLastName(lastNameTextField.getText());
         study.setAge(ageTextField.getText());
-        study.setCloseSystem(closeSystemCheckBox.isSelected());
         study.setTeacher(teachersComboBox.getSelectionModel().getSelectedItem());
-        String scenarioToRun = allScenariosListView.getSelectionModel().getSelectedItem();
-        study.setChosenScenario(availableScenarios.get(scenarioToRun));
+        study.setChosenScenario(availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()));
         study.setBlockPeripherals(blockPeripheralsSwitch.isSelected());
         study.setBlockedPeripheralsOnReceivers(receiversToBlockMultiComboBox.getCheckModel().getCheckedItems());
     }
 
-    void finishStudy() {
+    void clearStudyFields() {
         nameTextField.clear();
         lastNameTextField.clear();
         ageTextField.clear();
-        closeSystemCheckBox.selectedProperty().setValue(false);
         teachersComboBox.getSelectionModel().selectFirst();
-        allScenariosListView.getSelectionModel().clearSelection();
         receiversToBlockMultiComboBox.getCheckModel().clearChecks();
         blockPeripheralsSwitch.setSelected(false);
         allScenariosListView.getSelectionModel().selectFirst();
@@ -609,21 +620,15 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void runStudy(ActionEvent event) throws IOException, InterruptedException {
+    void runStudy() throws IOException, InterruptedException {
         if (validateEmptyFieldsOnStudyTab()) {
-            final Study study = new Study();
-            prepareStudy(study);
             Stage primaryStage = (Stage) runScenarioButton.getScene().getWindow();
 
-            StudyThread studyThread = new StudyThread(study, server, primaryStage);
-            closeCurrentWindow(event);
+            final Study study = new Study();
+            prepareStudy(study);
+            StudyThread studyThread = new StudyThread(study, primaryStage, outputConsole);
             studyThread.run();
-            finishStudy();
+            clearStudyFields();
         }
     }
-
-    private void closeCurrentWindow(ActionEvent event) {
-        ((javafx.scene.Node) (event.getSource())).getScene().getWindow().hide();
-    }
-
 }

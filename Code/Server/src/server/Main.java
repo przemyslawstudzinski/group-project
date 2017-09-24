@@ -23,7 +23,7 @@ public class Main extends Application {
         controller = loader.getController();
         appIcon = new Image(getClass().getResourceAsStream(
                 "view" + File.separator + "Images" + File.separator + "icon.png"));
-        primaryStage.setTitle("Serwer");
+        primaryStage.setTitle("StudiController v1.0 - Serwer");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(appIcon);
         Scene scene = new Scene(root, 800, 700);
@@ -41,7 +41,6 @@ public class Main extends Application {
             }
         });
     }
-
 
     public static void main(String[] args) {
         launch(args);

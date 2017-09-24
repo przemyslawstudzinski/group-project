@@ -1,13 +1,19 @@
+import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 
 import java.awt.*;
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+
+import javafx.scene.control.Alert;
 
 public class Client extends Thread {
 
@@ -18,8 +24,25 @@ public class Client extends Thread {
     private Process lockerProcess = null;
     private boolean closeSystem = false;
     private String serverIP = "";
+    private static Image icon;
     private static final String configDirectory = "Config" + File.separator;
     private static final String serverIPFilename = configDirectory + File.separator + "server_ip.ini";
+
+
+    public void showAlert() {
+        com.sun.javafx.application.PlatformImpl.startup(new Runnable() {
+            public void run() {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("icon.png"));
+                alert.setTitle("Problem z połączeniem...");
+                alert.setHeaderText("Nie można połączyć się z serwerem o adresie IP " + serverIP);
+                alert.setContentText("Upewnij się, że serwer jest włączony lub podaj inne IP w pliku konfiguracyjnym");
+                alert.showAndWait();
+            }
+        });
+    }
+
 
     private void lockPeripherals(boolean lockKeyboard, boolean lockMouseAndKeyboard) throws InterruptedException, AWTException, IOException {
         String lockerPath = "Dependencies" + File.separator + "Keyboard And Mouse Locker" + File.separator;
@@ -45,11 +68,10 @@ public class Client extends Thread {
         Clicker clicker = new Clicker();
         while (true) {
             String response = input.readLine();
-            if (response.equals("lockKeyboard"))
+            if (response.equals("lockKeyboard")) {
+                System.out.println(response);
                 lockPeripherals(/*lockKeyboard*/ true, /*lockMouseAndKeyboard*/ false);
-            else if (response.equals("closeSystem"))
-                closeSystem = true;
-            else if (response.equals("stopreplay")) {
+            } else if (response.equals("stopreplay")) {
                 System.out.println(response);
                 unlockPeripherals();
                 return;
@@ -84,6 +106,10 @@ public class Client extends Thread {
                         if (response.equals("lockMouseAndKeyboard")) {
                             System.out.println(response);
                             lockPeripherals(/*lockKeyboard*/ false, /*lockMouseAndKeyboard*/ true);
+                        }
+                        if (response.equals("unlockMouseAndKeyboard")) {
+                            System.out.println(response);
+                            unlockPeripherals();
                         }
                         if (response.equals("close")) {
                             running = false;
@@ -127,12 +153,19 @@ public class Client extends Thread {
     }
 
     Client() {
+        loadConfigFiles();
         try {
-            loadConfigFiles();
-            socket = new Socket(serverIP, 9090);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(serverIP, 9090), 1000);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            showAlert();
+            try {
+                Thread.sleep(7000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            System.exit(0);
         }
     }
 

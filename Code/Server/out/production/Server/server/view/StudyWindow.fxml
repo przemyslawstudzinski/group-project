@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.StudyController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.StudyController">
    <children>
       <AnchorPane prefHeight="340.0" prefWidth="600.0">
          <children>
-            <Label fx:id="timeLabel" alignment="CENTER" layoutX="200.0" layoutY="108.0" prefHeight="77.0" prefWidth="218.0" text="00:00:00">
+            <Label fx:id="timeLabel" alignment="CENTER" layoutX="192.0" layoutY="109.0" prefHeight="77.0" prefWidth="218.0" text="00:00:00">
                <font>
                   <Font size="48.0" />
                </font>
             </Label>
-            <Button fx:id="stopStudyButton" onAction="#stopStudy" layoutX="236.0" layoutY="234.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="145.0" text="Zatrzymaj" />
-            <Label layoutX="172.0" layoutY="52.0" prefHeight="35.0" prefWidth="275.0" text="Aktualnie trwa badanie...">
+            <Button fx:id="stopStudyButton" layoutX="228.0" layoutY="234.0" mnemonicParsing="false" onAction="#stopStudy" prefHeight="43.0" prefWidth="145.0" text="Zakończ badanie">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Label layoutX="163.0" layoutY="55.0" prefHeight="35.0" prefWidth="275.0" text="Aktualnie trwa badanie...">
                <font>
                   <Font size="24.0" />
                </font>

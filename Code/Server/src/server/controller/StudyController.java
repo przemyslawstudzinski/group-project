@@ -8,8 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import server.model.Receiver;
+import server.model.Study;
 import server.model.Time;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
 
@@ -24,6 +28,12 @@ public class StudyController implements Initializable, ChangeListener<Number> {
     private Time timeRemaining;
 
     private Thread timerThread;
+
+    private Study study;
+
+    public void setStudy(Study study) {
+        this.study = study;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,10 +57,20 @@ public class StudyController implements Initializable, ChangeListener<Number> {
         timeLabel.setText(timeRemaining.toString());
     }
 
+    private void unlockPeripherals() throws IOException {
+        if (study.blockPeripherals) {
+            for (Receiver r : study.blockedPeripheralsOnReceivers) {
+                PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
+                out.println("unlockMouseAndKeyboard");
+            }
+        }
+    }
+
     @FXML
-    public void stopStudy() {
+    public void stopStudy() throws IOException {
         Stage stage = (Stage) stopStudyButton.getScene().getWindow();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+        unlockPeripherals();
     }
 
     public void shutdown() {
