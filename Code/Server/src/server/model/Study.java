@@ -139,6 +139,6 @@ public class Study {
     public void runThisStudy(Server server) throws IOException, InterruptedException {
         sendRunActionsSignals();
         sendLockPeripheralsSignals();
-        //save/log study
+        //TODO: save/log study
     }
 }

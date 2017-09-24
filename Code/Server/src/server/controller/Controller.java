@@ -625,4 +625,5 @@ public class Controller implements Initializable {
     private void closeCurrentWindow(ActionEvent event) {
         ((javafx.scene.Node) (event.getSource())).getScene().getWindow().hide();
     }
+
 }

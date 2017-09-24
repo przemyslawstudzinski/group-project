@@ -1,6 +1,7 @@
 package server.utils;
 
 import javafx.scene.image.Image;
+import server.controller.StudyController;
 import server.model.Study;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class StudyThread implements Runnable {
+
+    private static StudyController studyController;
     private final Study study;
     private Server server;
     private Stage stage;
@@ -40,6 +43,8 @@ public class StudyThread implements Runnable {
             Parent root = loader.load();
             Image appIcon = new Image(getClass().getResourceAsStream(
                     ".." + File.separator + "view" + File.separator + "Images" + File.separator + "icon.png"));
+            studyController = loader.getController();
+
             Stage newStage = new Stage();
             newStage.setTitle("Study");
             newStage.getIcons().add(appIcon);
@@ -47,7 +52,8 @@ public class StudyThread implements Runnable {
             newStage.show();
 
             newStage.setOnCloseRequest(event -> {
-                    newStage.hide();
+                    newStage.close();
+                    studyController.shutdown();
                     stage.show();
             });
         }
