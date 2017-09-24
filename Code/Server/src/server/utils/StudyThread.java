@@ -1,11 +1,13 @@
 package server.utils;
 
+import javafx.scene.image.Image;
 import server.model.Study;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class StudyThread implements Runnable {
@@ -33,10 +35,14 @@ public class StudyThread implements Runnable {
 
     public void createStudyWindow() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/StudyWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                    ".." + File.separator + "view" + File.separator + "StudyWindow.fxml"));
             Parent root = loader.load();
+            Image appIcon = new Image(getClass().getResourceAsStream(
+                    ".." + File.separator + "view" + File.separator + "Images" + File.separator + "icon.png"));
             Stage newStage = new Stage();
             newStage.setTitle("Study");
+            newStage.getIcons().add(appIcon);
             newStage.setScene(new Scene(root, 600, 340));
             newStage.show();
 

@@ -18,15 +18,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view" + File.separator + "MainWindow.fxml"));
         Parent root = loader.load();
         controller = loader.getController();
-        appIcon = new Image(getClass().getResourceAsStream("view/Images" + File.separator + "icon.png"));
+        appIcon = new Image(getClass().getResourceAsStream(
+                "view" + File.separator + "Images" + File.separator + "icon.png"));
         primaryStage.setTitle("Serwer");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(appIcon);
         Scene scene = new Scene(root, 800, 700);
-        scene.getStylesheets().add(getClass().getClassLoader().getResource("server/view/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getClassLoader().getResource(
+                "server/view/style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> {
