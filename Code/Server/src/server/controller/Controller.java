@@ -594,7 +594,11 @@ private void updateReceiversToBlock()
         study.setTeacher(teachersComboBox.getSelectionModel().getSelectedItem());
         study.setChosenScenario(availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()));
         study.setBlockPeripherals(blockPeripheralsSwitch.isSelected());
-        study.setBlockedPeripheralsOnReceivers(receiversToBlockMultiComboBox.getCheckModel().getCheckedItems());
+        ArrayList<Receiver> copy = new ArrayList<>();
+        for (Receiver r : receiversToBlockMultiComboBox.getCheckModel().getCheckedItems()) {
+            copy.add(r);
+        }
+        study.setBlockedPeripheralsOnReceivers(copy);
     }
 
     void clearStudyFields() {
@@ -628,7 +632,7 @@ private void updateReceiversToBlock()
             prepareStudy(study);
             StudyThread studyThread = new StudyThread(study, primaryStage, outputConsole);
             studyThread.run();
-            clearStudyFields();
+            clearStudyFields(); // to oczywiscie wykonuje sie zazem z watkiem i czysci nam tablice blockedblablal ;)
         }
     }
 }

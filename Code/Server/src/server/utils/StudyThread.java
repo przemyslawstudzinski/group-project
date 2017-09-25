@@ -51,7 +51,7 @@ public class StudyThread implements Runnable {
                     createStudyWindow(study);
                 }
                 canRunStudy = true;
-            }
+    }
 
 
 
