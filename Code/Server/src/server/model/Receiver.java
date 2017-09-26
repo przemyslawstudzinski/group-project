@@ -42,4 +42,14 @@ public class Receiver {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj instanceof Receiver))
+            return false;
+        Receiver r = (Receiver) obj;
+        return this.name.equals(r.name);
+    }
 }

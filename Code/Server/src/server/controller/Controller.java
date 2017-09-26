@@ -205,7 +205,6 @@ public class Controller implements Initializable {
         tooltip = new Tooltip();
         tooltip.setText("StudiController v1.0 beta");
         infoButton.setTooltip(tooltip);
-
         tooltip = new Tooltip();
         tooltip.setText("Dodaj akcję do scenariusza");
         moveRightButton.setTooltip(tooltip);
@@ -245,15 +244,16 @@ public class Controller implements Initializable {
         });
     }
 
-private void updateReceiversToBlock()
-{
-    receiversToBlockMultiComboBox.getItems().clear();
-    receiversToBlock.clear();
-    for (Action a : availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()).getChosenActions()) {
-        receiversToBlock.add(a.getReceiver());
+    private void updateReceiversToBlock() {
+        receiversToBlockMultiComboBox.getItems().clear();
+        receiversToBlock.clear();
+        for (Action a : availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()).getChosenActions()) {
+            if (!receiversToBlock.contains(a.getReceiver()))
+                receiversToBlock.add(a.getReceiver());
+        }
+        receiversToBlockMultiComboBox.getItems().addAll(receiversToBlock);
     }
-    receiversToBlockMultiComboBox.getItems().addAll(receiversToBlock);
-}
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         outputConsole = new OutputConsole(logScrollPanel, textFlow);
@@ -282,7 +282,7 @@ private void updateReceiversToBlock()
         allScenariosListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
-               updateReceiversToBlock();
+                updateReceiversToBlock();
             }
         });
 
