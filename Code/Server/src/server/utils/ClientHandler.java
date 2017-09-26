@@ -11,10 +11,15 @@ import java.net.SocketException;
 import java.util.ArrayList;
 
 public class ClientHandler extends Thread {
+
     private Socket socket;
+
     private BufferedReader input;
+
     private ArrayList<Node> recordedClicks;
+
     private String IP = "";
+
     public boolean running = true;
 
     private Thread clientListener = new Thread() {

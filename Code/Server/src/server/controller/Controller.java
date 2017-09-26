@@ -92,9 +92,6 @@ public class Controller implements Initializable {
     private ComboBox<String> teachersComboBox;
 
     @FXML
-    private CheckBox closeSystemCheckBox;
-
-    @FXML
     private TextField scenarioNameTextField;
 
     @FXML
@@ -137,13 +134,17 @@ public class Controller implements Initializable {
             = FXCollections.observableArrayList();
 
     private static final String configDirectory = "Config" + File.separator;
+
     private static final String fileNameOfReceivers = configDirectory + File.separator + "receivers.ini";
+
     private static final String fileNameOfTeachers = configDirectory + File.separator + "teachers.ini";
 
     private static final String actionsPath = configDirectory + File.separator + "Actions" + File.separator;
+
     private static final String scenariosPath = configDirectory + File.separator + "Scenarios" + File.separator;
 
     private final Map<String, Action> availableActions = new HashMap();
+
     private final Map<String, Scenario> availableScenarios = new HashMap();
 
     private OutputConsole outputConsole;
@@ -155,16 +156,22 @@ public class Controller implements Initializable {
     public String actionClient = "";
 
     public RequiredField requiredNameTextField;
+
     public RequiredField requiredLastNameTextField;
+
     public RequiredField requiredAgeTextField;
 
     public RequiredField requiredScenarioNameTextField;
+
     public RequiredField requiredScenarioDescriptionTextArea;
+
     public RequiredField requiredChosenActionsListView;
 
-
     public RequiredField requiredActionNameTextField;
+
     public RequiredField requiredActionDescriptionTextArea;
+
+    public static final String studiesPath = configDirectory + File.separator + "Studies" + File.separator;
 
     public void shutdown() throws InterruptedException, IOException {
         server.running = false;
@@ -304,6 +311,7 @@ public class Controller implements Initializable {
                     receiversToBlockMultiComboBox.setDisable(true);
             }
         });
+
 
         //teachers ComboBox
         teachersComboBox.setItems(allTeachers);
@@ -627,12 +635,11 @@ public class Controller implements Initializable {
     void runStudy() throws IOException, InterruptedException {
         if (validateEmptyFieldsOnStudyTab()) {
             Stage primaryStage = (Stage) runScenarioButton.getScene().getWindow();
-
             final Study study = new Study();
             prepareStudy(study);
             StudyThread studyThread = new StudyThread(study, primaryStage, outputConsole);
             studyThread.run();
-            clearStudyFields(); // to oczywiscie wykonuje sie zazem z watkiem i czysci nam tablice blockedblablal ;)
+            clearStudyFields();
         }
     }
 }

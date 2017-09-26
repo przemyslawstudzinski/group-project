@@ -14,6 +14,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static Controller controller;
+
     private static Image appIcon;
 
     @Override

@@ -9,10 +9,13 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class OutputConsole {
+
     private final String fontFamily = "Helvetica";
+
     private final int size = 15;
 
     private TextFlow console;
+
     public OutputConsole(ScrollPane scrollPane, TextFlow tf) {
         console = tf;
         console.getChildren().addListener(

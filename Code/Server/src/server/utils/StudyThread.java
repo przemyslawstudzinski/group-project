@@ -2,6 +2,8 @@ package server.utils;
 
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 import server.Main;
 import server.controller.Controller;
 import server.controller.StudyController;
@@ -14,15 +16,21 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StudyThread implements Runnable {
 
     private static StudyController studyController;
+
     private final Study study;
+
     private Stage stage;
+
     public OutputConsole console;
+
     public static Boolean canRunStudy;
 
     public StudyThread(Study study, Stage stage, OutputConsole console) {
@@ -40,6 +48,7 @@ public class StudyThread implements Runnable {
     public void run() {
 
                 try {
+                    study.setStartTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
                     study.runThisStudy(console);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -48,14 +57,14 @@ public class StudyThread implements Runnable {
                 }
                 if (canRunStudy) {
                     closeCurrentWindow();
-                    createStudyWindow(study);
+                    createStudyWindow(study, console);
                 }
                 canRunStudy = true;
     }
 
 
 
-    public void createStudyWindow(Study study) {
+    public void createStudyWindow(Study study, OutputConsole console) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
                     ".." + File.separator + "view" + File.separator + "StudyWindow.fxml"));
@@ -66,14 +75,17 @@ public class StudyThread implements Runnable {
             studyController.setStudy(study);
             Stage newStage = new Stage();
             newStage.setTitle("Badanie");
+            newStage.setResizable(false);
             newStage.getIcons().add(appIcon);
             newStage.setScene(new Scene(root, 600, 340));
             newStage.show();
-
             newStage.setOnCloseRequest(event -> {
                 newStage.close();
                 studyController.shutdown();
                 stage.show();
+                console.writeLine("Zakończono badanie!");
+                study.setEndTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+                study.saveLog();
             });
         } catch (IOException e) {
             e.printStackTrace();

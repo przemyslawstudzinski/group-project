@@ -18,7 +18,6 @@ public class SystemHook extends Thread {
 
     public void attachMouseListener() {
         GlobalMouseHook mouseHook = new GlobalMouseHook();
-        System.out.println("Global mouse hook successfully started, press [middle] mouse button to shutdown.");
 
         mouseHook.addMouseListener(new GlobalMouseAdapter() {
             @Override
@@ -49,7 +48,6 @@ public class SystemHook extends Thread {
     }
 
     public void run() {
-        System.out.println("SystemHook thread running");
         clickTime = System.currentTimeMillis();
         attachMouseListener();
     }

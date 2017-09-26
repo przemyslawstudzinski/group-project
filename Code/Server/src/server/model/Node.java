@@ -6,8 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Node {
 
     private int corX;
+
     private int corY;
+
     private long delay;
+
     private boolean isDouble;
 
     public Node() {

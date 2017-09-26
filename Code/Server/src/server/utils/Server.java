@@ -8,9 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server extends Thread {
+
     private ServerSocket listener;
+
     public static Map<String, ClientHandler> connectedClientsMap = new HashMap();
+
     public boolean running = true;
+
     private OutputConsole outputConsole;
 
     public Server(OutputConsole console) {
