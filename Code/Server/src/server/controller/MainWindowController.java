@@ -255,9 +255,11 @@ public class MainWindowController implements Initializable {
         receiversToBlockMultiComboBox.getItems().clear();
         receiversToBlock.clear();
         String selected = allScenariosListView.getSelectionModel().getSelectedItem();
-        for (Action a : availableScenarios.get(selected).getChosenActions()) {
-            if (!receiversToBlock.contains(a.getReceiver()))
-                receiversToBlock.add(a.getReceiver());
+        if (selected != null) {
+            for (Action a : availableScenarios.get(selected).getChosenActions()) {
+                if (!receiversToBlock.contains(a.getReceiver()))
+                    receiversToBlock.add(a.getReceiver());
+            }
         }
         receiversToBlockMultiComboBox.getItems().addAll(receiversToBlock);
     }

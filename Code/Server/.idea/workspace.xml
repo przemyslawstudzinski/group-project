@@ -70,11 +70,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainWindowController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainWindowController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/controller/MainWindowController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="169" column="53" lean-forward="true" selection-start-line="169" selection-start-column="53" selection-end-line="169" selection-end-column="53" />
+            <state relative-caret-position="158">
+              <caret line="430" column="49" lean-forward="true" selection-start-line="430" selection-start-column="49" selection-end-line="430" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="receivers.ini" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/receivers.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="20" lean-forward="true" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="teachers.ini" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/teachers.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="20" lean-forward="true" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -101,7 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>startRecording</find>
       <find>Nag</find>
       <find>zako</find>
       <find>uruchom</find>
@@ -119,7 +138,6 @@
       <find>Boo</find>
       <find>Study(</find>
       <find>blocked</find>
-      <find>receiversToBlock</find>
       <find>static</find>
       <find>receiversToBlockMultiComboBox</find>
       <find>allReceivers</find>
@@ -131,6 +149,8 @@
       <find>teacher</find>
       <find>upadet</find>
       <find>updateReceiversToBlock</find>
+      <find>receiversToBlock</find>
+      <find>allTeachers</find>
     </findStrings>
     <replaceStrings>
       <replace>Scenarios</replace>
@@ -149,8 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/guiproject/Scenario.java" />
-        <option value="$PROJECT_DIR$/src/guiproject/Receiver.java" />
         <option value="$PROJECT_DIR$/src/guiproject/Node.java" />
         <option value="$PROJECT_DIR$/src/guiproject/TODO.java" />
         <option value="$PROJECT_DIR$/src/guiproject/StudyThread.java" />
@@ -200,6 +218,8 @@
         <option value="$PROJECT_DIR$/src/server/utils/ClientHandler.java" />
         <option value="$PROJECT_DIR$/src/server/controller/Controller.java" />
         <option value="$PROJECT_DIR$/src/server/controller/MainWindowController.java" />
+        <option value="$PROJECT_DIR$/config/teachers.ini" />
+        <option value="$PROJECT_DIR$/config/receivers.ini" />
       </list>
     </option>
   </component>
@@ -591,7 +611,7 @@
           <option name="timeStamp" value="183" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="189" />
+      <option name="time" value="190" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -625,7 +645,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/guiproject/TODO.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/net/Socket.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -732,13 +751,6 @@
     <entry file="file://$PROJECT_DIR$/out/production/Server/server/view/Images/arrow_right.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/receivers.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Config/Scenarios/A.cfg" />
@@ -927,10 +939,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/teachers.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="20" lean-forward="true" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/server/controller/MainWindowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="169" column="53" lean-forward="true" selection-start-line="169" selection-start-column="53" selection-end-line="169" selection-end-column="53" />
+        <state relative-caret-position="158">
+          <caret line="430" column="49" lean-forward="true" selection-start-line="430" selection-start-column="49" selection-end-line="430" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/receivers.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="20" lean-forward="true" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
           <folding />
         </state>
       </provider>
