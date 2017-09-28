@@ -1,0 +1,9 @@
+----------------------- LOG BADANIA ----------------------- 
+Data rozpoczęcia: 2017.09.28
+Godzina rozpoczęcia: 22.11.27
+Opiekun badania: ﻿dr inż. Michał Wróbel
+Badana osoba: A B, 11 lat 
+Scenariusz: Test
+Data zakończenia: 2017.09.28
+Godzina zakończenia: 22.11.36
+----------------------- LOG BADANIA -----------------------
