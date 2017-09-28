@@ -20,6 +20,7 @@
 <?import com.pixelduke.javafx.validation.RequiredField?>
 <?import com.pixelduke.javafx.validation.ErrorLabel?>
 
+<?import server.validator.ExistNameValidator?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.MainWindowController">
     <children>
         <TabPane layoutX="-6.0" layoutY="-8.0" prefHeight="487.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
@@ -109,6 +110,11 @@
                                             <fx:reference source="scenarioNameTextField" />
                                         </srcControl>
                                     </RequiredField>
+                                    <ExistNameValidator fx:id="existScenarioNameTextField">
+                                        <srcControl>
+                                            <fx:reference source="scenarioNameTextField" />
+                                        </srcControl>
+                                    </ExistNameValidator>
                                     <RequiredField fx:id="requiredScenarioDescriptionTextArea">
                                         <srcControl>
                                             <fx:reference source="scenarioDescriptionTextArea" />
@@ -124,6 +130,11 @@
                                 <validator>
                                     <fx:reference source="requiredScenarioNameTextField"></fx:reference>
                                 </validator>
+                                </ErrorLabel>
+                                <ErrorLabel layoutX="21.0" layoutY="80.0" message="Taka nazwa scenariusza już istnieje!">
+                                    <validator>
+                                        <fx:reference source="existScenarioNameTextField"></fx:reference>
+                                    </validator>
                                 </ErrorLabel>
                                 <ErrorLabel layoutX="436.0" layoutY="110.0" message="Proszę uzupełnij opis scenariusza!">
                                 <validator>
@@ -158,6 +169,11 @@
                                             <fx:reference source="actionNameTextField" />
                                         </srcControl>
                                     </RequiredField>
+                                    <ExistNameValidator fx:id="existActionNameTextField">
+                                        <srcControl>
+                                            <fx:reference source="actionNameTextField" />
+                                        </srcControl>
+                                    </ExistNameValidator>
                                     <RequiredField fx:id="requiredActionDescriptionTextArea">
                                         <srcControl>
                                             <fx:reference source="actionDescriptionTextArea" />
@@ -168,6 +184,11 @@
                                 <validator>
                                     <fx:reference source="requiredActionNameTextField"></fx:reference>
                                 </validator>
+                                </ErrorLabel>
+                                <ErrorLabel layoutX="25.0" layoutY="85.0" message="Taka nazwa akcji już istnieje!">
+                                    <validator>
+                                        <fx:reference source="existActionNameTextField"></fx:reference>
+                                    </validator>
                                 </ErrorLabel>
                                 <ErrorLabel layoutX="427.0" layoutY="135.0" message="Proszę uzupełnij opis akcji!">
                                 <validator>

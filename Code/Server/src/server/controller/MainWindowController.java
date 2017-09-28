@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
 import server.utils.Server;
+import server.validator.ExistNameValidator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -170,6 +171,10 @@ public class MainWindowController implements Initializable {
     public RequiredField requiredActionNameTextField;
 
     public RequiredField requiredActionDescriptionTextArea;
+
+    public ExistNameValidator existActionNameTextField;
+
+    public ExistNameValidator existScenarioNameTextField;
 
     public static final String studiesPath = configDirectory + "studies" + File.separator;
 
@@ -509,9 +514,20 @@ public class MainWindowController implements Initializable {
         return true;
     }
 
+    boolean validateTheSameNameOfScenarios() {
+        existScenarioNameTextField.setColection(allScenarios);
+        existScenarioNameTextField.eval();
+        if (existScenarioNameTextField.getHasErrors() == true) {
+            return false;
+        }
+        return true;
+    }
+
     @FXML
     void saveScenario(ActionEvent event) throws IOException {
-        if (validateEmptyFieldsOnScenarioTab()) {
+        boolean validateEmptyFields = validateEmptyFieldsOnScenarioTab();
+        boolean validateTheSameNames = validateTheSameNameOfScenarios();
+        if ( validateEmptyFields && validateTheSameNames) {
             Scenario scenario = new Scenario();
             scenario.setName(scenarioNameTextField.getText());
             scenario.setDescription(scenarioDescriptionTextArea.getText());
@@ -536,6 +552,15 @@ public class MainWindowController implements Initializable {
         requiredActionDescriptionTextArea.eval();
         if (requiredActionNameTextField.getHasErrors()
                 || requiredActionDescriptionTextArea.getHasErrors()) {
+            return false;
+        }
+        return true;
+    }
+
+    boolean validateTheSameNameOfActions() {
+        existActionNameTextField.setColection(allActions);
+        existActionNameTextField.eval();
+        if (existActionNameTextField.getHasErrors() == true) {
             return false;
         }
         return true;
@@ -575,7 +600,9 @@ public class MainWindowController implements Initializable {
     @FXML
     void startRecording(ActionEvent event) throws IOException {
         if (actionClientAvailable()) {
-            if (validateEmptyFieldsOnActionTab()) {
+            boolean validateEmptyFields = validateEmptyFieldsOnActionTab();
+            boolean validateTheSameNames = validateTheSameNameOfActions();
+            if (validateEmptyFields && validateTheSameNames) {
                 PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
                 out.println("record");
                 isRecording = true;
