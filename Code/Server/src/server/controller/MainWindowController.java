@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class Controller implements Initializable {
+public class MainWindowController implements Initializable {
 
     @FXML
     private Button startRecordingButton;
@@ -133,15 +133,15 @@ public class Controller implements Initializable {
     private final ObservableList<Receiver> receiversToBlock
             = FXCollections.observableArrayList();
 
-    private static final String configDirectory = "Config" + File.separator;
+    private static final String configDirectory = "config" + File.separator;
 
-    private static final String fileNameOfReceivers = configDirectory + File.separator + "receivers.ini";
+    private static final String fileNameOfReceivers = configDirectory + "receivers.ini";
 
-    private static final String fileNameOfTeachers = configDirectory + File.separator + "teachers.ini";
+    private static final String fileNameOfTeachers = configDirectory + "teachers.ini";
 
-    private static final String actionsPath = configDirectory + File.separator + "Actions" + File.separator;
+    private static final String actionsPath = configDirectory + "actions" + File.separator;
 
-    private static final String scenariosPath = configDirectory + File.separator + "Scenarios" + File.separator;
+    private static final String scenariosPath = configDirectory + "scenarios" + File.separator;
 
     private final Map<String, Action> availableActions = new HashMap();
 
@@ -171,7 +171,7 @@ public class Controller implements Initializable {
 
     public RequiredField requiredActionDescriptionTextArea;
 
-    public static final String studiesPath = configDirectory + File.separator + "Studies" + File.separator;
+    public static final String studiesPath = configDirectory + "studies" + File.separator;
 
     public void shutdown() throws InterruptedException, IOException {
         server.running = false;
@@ -254,7 +254,8 @@ public class Controller implements Initializable {
     private void updateReceiversToBlock() {
         receiversToBlockMultiComboBox.getItems().clear();
         receiversToBlock.clear();
-        for (Action a : availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()).getChosenActions()) {
+        String selected = allScenariosListView.getSelectionModel().getSelectedItem();
+        for (Action a : availableScenarios.get(selected).getChosenActions()) {
             if (!receiversToBlock.contains(a.getReceiver()))
                 receiversToBlock.add(a.getReceiver());
         }

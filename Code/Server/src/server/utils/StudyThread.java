@@ -1,13 +1,7 @@
 package server.utils;
 
-import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
-import javafx.stage.StageStyle;
-import server.Main;
-import server.controller.Controller;
-import server.controller.StudyController;
-import server.model.Receiver;
+import server.controller.StudyWindowController;
 import server.model.Study;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,13 +11,11 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class StudyThread implements Runnable {
 
-    private static StudyController studyController;
+    private static StudyWindowController studyController;
 
     private final Study study;
 

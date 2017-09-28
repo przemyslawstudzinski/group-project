@@ -1,6 +1,6 @@
 package server;
 
-import server.controller.Controller;
+import server.controller.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    private static Controller controller;
+    private static MainWindowController controller;
 
     private static Image appIcon;
 

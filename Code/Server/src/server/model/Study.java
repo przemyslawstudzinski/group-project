@@ -1,8 +1,7 @@
 package server.model;
 
-import server.controller.Controller;
+import server.controller.MainWindowController;
 import server.utils.OutputConsole;
-import server.utils.Server;
 import server.utils.StudyThread;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -103,7 +102,7 @@ public class Study {
     private boolean allReceiversAvailable() {
         for (Action a : this.getChosenScenario().getChosenActions()) {
             Receiver r = a.getReceiver();
-            if (!Controller.server.connectedClientsMap.containsKey(r.getIpAddress()))
+            if (!MainWindowController.server.connectedClientsMap.containsKey(r.getIpAddress()))
                 return false;
         }
         return true;
@@ -113,7 +112,7 @@ public class Study {
         if (allReceiversAvailable()) {
             for (Action a : this.getChosenScenario().getChosenActions()) {
                 {
-                    PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(a.getReceiver().getIpAddress()).getSocket().getOutputStream(), true);
+                    PrintWriter out = new PrintWriter(MainWindowController.server.connectedClientsMap.get(a.getReceiver().getIpAddress()).getSocket().getOutputStream(), true);
                     out.println("replay");
                     out.println("lockKeyboard");
                     for (Node n : a.getNodes()) {
@@ -133,7 +132,7 @@ public class Study {
     private void sendLockPeripheralsSignals() throws IOException {
         if (this.blockPeripherals) {
             for (Receiver r : this.blockedPeripheralsOnReceivers) {
-                PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
+                PrintWriter out = new PrintWriter(MainWindowController.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
                 out.println("lockMouseAndKeyboard");
             }
         }
@@ -149,7 +148,7 @@ public class Study {
             String endDate = endTime.replace(".", "_");
             String[] startDates = startDate.split("_", 6);
             String[] endDates = endDate.split("_", 6);
-            PrintStream out = new PrintStream(new FileOutputStream(Controller.studiesPath + File.separator + this.name + "_" + this.lastName + "_" +
+            PrintStream out = new PrintStream(new FileOutputStream(MainWindowController.studiesPath + File.separator + this.name + "_" + this.lastName + "_" +
                     startDates[0] + "_" + startDates[1] + "_" + startDates[2] + ".txt"));
             String log = "----------------------- LOG BADANIA ----------------------- \n" +
                     "Data rozpoczęcia: " + startDates[0] + "." + startDates[1] + "." + startDates[2] + "\n" +

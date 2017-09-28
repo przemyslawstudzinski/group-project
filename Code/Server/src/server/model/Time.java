@@ -1,13 +1,13 @@
 package server.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
-import server.controller.StudyController;
+import server.controller.StudyWindowController;
 
 public class Time {
 
     private SimpleIntegerProperty seconds;
 
-    public Time(StudyController controller) {
+    public Time(StudyWindowController controller) {
         seconds = new SimpleIntegerProperty(0);
         seconds.addListener(controller);
     }

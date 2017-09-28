@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
 
-public class StudyController implements Initializable, ChangeListener<Number> {
+public class StudyWindowController implements Initializable, ChangeListener<Number> {
 
     @FXML
     private Label timeLabel;
@@ -60,7 +60,7 @@ public class StudyController implements Initializable, ChangeListener<Number> {
     private void unlockPeripherals() throws IOException {
         if (study.blockPeripherals) {
             for (Receiver r : study.blockedPeripheralsOnReceivers) {
-                PrintWriter out = new PrintWriter(Controller.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
+                PrintWriter out = new PrintWriter(MainWindowController.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
                 out.println("unlockMouseAndKeyboard");
             }
         }
