@@ -59,10 +59,10 @@ public class StudyThread implements Runnable {
     public void createStudyWindow(Study study, OutputConsole console) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                    ".." + File.separator + "view" + File.separator + "StudyWindow.fxml"));
+                    "/server/view/StudyWindow.fxml"));
             Parent root = loader.load();
             Image appIcon = new Image(getClass().getResourceAsStream(
-                    ".." + File.separator + "view" + File.separator + "Images" + File.separator + "icon.png"));
+                    "/server/view/Images/icon.png"));
             studyController = loader.getController();
             studyController.setStudy(study);
             Stage newStage = new Stage();

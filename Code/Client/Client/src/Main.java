@@ -12,7 +12,7 @@ public class Main {
     private static Image appIcon;
 
     private static void addTrayIcon() {
-        appIcon = Toolkit.getDefaultToolkit().getImage("Dependencies" + File.separator + "Images" + File.separator + "icon.png");
+        appIcon = Toolkit.getDefaultToolkit().getImage("Dependencies/Images/icon.png");
         PopupMenu trayPopupMenu = new PopupMenu();
         MenuItem close = new MenuItem("Close");
         close.addActionListener(new ActionListener() {

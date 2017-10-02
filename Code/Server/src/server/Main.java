@@ -19,11 +19,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view" + File.separator + "MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/MainWindow.fxml"));
         Parent root = loader.load();
         controller = loader.getController();
         appIcon = new Image(getClass().getResourceAsStream(
-                "view" + File.separator + "Images" + File.separator + "icon.png"));
+                "view/Images/icon.png"));
         primaryStage.setTitle("StudiController v1.0 - Serwer");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(appIcon);
