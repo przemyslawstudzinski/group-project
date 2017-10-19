@@ -1,6 +1,8 @@
 package server.controller;
 
 import com.pixelduke.javafx.validation.RequiredField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import server.utils.OutputConsole;
 import server.model.Scenario;
 import server.utils.StudyThread;
@@ -28,7 +30,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -84,10 +85,16 @@ public class MainWindowController implements Initializable {
     private TextField ageTextField;
 
     @FXML
-    private TextField nameTextField;
+    private TextField codeTextField;
 
     @FXML
-    private TextField lastNameTextField;
+    private Label sexErrorLabel;
+
+    @FXML
+    private RadioButton sexRadioButtonWomen;
+
+    @FXML
+    private RadioButton sexRadioButtonMen;
 
     @FXML
     private ComboBox<String> teachersComboBox;
@@ -156,9 +163,7 @@ public class MainWindowController implements Initializable {
 
     public String actionClient = "";
 
-    public RequiredField requiredNameTextField;
-
-    public RequiredField requiredLastNameTextField;
+    public RequiredField requiredCodeTextField;
 
     public RequiredField requiredAgeTextField;
 
@@ -304,7 +309,6 @@ public class MainWindowController implements Initializable {
         receiversToBlockMultiComboBox.setDisable(true);
         actionClient = receiversComboBox.getSelectionModel().getSelectedItem().getIpAddress();
 
-
         receiversComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) ->
                 actionClient = newValue.getIpAddress()
         );
@@ -320,14 +324,23 @@ public class MainWindowController implements Initializable {
             }
         });
 
-
         //teachers ComboBox
         teachersComboBox.setItems(allTeachers);
         teachersComboBox.getSelectionModel().selectFirst();
-        //name Text Field
-        validateTextField(nameTextField, "textOnly");
-        //last name Text Field
-        validateTextField(lastNameTextField, "textOnly");
+        //code Text Field
+        validateTextField(codeTextField, "textNumber");
+        //sex Radio Buttons
+        sexErrorLabel.setTextFill(Color.RED);
+        sexErrorLabel.setStyle("-fx-font-size:12;");
+        sexErrorLabel.setVisible(false);
+        sexRadioButtonWomen.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) sexRadioButtonMen.setSelected(false);
+        });
+        sexRadioButtonMen.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) sexRadioButtonWomen.setSelected(false);
+        });
+        //code Text Field
+        validateTextField(codeTextField,"textNumber");
         //age Text Field
         validateTextField(ageTextField, "numberOnly");
         //scenario Name Text Field
@@ -346,10 +359,10 @@ public class MainWindowController implements Initializable {
     }
 
     void validateTextField(TextField field, String validationType) {
-        if (validationType.equals("textOnly")) {
+        if (validationType.equals("textNumber")) {
             field.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("\\sa-zA-Z*")) {
-                    field.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+                if (!newValue.matches("[A-Za-z0-9]")) {
+                    field.setText(newValue.replaceAll("[^A-Za-z0-9]", ""));
                 }
             });
         } else if (validationType.equals("numberOnly")) {
@@ -626,8 +639,11 @@ public class MainWindowController implements Initializable {
 
 
     void prepareStudy(Study study) {
-        study.setName(nameTextField.getText());
-        study.setLastName(lastNameTextField.getText());
+        study.setCode(codeTextField.getText());
+        if (sexRadioButtonMen.isSelected())
+            study.setSex("Mężczyzna");
+        else
+            study.setSex("Kobieta");
         study.setAge(ageTextField.getText());
         study.setTeacher(teachersComboBox.getSelectionModel().getSelectedItem());
         study.setChosenScenario(availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()));
@@ -640,8 +656,9 @@ public class MainWindowController implements Initializable {
     }
 
     void clearStudyFields() {
-        nameTextField.clear();
-        lastNameTextField.clear();
+        codeTextField.clear();
+        sexRadioButtonWomen.setSelected(false);
+        sexRadioButtonMen.setSelected(false);
         ageTextField.clear();
         teachersComboBox.getSelectionModel().selectFirst();
         receiversToBlockMultiComboBox.getCheckModel().clearChecks();
@@ -650,12 +667,14 @@ public class MainWindowController implements Initializable {
     }
 
     boolean validateEmptyFieldsOnStudyTab() {
-        requiredNameTextField.eval();
-        requiredLastNameTextField.eval();
+        requiredCodeTextField.eval();
         requiredAgeTextField.eval();
-        if (requiredNameTextField.getHasErrors()
-                || requiredLastNameTextField.getHasErrors()
-                || requiredAgeTextField.getHasErrors()) {
+        sexErrorLabel.setVisible(false);
+        if (!sexRadioButtonMen.isSelected() && !sexRadioButtonWomen.isSelected()) {
+            sexErrorLabel.setVisible(true);
+            return false;
+        }
+        if (requiredCodeTextField.getHasErrors() || requiredAgeTextField.getHasErrors()) {
             return false;
         }
         return true;

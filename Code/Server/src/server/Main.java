@@ -22,14 +22,12 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/MainWindow.fxml"));
         Parent root = loader.load();
         controller = loader.getController();
-        appIcon = new Image(getClass().getResourceAsStream(
-                "view/Images/icon.png"));
+        appIcon = new Image(getClass().getResourceAsStream("view/Images/icon.png"));
         primaryStage.setTitle("StudiController v1.0 - Serwer");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(appIcon);
         Scene scene = new Scene(root, 800, 700);
-        scene.getStylesheets().add(getClass().getClassLoader().getResource(
-                "server/view/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("server/view/style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> {

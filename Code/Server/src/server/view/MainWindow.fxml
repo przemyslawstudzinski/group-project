@@ -21,6 +21,7 @@
 <?import com.pixelduke.javafx.validation.ErrorLabel?>
 
 <?import server.validator.ExistNameValidator?>
+<?import javafx.scene.control.RadioButton?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.MainWindowController">
     <children>
         <TabPane layoutX="-6.0" layoutY="-8.0" prefHeight="487.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
@@ -29,16 +30,18 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="806.0">
                             <children>
-                                <TextField fx:id="nameTextField" layoutX="94.0" layoutY="55.0" prefHeight="25.0" prefWidth="185.0" />
-                                <TextField fx:id="lastNameTextField" layoutX="94.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
+                                <TextField fx:id="codeTextField" layoutX="94.0" layoutY="55.0" prefHeight="25.0" prefWidth="185.0" />
+                                <RadioButton fx:id="sexRadioButtonWomen" text="Kobieta" layoutX="94.0" layoutY="95.0" prefHeight="25.0" prefWidth="80.0"/>
+                                <RadioButton fx:id="sexRadioButtonMen" text="Mężczyzna" layoutX="185.0" layoutY="95.0" prefHeight="25.0" prefWidth="180.0"/>
+                                <Label fx:id="sexErrorLabel" text="Proszę uzupełnij płeć!" layoutX="94.0" layoutY="115.0" prefWidth="180.0"/>
                                 <TextField fx:id="ageTextField" layoutX="94.0" layoutY="135.0" prefHeight="25.0" prefWidth="50.0" />
-                                <Label layoutX="22.0" layoutY="55.0" prefHeight="25.0" prefWidth="68.0" text="Imię:" />
-                                <Label layoutX="21.0" layoutY="95.0" prefHeight="25.0" prefWidth="70.0" text="Nazwisko:" />
-                                <Label layoutX="23.0" layoutY="135.0" prefHeight="25.0" prefWidth="67.0" text="Wiek:" />
+                                <Label layoutX="22.0" layoutY="55.0" prefHeight="25.0" prefWidth="68.0" text="Kod:" />
+                                <Label layoutX="22.0" layoutY="95.0" prefHeight="25.0" prefWidth="70.0" text="Płeć:" />
+                                <Label layoutX="22.0" layoutY="135.0" prefHeight="25.0" prefWidth="67.0" text="Wiek:" />
                                 <fx:define>
-                                    <RequiredField fx:id="requiredNameTextField">
+                                    <RequiredField fx:id="requiredCodeTextField">
                                         <srcControl>
-                                            <fx:reference source="nameTextField" />
+                                            <fx:reference source="codeTextField" />
                                         </srcControl>
                                     </RequiredField>
                                     <RequiredField fx:id="requiredAgeTextField">
@@ -46,20 +49,10 @@
                                             <fx:reference source="ageTextField" />
                                         </srcControl>
                                     </RequiredField>
-                                    <RequiredField fx:id="requiredLastNameTextField">
-                                        <srcControl>
-                                            <fx:reference source="lastNameTextField" />
-                                        </srcControl>
-                                    </RequiredField>
                                 </fx:define>
-                                <ErrorLabel layoutX="94.0" layoutY="80.0" message="Proszę uzupełnij imię!">
+                                <ErrorLabel layoutX="94.0" layoutY="80.0" message="Proszę uzupełnij kod!">
                                 <validator>
-                                    <fx:reference source="requiredNameTextField"></fx:reference>
-                                </validator>
-                                </ErrorLabel>
-                                <ErrorLabel layoutX="94.0" layoutY="120.0" message="Proszę uzupełnij nazwisko!">
-                                <validator>
-                                    <fx:reference source="requiredLastNameTextField"></fx:reference>
+                                    <fx:reference source="requiredCodeTextField"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
                                 <ErrorLabel layoutX="94.0" layoutY="155.0" message="Proszę uzupełnij wiek!">
@@ -67,8 +60,8 @@
                                     <fx:reference source="requiredAgeTextField"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
-                                <Label layoutX="21.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Dane osoby badanej" />
-                                <Label layoutX="25.0" layoutY="187.0" prefHeight="25.0" prefWidth="188.0" text="Wybierz scenariusz badania" />
+                                <Label layoutX="22.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Dane osoby badanej" />
+                                <Label layoutX="22.0" layoutY="187.0" prefHeight="25.0" prefWidth="188.0" text="Wybierz scenariusz badania" />
                                 <ListView fx:id="allScenariosListView" layoutX="26.0" layoutY="212.0" prefHeight="189.0" prefWidth="321.0" />
                                 <Label layoutX="320.0" layoutY="23.0" prefHeight="25.0" prefWidth="217.0" text="Blokuj peryferia w trakcie badania" />
                                 <ToggleSwitch fx:id="blockPeripheralsSwitch" layoutX="374.0" layoutY="61.0" prefHeight="14.0" prefWidth="53.0" />

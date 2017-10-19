@@ -12,9 +12,9 @@ import java.util.List;
 @XmlRootElement
 public class Study {
 
-    private String name;
+    private String code;
 
-    private String lastName;
+    private String sex;
 
     private String age;
 
@@ -35,12 +35,12 @@ public class Study {
     }
 
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public void setAge(String age) {
@@ -79,12 +79,12 @@ public class Study {
         return age;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSex() {
+        return sex;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
     public String getEndTime() {
@@ -148,13 +148,14 @@ public class Study {
             String endDate = endTime.replace(".", "_");
             String[] startDates = startDate.split("_", 6);
             String[] endDates = endDate.split("_", 6);
-            PrintStream out = new PrintStream(new FileOutputStream(MainWindowController.studiesPath + File.separator + this.name + "_" + this.lastName + "_" +
+            PrintStream out = new PrintStream(new FileOutputStream(
+                    MainWindowController.studiesPath + File.separator + this.code + "_" + this.sex + "_" +
                     startDates[0] + "_" + startDates[1] + "_" + startDates[2] + ".txt"));
             String log = "----------------------- LOG BADANIA ----------------------- \n" +
                     "Data rozpoczęcia: " + startDates[0] + "." + startDates[1] + "." + startDates[2] + "\n" +
                     "Godzina rozpoczęcia: " + startDates[3] + "." + startDates[4] + "." + startDates[5] + "\n" +
                     "Opiekun badania: " + this.teacher + "\n" +
-                    "Badana osoba: " + this.name + " " + this.lastName + ", " + this.age + " lat \n" +
+                    "Badana osoba: " + this.code + " " + this.sex + ", " + this.age + " lat \n" +
                     "Scenariusz: " + this.chosenScenario.getName() + "\n" +
                     "Data zakończenia: " + endDates[0] + "." + endDates[1] + "." + endDates[2] + "\n" +
                     "Godzina zakończenia: " + endDates[3] + "." + endDates[4] + "." + endDates[5] + "\n" +
