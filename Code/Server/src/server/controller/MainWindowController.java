@@ -25,7 +25,6 @@ import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
 import server.utils.Server;
 import server.validator.ExistNameValidator;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -41,7 +40,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 
 public class MainWindowController implements Initializable {
 
@@ -98,6 +96,15 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private ComboBox<String> teachersComboBox;
+
+    @FXML
+    private Button showTeacherFieldButton;
+
+    @FXML
+    private Button addTeacherButton;
+
+    @FXML
+    private TextField newTeacherTextField;
 
     @FXML
     private TextField scenarioNameTextField;
@@ -167,6 +174,8 @@ public class MainWindowController implements Initializable {
 
     public RequiredField requiredAgeTextField;
 
+    public RequiredField requiredTeacherField;
+
     public RequiredField requiredScenarioNameTextField;
 
     public RequiredField requiredScenarioDescriptionTextArea;
@@ -206,7 +215,6 @@ public class MainWindowController implements Initializable {
         }
     }
 
-
     private void assignTooltips() {
         updateTooltipBehavior(50, 10000, 50, true);
 
@@ -234,7 +242,6 @@ public class MainWindowController implements Initializable {
         tooltip = new Tooltip();
         tooltip.setText("Przesuń akcję w dół");
         moveDownButton.setTooltip(tooltip);
-
 
         allScenariosListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             public ListCell<String> call(ListView<String> param) {
@@ -279,7 +286,6 @@ public class MainWindowController implements Initializable {
         outputConsole = new OutputConsole(logScrollPanel, textFlow);
         server = new Server(outputConsole);
         server.start();
-
         try {
             //load Receivers and Teachers from .ini file and add them to receivers comboBox
             loadConfigFiles();
@@ -298,7 +304,6 @@ public class MainWindowController implements Initializable {
         }
 
         chosenActionsListView.setItems(chosenActions);
-
         allScenariosListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
@@ -308,7 +313,6 @@ public class MainWindowController implements Initializable {
 
         receiversToBlockMultiComboBox.setDisable(true);
         actionClient = receiversComboBox.getSelectionModel().getSelectedItem().getIpAddress();
-
         receiversComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) ->
                 actionClient = newValue.getIpAddress()
         );
@@ -327,6 +331,9 @@ public class MainWindowController implements Initializable {
         //teachers ComboBox
         teachersComboBox.setItems(allTeachers);
         teachersComboBox.getSelectionModel().selectFirst();
+        newTeacherTextField.setVisible(false);
+        addTeacherButton.setVisible(false);
+        validateTextField(newTeacherTextField, "withoutNumbers");
         //code Text Field
         validateTextField(codeTextField, "textNumber");
         //sex Radio Buttons
@@ -351,7 +358,6 @@ public class MainWindowController implements Initializable {
         updateReceiversToBlock();
         assignTooltips();
     }
-
 
     @FXML
     void clearConsole() {
@@ -383,6 +389,12 @@ public class MainWindowController implements Initializable {
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("[-_. A-Za-z0-9]")) {
                     field.setText(newValue.replaceAll("[^-_. A-Za-z0-9]", ""));
+                }
+            });
+        } else if(validationType.equals("withoutNumbers")){
+            field.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("[^0-9]")) {
+                    field.setText(newValue.replaceAll("[0-9]", ""));
                 }
             });
         }
@@ -536,6 +548,39 @@ public class MainWindowController implements Initializable {
         return true;
     }
 
+    boolean validateEmptyFieldsOnActionTab() {
+        requiredActionNameTextField.eval();
+        requiredActionDescriptionTextArea.eval();
+        if (requiredActionNameTextField.getHasErrors()
+                || requiredActionDescriptionTextArea.getHasErrors()) {
+            return false;
+        }
+        return true;
+    }
+
+    boolean validateTheSameNameOfActions() {
+        existActionNameTextField.setColection(allActions);
+        existActionNameTextField.eval();
+        if (existActionNameTextField.getHasErrors() == true) {
+            return false;
+        }
+        return true;
+    }
+
+    boolean validateEmptyFieldsOnStudyTab() {
+        requiredCodeTextField.eval();
+        requiredAgeTextField.eval();
+        sexErrorLabel.setVisible(false);
+        if (!sexRadioButtonMen.isSelected() && !sexRadioButtonWomen.isSelected()) {
+            sexErrorLabel.setVisible(true);
+            return false;
+        }
+        if (requiredCodeTextField.getHasErrors() || requiredAgeTextField.getHasErrors()) {
+            return false;
+        }
+        return true;
+    }
+
     @FXML
     void saveScenario(ActionEvent event) throws IOException {
         boolean validateEmptyFields = validateEmptyFieldsOnScenarioTab();
@@ -558,25 +603,6 @@ public class MainWindowController implements Initializable {
             chosenActionsListView.getItems().clear();
             allActionsListView.getSelectionModel().selectFirst();
         }
-    }
-
-    boolean validateEmptyFieldsOnActionTab() {
-        requiredActionNameTextField.eval();
-        requiredActionDescriptionTextArea.eval();
-        if (requiredActionNameTextField.getHasErrors()
-                || requiredActionDescriptionTextArea.getHasErrors()) {
-            return false;
-        }
-        return true;
-    }
-
-    boolean validateTheSameNameOfActions() {
-        existActionNameTextField.setColection(allActions);
-        existActionNameTextField.eval();
-        if (existActionNameTextField.getHasErrors() == true) {
-            return false;
-        }
-        return true;
     }
 
     void saveAction() throws IOException {
@@ -637,6 +663,27 @@ public class MainWindowController implements Initializable {
         }
     }
 
+    @FXML
+    void showTeacherField(ActionEvent event) {
+        newTeacherTextField.setVisible(true);
+        addTeacherButton.setVisible(true);
+    }
+
+    @FXML
+    void addTeacher(ActionEvent event) throws IOException {
+        requiredTeacherField.eval();
+        if (!requiredTeacherField.getHasErrors()) {
+            allTeachers.add(newTeacherTextField.getText());
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileNameOfTeachers, true));
+            bw.newLine();
+            bw.write(newTeacherTextField.getText());
+            bw.close();
+            newTeacherTextField.setText("");
+            newTeacherTextField.setVisible(false);
+            addTeacherButton.setVisible(false);
+            outputConsole.writeLine("[Dodawanie opiekuna] Pomyślnie dodano nowego opiekuna");
+        }
+    }
 
     void prepareStudy(Study study) {
         study.setCode(codeTextField.getText());
@@ -664,20 +711,6 @@ public class MainWindowController implements Initializable {
         receiversToBlockMultiComboBox.getCheckModel().clearChecks();
         blockPeripheralsSwitch.setSelected(false);
         allScenariosListView.getSelectionModel().selectFirst();
-    }
-
-    boolean validateEmptyFieldsOnStudyTab() {
-        requiredCodeTextField.eval();
-        requiredAgeTextField.eval();
-        sexErrorLabel.setVisible(false);
-        if (!sexRadioButtonMen.isSelected() && !sexRadioButtonWomen.isSelected()) {
-            sexErrorLabel.setVisible(true);
-            return false;
-        }
-        if (requiredCodeTextField.getHasErrors() || requiredAgeTextField.getHasErrors()) {
-            return false;
-        }
-        return true;
     }
 
     @FXML

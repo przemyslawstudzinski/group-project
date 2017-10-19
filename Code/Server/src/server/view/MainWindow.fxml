@@ -65,13 +65,28 @@
                                 <ListView fx:id="allScenariosListView" layoutX="26.0" layoutY="212.0" prefHeight="189.0" prefWidth="321.0" />
                                 <Label layoutX="320.0" layoutY="23.0" prefHeight="25.0" prefWidth="217.0" text="Blokuj peryferia w trakcie badania" />
                                 <ToggleSwitch fx:id="blockPeripheralsSwitch" layoutX="374.0" layoutY="61.0" prefHeight="14.0" prefWidth="53.0" />
+                                <Button onAction="#showTeacherField" fx:id="showTeacherFieldButton" text="+" layoutX="740.0" layoutY="57.0" prefHeight="25.0" prefWidth="35.0" />
                                 <ComboBox fx:id="teachersComboBox" layoutX="579.0" layoutY="57.0" prefHeight="25.0" prefWidth="157.0" />
                                 <Label layoutX="579.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Opiekun badania" />
+                                <TextField fx:id="newTeacherTextField" layoutX="579.0" layoutY="90.0" prefHeight="25.0" prefWidth="157.0" />
+                                <Button onAction="#addTeacher" fx:id="addTeacherButton" text="Dodaj" layoutX="740.0" layoutY="90.0" prefHeight="25.0" prefWidth="50.0" />
                                 <Button fx:id="runScenarioButton" layoutX="499.0" layoutY="235.0" mnemonicParsing="false" onAction="#runStudy" prefHeight="104.0" prefWidth="106.0" />
                                 <CheckComboBox fx:id="receiversToBlockMultiComboBox" layoutX="343.0" layoutY="123.0" prefHeight="25.0" prefWidth="106.0" />
                                 <Label layoutX="348.0" layoutY="61.0" text="NIE" />
                                 <Label layoutX="445.0" layoutY="61.0" text="TAK" />
                                 <Label layoutX="341.0" layoutY="96.0" text="Blokuj na " />
+                                <fx:define>
+                                    <RequiredField fx:id="requiredTeacherField">
+                                        <srcControl>
+                                            <fx:reference source="newTeacherTextField" />
+                                        </srcControl>
+                                    </RequiredField>
+                                </fx:define>
+                                <ErrorLabel layoutX="579.0" layoutY="125.0" message="Proszę uzupełnij dane opiekuna!">
+                                    <validator>
+                                        <fx:reference source="requiredTeacherField"></fx:reference>
+                                    </validator>
+                                </ErrorLabel>
                             </children>
                         </AnchorPane>
                     </content>
