@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="FXValidation">
+  <library name="commons-io-2.6">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/dependencies/FXValidation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dependencies/commons-io-2.6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
