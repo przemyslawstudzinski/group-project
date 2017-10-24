@@ -229,7 +229,7 @@
                                         </TableColumn>
                                     </columns>
                                 </TableView>
-                                <Button layoutX="541.0" layoutY="261.0" mnemonicParsing="false" onAction="#editAction" prefHeight="57.0" prefWidth="137.0" text="Zapisz akcję" />
+                                <Button layoutX="541.0" layoutY="261.0" mnemonicParsing="false" onAction="#editAction" prefHeight="57.0" prefWidth="137.0" text="Zapisz zmiany" />
                             </children>
                         </AnchorPane>
                     </content>

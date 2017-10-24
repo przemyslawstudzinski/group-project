@@ -807,14 +807,9 @@ public class MainWindowController implements Initializable {
     @FXML
     private void removeNode() throws IOException {
         NodeTableData nodeTableData = nodeTableView.getSelectionModel().getSelectedItem();
-
         Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
-        action.getNodes().removeIf( x -> x.getId().equals(nodeTableData.getId()));
         nodes.removeIf( x -> x.getId().equals(nodeTableData.getId()));
 
-        removeEditActionFile();
-        saveActionToFile(action, action.getName());
-        loadActionFiles(actionsPath, availableActions);
         nodeTableView.refresh();
         outputConsole.writeLine("[Edycja akcji] Usunięto kliknięcie z akcji: " + action.getName());
     }
