@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import com.pixelduke.javafx.validation.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 <?import org.controlsfx.control.CheckComboBox?>
 <?import org.controlsfx.control.ToggleSwitch?>
-<?import com.pixelduke.javafx.validation.RequiredField?>
-<?import com.pixelduke.javafx.validation.ErrorLabel?>
-
 <?import server.validator.ExistNameValidator?>
-<?import javafx.scene.control.RadioButton?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.MainWindowController">
     <children>
         <TabPane layoutX="-6.0" layoutY="-8.0" prefHeight="487.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
@@ -203,6 +191,45 @@
                                     <fx:reference source="requiredActionDescriptionTextArea"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Edytuj akcję">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Button fx:id="chooseActionButton" layoutX="459.0" layoutY="26.0" mnemonicParsing="false" onAction="#chooseActionToEdit" prefHeight="39.0" prefWidth="98.0" text="Wybierz akcję" />
+                                <Label fx:id="chosenActionLabel" layoutX="572.0" layoutY="27.0" prefHeight="38.0" prefWidth="190.0" text="">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font></Label>
+                                <Button layoutX="459.0" layoutY="104.0" mnemonicParsing="false" onAction="#removeNode" text="Usuń kliknięcie" />
+                                <TableView fx:id="nodeTableView" layoutX="54.0" layoutY="26.0" prefHeight="406.0" prefWidth="370.0">
+                                    <columns>
+                                        <TableColumn fx:id="corX" prefWidth="70.0" text="X">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="corX" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="corY" prefWidth="70.0" text="Y">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="corY" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="delayColumn" prefWidth="120.0" text="Opóźnienie">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="delay" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                        <TableColumn fx:id="isDoubleColumn" prefWidth="110.0" text="Dwuklik">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="isDouble" />
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                                <Button layoutX="541.0" layoutY="261.0" mnemonicParsing="false" onAction="#editAction" prefHeight="57.0" prefWidth="137.0" text="Zapisz akcję" />
                             </children>
                         </AnchorPane>
                     </content>

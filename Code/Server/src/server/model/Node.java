@@ -1,9 +1,12 @@
 package server.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.UUID;
 
 @XmlRootElement
 public class Node {
+
+    private UUID id;
 
     private int corX;
 
@@ -14,6 +17,7 @@ public class Node {
     private boolean isDouble;
 
     public Node() {
+        this.id = UUID.randomUUID();
     }
 
     public Node(int corX, int corY, long delay, boolean isDouble) {
@@ -21,6 +25,19 @@ public class Node {
         this.corY = corY;
         this.delay = delay;
         this.isDouble = isDouble;
+        this.id = UUID.randomUUID();
+    }
+
+    public Node(int corX, int corY, long delay, boolean isDouble, UUID id) {
+        this.corX = corX;
+        this.corY = corY;
+        this.delay = delay;
+        this.isDouble = isDouble;
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public void setCorX(int corX) {
@@ -54,4 +71,5 @@ public class Node {
     public boolean getIsDouble() {
         return isDouble;
     }
+
 }

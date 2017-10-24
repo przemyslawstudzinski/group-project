@@ -1,14 +1,13 @@
 package server.controller;
 
 import com.pixelduke.javafx.validation.RequiredField;
+import javafx.scene.Node;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import server.utils.OutputConsole;
-import server.model.Scenario;
-import server.utils.StudyThread;
-import server.model.Action;
-import server.model.Receiver;
-import server.model.Study;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
+import server.model.*;
+import server.utils.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -23,8 +22,10 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.ToggleSwitch;
-import server.utils.Server;
 import server.validator.ExistNameValidator;
+import org.apache.commons.io.FilenameUtils;
+
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -75,6 +76,12 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private ListView<String> chosenActionsListView;
+
+    @FXML
+    private TableView<NodeTableData> nodeTableView;
+
+    @FXML
+    private TableColumn<NodeTableData, Long> delayColumn;
 
     @FXML
     private ComboBox<Receiver> receiversComboBox;
@@ -129,6 +136,12 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private ScrollPane logScrollPanel;
+
+    @FXML
+    private Button chooseActionButton;
+
+    @FXML
+    private Label chosenActionLabel;
 
     private final ObservableList<String> allActions
             = FXCollections.observableArrayList();
@@ -189,6 +202,12 @@ public class MainWindowController implements Initializable {
     public ExistNameValidator existActionNameTextField;
 
     public ExistNameValidator existScenarioNameTextField;
+
+    File chosenActionToEdit;
+
+    List<File> actionsFiles;
+
+    ObservableList<NodeTableData> nodes = FXCollections.observableArrayList();
 
     public static final String studiesPath = configDirectory + "studies" + File.separator;
 
@@ -347,7 +366,7 @@ public class MainWindowController implements Initializable {
             if (newValue) sexRadioButtonWomen.setSelected(false);
         });
         //code Text Field
-        validateTextField(codeTextField,"textNumber");
+        validateTextField(codeTextField, "textNumber");
         //age Text Field
         validateTextField(ageTextField, "numberOnly");
         //scenario Name Text Field
@@ -391,7 +410,7 @@ public class MainWindowController implements Initializable {
                     field.setText(newValue.replaceAll("[^-_. A-Za-z0-9]", ""));
                 }
             });
-        } else if(validationType.equals("withoutNumbers")){
+        } else if (validationType.equals("withoutNumbers")) {
             field.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("[^0-9]")) {
                     field.setText(newValue.replaceAll("[0-9]", ""));
@@ -401,7 +420,7 @@ public class MainWindowController implements Initializable {
     }
 
     private void loadActionFiles(String path, Map<String, Action> map) throws IOException {
-        List<File> actionsFiles = Files.walk(Paths.get(path))
+        actionsFiles = Files.walk(Paths.get(path))
                 .filter(Files::isRegularFile)
                 .filter(f -> f.getFileName().toString().endsWith(".xml"))
                 .map(Path::toFile)
@@ -585,7 +604,7 @@ public class MainWindowController implements Initializable {
     void saveScenario(ActionEvent event) throws IOException {
         boolean validateEmptyFields = validateEmptyFieldsOnScenarioTab();
         boolean validateTheSameNames = validateTheSameNameOfScenarios();
-        if ( validateEmptyFields && validateTheSameNames) {
+        if (validateEmptyFields && validateTheSameNames) {
             Scenario scenario = new Scenario();
             scenario.setName(scenarioNameTextField.getText());
             scenario.setDescription(scenarioDescriptionTextArea.getText());
@@ -613,6 +632,16 @@ public class MainWindowController implements Initializable {
         action.setNodes(server.connectedClientsMap.get(actionClient).getRecordedClicks());
 
         String filename = actionNameTextField.getText();
+        saveActionToFile(action, filename);
+        loadActionFiles(actionsPath, availableActions);
+        allActions.add(action.getName());
+        actionNameTextField.clear();
+        actionDescriptionTextArea.clear();
+        server.connectedClientsMap.get(actionClient).getRecordedClicks().clear();
+        receiversComboBox.getSelectionModel().selectFirst();
+    }
+
+    private void saveActionToFile(Action action, String filename) {
         try {
             File file = new File(actionsPath + filename + ".xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(Action.class);
@@ -622,12 +651,6 @@ public class MainWindowController implements Initializable {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        loadActionFiles(actionsPath, availableActions);
-        allActions.add(action.getName());
-        actionNameTextField.clear();
-        actionDescriptionTextArea.clear();
-        server.connectedClientsMap.get(actionClient).getRecordedClicks().clear();
-        receiversComboBox.getSelectionModel().selectFirst();
     }
 
     boolean actionClientAvailable() {
@@ -722,6 +745,95 @@ public class MainWindowController implements Initializable {
             StudyThread studyThread = new StudyThread(study, primaryStage, outputConsole);
             studyThread.run();
             clearStudyFields();
+        }
+    }
+
+    @FXML
+    void chooseActionToEdit(ActionEvent e) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose action to edit");
+        fileChooser.setInitialDirectory(new File(actionsPath));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML", "*.xml"));
+        Node source = (Node) e.getSource();
+        Window stage = source.getScene().getWindow();
+        chosenActionToEdit = fileChooser.showOpenDialog(stage);
+
+        if (chosenActionToEdit != null && chosenActionToEdit.exists()) {
+            String actionName = FilenameUtils.removeExtension(chosenActionToEdit.getName());
+
+            if (actionsFiles.stream().filter(
+                    x -> x.getName().equals(chosenActionToEdit.getName())).findFirst().isPresent()) {
+                chosenActionLabel.setText(chosenActionToEdit.getName());
+                Action action = availableActions.get(actionName);
+                List<server.model.Node> nodesList;
+                if (action != null) {
+                    nodesList = action.getNodes();
+                    nodesList.forEach(node -> nodes.add(new NodeTableData(node)));
+                    nodeTableView.setItems(nodes);
+                }
+                nodeTableView.setEditable(true);
+                setupDelayColumn();
+                outputConsole.writeLine("[Edycja akcji] Wczytano akcję: " + actionName + " do edycji");
+            }
+        }
+    }
+
+    private void setupDelayColumn() {
+        delayColumn.setCellFactory(
+                TextFieldTableCell.<NodeTableData, Long>forTableColumn(new MyLongStringConverter()));
+        // updates the delay time field on the NodeTableData object to the committed value
+        delayColumn.setOnEditCommit(event -> {
+            final Long value = event.getNewValue() != null
+                    ? event.getNewValue() : event.getOldValue();
+            ((NodeTableData) event.getTableView().getItems()
+                    .get(event.getTablePosition().getRow())).setDelay(value);
+            nodeTableView.refresh();
+        });
+    }
+
+    private void removeEditActionFile() {
+        Action action = availableActions.get(chosenActionLabel.getText());
+        allActions.remove(action);
+        chosenActions.remove(action);
+        availableActions.remove(action);
+        actionsFiles.remove(chosenActionToEdit);
+        chosenActionToEdit.delete();
+        allActionsListView.refresh();
+        chosenActionsListView.refresh();
+    }
+
+    @FXML
+    private void removeNode() throws IOException {
+        NodeTableData nodeTableData = nodeTableView.getSelectionModel().getSelectedItem();
+
+        Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
+        action.getNodes().removeIf( x -> x.getId().equals(nodeTableData.getId()));
+        nodes.removeIf( x -> x.getId().equals(nodeTableData.getId()));
+
+        removeEditActionFile();
+        saveActionToFile(action, action.getName());
+        loadActionFiles(actionsPath, availableActions);
+        nodeTableView.refresh();
+        outputConsole.writeLine("[Edycja akcji] Usunięto kliknięcie z akcji: " + action.getName());
+    }
+
+    @FXML
+    private void editAction() throws IOException {
+        Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
+        if (action != null) {
+            List<NodeTableData> nodesTableData = nodeTableView.getItems();
+            action.getNodes().clear();
+            nodesTableData.forEach(x -> action.getNodes().add(x.toNode()));
+
+            removeEditActionFile();
+            saveActionToFile(action, action.getName());
+            loadActionFiles(actionsPath, availableActions);
+
+            chosenActionLabel.setText("");
+            nodes.clear();
+            chosenActionToEdit = null;
+            nodeTableView.refresh();
+            outputConsole.writeLine("[Edycja akcji] Zapisano nową wersji akcji: " + action.getName());
         }
     }
 }
