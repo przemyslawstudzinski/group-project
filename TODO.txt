@@ -1,34 +1,13 @@
-//SERVER:
+TODO:
 
-	TODO:
-
-	//ADDING LOGGING TO RUNNING STUDY - WADIM TODO P2
-	
-
-	WIP:
-
-	
-	DONE:
-	//CHANGE DEFAULT JAVA LOGO INSIDE APPLICATION WINDOW AND ON TASKBAR - WADIM P3
-	//HANDLING EXCEPTIONS (CHECKING IF ALL REQUIRED FIELDS ARE SET) - PRZEMEK P0
-	//ADDING SOME GUI WINDOW AFTER LAUNCHING STUDY (WITH SOME FINISH BUTTON) - PRZEMEK P0
-	//FIXING XML NODES NAMING - PRZEMEK P2
-	//FIX LOGGING TO OUTPOUTCONSOLE (ENABLE AUTOSCROLLING, FIX RENDERING PROBLEMS)
-	//FILLING "ABOUT" TAB - P4
-
-
-
-
-
-//CLIENT:
-
-	TODO:
-	
-	WIP:
-	
-	DONE:
-	//ADD TRAY ICON OF RUNNING CLIENT - WADIM P3
-	//HANDLING SCENARIO FINISHING ACTIONS (UNLOCKING MOUSE/KEYBOARD, CLOSING SYSTEM ETC.) - WADIM P1
-	
-
+1. dodanie usuwania scenariusza (minusik przy oknie ze scenariuszami) - PRZEMEK
+2. poprawa panelu edycji akcji - PRZEMEK (5 rzeczy do poprawienia - PRZEMEK pamieta jakie :D)
+3. jak jest nagrywanie na localhost to zminimalizuj okno serwera - WADIM
+4. jak jest nagrywanie na localhost to zminimalizuj okno z informacja o aktualnie trwajacym badaniu - WADIM
+5. dodanie skrotu klawiszowego do zakonczenia nagrywana akcji - WADIM
+6. wyczyszenie kodu z nieuzywanych funkcji/importow - WADIM
+7. poprawienie informacji o badanej osobie przy logowaniu badania do pliku (kod + płeć) - WADIM
+8. naprawienie niezamykajacego sie watku - NATALIA
+9. przeniesienie logowania z System.out do konsoli w aplikacji (+ dodanie wiecej info przy logowaniu roznych eventow) - NATALIA/PRZEMEK
+10. wypelnienie zakladki "O programie" - PRZEMEK/NATALIA/WADIM
 
