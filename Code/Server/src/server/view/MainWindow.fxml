@@ -207,22 +207,22 @@
                                 <Button layoutX="459.0" layoutY="104.0" mnemonicParsing="false" onAction="#removeNode" text="Usuń kliknięcie" />
                                 <TableView fx:id="nodeTableView" layoutX="54.0" layoutY="26.0" prefHeight="406.0" prefWidth="370.0">
                                     <columns>
-                                        <TableColumn fx:id="corX" prefWidth="70.0" text="X">
+                                        <TableColumn fx:id="corX" prefWidth="70.0" text="X" sortable="false">
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="corX" />
                                             </cellValueFactory>
                                         </TableColumn>
-                                        <TableColumn fx:id="corY" prefWidth="70.0" text="Y">
+                                        <TableColumn fx:id="corY" prefWidth="70.0" text="Y" sortable="false">
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="corY" />
                                             </cellValueFactory>
                                         </TableColumn>
-                                        <TableColumn fx:id="delayColumn" prefWidth="120.0" text="Opóźnienie">
+                                        <TableColumn fx:id="delayColumn" prefWidth="120.0" text="Opóźnienie" sortable="false">
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="delay" />
                                             </cellValueFactory>
                                         </TableColumn>
-                                        <TableColumn fx:id="isDoubleColumn" prefWidth="110.0" text="Dwuklik">
+                                        <TableColumn fx:id="isDoubleColumn" prefWidth="110.0" text="Dwuklik" sortable="false">
                                             <cellValueFactory>
                                                 <PropertyValueFactory property="isDouble" />
                                             </cellValueFactory>

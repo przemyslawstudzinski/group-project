@@ -375,6 +375,7 @@ public class MainWindowController implements Initializable {
         validateTextField(actionNameTextField, "filename");
 
         updateReceiversToBlock();
+        nodeTableView.setPlaceholder(new Label("Brak zdefiniowanych kliknięć"));
         assignTooltips();
     }
 
@@ -750,6 +751,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void chooseActionToEdit(ActionEvent e) throws IOException {
+        clearEditActonTab();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose action to edit");
         fileChooser.setInitialDirectory(new File(actionsPath));
@@ -829,11 +831,15 @@ public class MainWindowController implements Initializable {
             saveActionToFile(action, action.getName());
             loadActionFiles(actionsPath, availableActions);
 
-            chosenActionLabel.setText("");
-            nodes.clear();
-            chosenActionToEdit = null;
-            nodeTableView.refresh();
+            clearEditActonTab();
             outputConsole.writeLine("[Edycja akcji] Zapisano nową wersji akcji: " + action.getName());
         }
+    }
+
+    private void clearEditActonTab() {
+        chosenActionLabel.setText("");
+        nodes.clear();
+        chosenActionToEdit = null;
+        nodeTableView.refresh();
     }
 }
