@@ -2,7 +2,6 @@ package server.controller;
 
 import com.pixelduke.javafx.validation.RequiredField;
 import javafx.scene.Node;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
@@ -781,14 +780,14 @@ public class MainWindowController implements Initializable {
     }
 
     private void setupDelayColumn() {
-        delayColumn.setCellFactory(
-                TextFieldTableCell.<NodeTableData, Long>forTableColumn(new MyLongStringConverter()));
-        // updates the delay time field on the NodeTableData object to the committed value
+        delayColumn.setCellFactory(MyEditCell.<NodeTableData, Long>forTableColumn(new MyLongStringConverter()));
+        // updates the delay time field on the NodeTableData
         delayColumn.setOnEditCommit(event -> {
             final Long value = event.getNewValue() != null
                     ? event.getNewValue() : event.getOldValue();
-            ((NodeTableData) event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow())).setDelay(value);
+            NodeTableData node =  event.getTableView().getItems()
+                    .get(event.getTablePosition().getRow());
+            node.setDelay(value);
             nodeTableView.refresh();
         });
     }
