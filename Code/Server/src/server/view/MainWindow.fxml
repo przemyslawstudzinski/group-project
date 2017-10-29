@@ -51,6 +51,7 @@
                                 <Label layoutX="22.0" layoutY="23.0" prefHeight="25.0" prefWidth="138.0" text="Dane osoby badanej" />
                                 <Label layoutX="22.0" layoutY="187.0" prefHeight="25.0" prefWidth="188.0" text="Wybierz scenariusz badania" />
                                 <ListView fx:id="allScenariosListView" layoutX="26.0" layoutY="212.0" prefHeight="189.0" prefWidth="321.0" />
+                                <Button fx:id="removeScenarioFile" layoutX="350.0" layoutY="212.0" onAction="#removeScenarioFile" prefHeight="25.0" prefWidth="35.0" text="-" />
                                 <Label layoutX="320.0" layoutY="23.0" prefHeight="25.0" prefWidth="217.0" text="Blokuj peryferia w trakcie badania" />
                                 <ToggleSwitch fx:id="blockPeripheralsSwitch" layoutX="374.0" layoutY="61.0" prefHeight="14.0" prefWidth="53.0" />
                                 <Button onAction="#showTeacherField" fx:id="showTeacherFieldButton" text="+" layoutX="740.0" layoutY="57.0" prefHeight="25.0" prefWidth="35.0" />

@@ -54,11 +54,17 @@ public class Scenario {
     }
 
     public void saveToFile(String scenariosPath) throws IOException {
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(scenariosPath + this.getName() + ".cfg"), "utf-8"))) {
+        FileOutputStream fos = new FileOutputStream(scenariosPath + this.getName() + ".cfg");
+        OutputStreamWriter osw = new OutputStreamWriter(fos, "utf-8");
+
+        try (Writer writer = new BufferedWriter(osw)) {
             writer.write("nazwa:" + this.name + "\n" + "opis:" + this.description + "\n");
-            for (Action i : this.chosenActions)
+            for (Action i : this.chosenActions) {
                 writer.write("akcja:" + i.getName() + "\n");
+            }
+            writer.close();
         }
+        fos.close();
+        osw.close();
     }
 }

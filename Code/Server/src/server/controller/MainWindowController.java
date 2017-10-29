@@ -170,6 +170,8 @@ public class MainWindowController implements Initializable {
 
     private static final String scenariosPath = configDirectory + "scenarios" + File.separator;
 
+    private static final String scenarioFileExtension = ".cfg";
+
     private final Map<String, Action> availableActions = new HashMap();
 
     private final Map<String, Scenario> availableScenarios = new HashMap();
@@ -205,6 +207,8 @@ public class MainWindowController implements Initializable {
     File chosenActionToEdit;
 
     List<File> actionsFiles;
+
+    List<File> scenarioFiles;
 
     ObservableList<NodeTableData> nodes = FXCollections.observableArrayList();
 
@@ -261,6 +265,10 @@ public class MainWindowController implements Initializable {
         tooltip.setText("Przesuń akcję w dół");
         moveDownButton.setTooltip(tooltip);
 
+        //setTooltipToScenarios();
+    }
+
+    private void setTooltipToScenarios() {
         allScenariosListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             public ListCell<String> call(ListView<String> param) {
                 Tooltip tooltip = new Tooltip();
@@ -441,9 +449,9 @@ public class MainWindowController implements Initializable {
     }
 
     private void loadScenarioFiles(String path, Map<String, Scenario> map) throws IOException {
-        List<File> scenarioFiles = Files.walk(Paths.get(path))
+        scenarioFiles = Files.walk(Paths.get(path))
                 .filter(Files::isRegularFile)
-                .filter(f -> f.getFileName().toString().endsWith(".cfg"))
+                .filter(f -> f.getFileName().toString().endsWith(scenarioFileExtension))
                 .map(Path::toFile)
                 .collect(Collectors.toList());
         for (File file : scenarioFiles) {
@@ -470,6 +478,9 @@ public class MainWindowController implements Initializable {
             int pos = file.getName().lastIndexOf(".");
             String filename = pos > 0 ? file.getName().substring(0, pos) : file.getName();
             map.putIfAbsent(filename, scenario);
+            fis.close();
+            isr.close();
+            br.close();
         }
     }
 
@@ -621,6 +632,8 @@ public class MainWindowController implements Initializable {
             chosenActions.removeAll();
             chosenActionsListView.getItems().clear();
             allActionsListView.getSelectionModel().selectFirst();
+            outputConsole.writeLine("[Zapisywanie scenariusza] Zapisano scenariusz: " + scenario.getName() + ".");
+
         }
     }
 
@@ -836,4 +849,24 @@ public class MainWindowController implements Initializable {
         chosenActionToEdit = null;
         nodeTableView.refresh();
     }
+
+    @FXML
+    private void removeScenarioFile() throws IOException {
+        String scenarioName = allScenariosListView.getSelectionModel().getSelectedItem();
+        Scenario scenario = availableScenarios.get(scenarioName);
+
+        File file = Paths.get(scenariosPath + scenarioName + scenarioFileExtension).toFile();
+        if (scenarioName != null && scenario != null && file != null) {
+            if (file.delete()) {
+                scenarioFiles.remove(file);
+                availableScenarios.remove(scenarioName, scenario);
+                allScenarios.remove(scenarioName);
+
+                allScenariosListView.refresh();
+                outputConsole.writeLine("[Usuwanie scenariusza] Usunięto scenariusz: " + scenarioName + ".");
+            }
+        }
+    }
+
+
 }
