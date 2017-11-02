@@ -819,11 +819,13 @@ public class MainWindowController implements Initializable {
     @FXML
     private void removeNode() throws IOException {
         NodeTableData nodeTableData = nodeTableView.getSelectionModel().getSelectedItem();
-        Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
-        nodes.removeIf( x -> x.getId().equals(nodeTableData.getId()));
+        if (nodeTableData != null) {
+            Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
+            nodes.removeIf(x -> x.getId().equals(nodeTableData.getId()));
 
-        nodeTableView.refresh();
-        outputConsole.writeLine("[Edycja akcji] Usunięto kliknięcie z akcji: " + action.getName());
+            nodeTableView.refresh();
+            outputConsole.writeLine("[Edycja akcji] Usunięto kliknięcie z akcji: " + action.getName());
+        }
     }
 
     @FXML
@@ -839,7 +841,7 @@ public class MainWindowController implements Initializable {
             loadActionFiles(actionsPath, availableActions);
 
             clearEditActonTab();
-            outputConsole.writeLine("[Edycja akcji] Zapisano nową wersji akcji: " + action.getName());
+            outputConsole.writeLine("[Edycja akcji] Zapisano nową wersję akcji: " + action.getName());
         }
     }
 
