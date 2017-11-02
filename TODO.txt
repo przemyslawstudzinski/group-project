@@ -1,7 +1,5 @@
-TODO:
+﻿TODO:
 
-1. dodanie usuwania scenariusza (minusik przy oknie ze scenariuszami) - PRZEMEK
-2. poprawa panelu edycji akcji - PRZEMEK (5 rzeczy do poprawienia - PRZEMEK pamieta jakie :D)
 3. jak jest nagrywanie na localhost to zminimalizuj okno serwera - WADIM
 4. jak jest nagrywanie na localhost to zminimalizuj okno z informacja o aktualnie trwajacym badaniu - WADIM
 5. dodanie skrotu klawiszowego do zakonczenia nagrywana akcji - WADIM
@@ -10,4 +8,9 @@ TODO:
 8. naprawienie niezamykajacego sie watku - NATALIA
 9. przeniesienie logowania z System.out do konsoli w aplikacji (+ dodanie wiecej info przy logowaniu roznych eventow) - NATALIA/PRZEMEK
 10. wypelnienie zakladki "O programie" - PRZEMEK/NATALIA/WADIM
+11. Naprawienie tooltip do scenariuszy. Jesli się usuwa scenariusz to zostaje w dalszym ciągu jego nazwa w gui - WADIM
 
+
+DONE:
+1. dodanie usuwania scenariusza (minusik przy oknie ze scenariuszami) - PRZEMEK
+2. poprawa panelu edycji akcji - PRZEMEK (5 rzeczy do poprawienia - PRZEMEK pamieta jakie :D)
