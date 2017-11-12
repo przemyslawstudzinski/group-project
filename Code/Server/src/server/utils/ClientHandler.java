@@ -79,7 +79,7 @@ public class ClientHandler extends Thread {
             while (running) {
                 Thread.sleep(1);
             }
-        } catch (InterruptedException e) {`
+        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             if (!socket.isClosed()) {

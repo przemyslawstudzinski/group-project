@@ -665,15 +665,15 @@ public class MainWindowController implements Initializable {
                     @Override
                     public void keyPressed(GlobalKeyEvent event) {
                         if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_OEM_3)
-                            try {
-                                stopRecording(new ActionEvent());
-                                Platform.runLater(() -> {
-                                    Stage s = (Stage) startRecordingButton.getScene().getWindow();
-                                    s.setIconified(false);
-                                });
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            Platform.runLater(() -> {
+                                try {
+                                    stopRecording(new ActionEvent());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Stage s = (Stage) startRecordingButton.getScene().getWindow();
+                                s.setIconified(false);
+                            });
                     }
                 });
             }
