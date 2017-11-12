@@ -1,11 +1,7 @@
 ﻿TODO:
 
-9. przeniesienie logowania z System.out do konsoli w aplikacji (+ dodanie wiecej info przy logowaniu roznych eventow) - NATALIA/PRZEMEK
-
 10. Wypelnienie zakladki "O programie" - PRZEMEK/NATALIA/WADIM (???)
 11. Naprawienie tooltip do scenariuszy. Jesli się usuwa scenariusz to zostaje w dalszym ciągu jego nazwa w gui - WADIM (???)
-
-
 
 DONE:
 1. dodanie usuwania scenariusza (minusik przy oknie ze scenariuszami) - PRZEMEK
@@ -16,5 +12,6 @@ DONE:
 6. wyczyszenie kodu z nieuzywanych funkcji/importow - WADIM
 7. poprawienie informacji o badanej osobie przy logowaniu badania do pliku (kod + płeć) - WADIM
 8. naprawienie niezamykajacego sie watku - NATALIA
+9. przeniesienie logowania z System.out do konsoli w aplikacji (+ dodanie wiecej info przy logowaniu roznych eventow) - NATALIA/PRZEMEK
 
 

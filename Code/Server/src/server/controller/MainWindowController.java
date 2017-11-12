@@ -660,6 +660,7 @@ public class MainWindowController implements Initializable {
                 PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
                 out.println("record");
                 isRecording = true;
+                outputConsole.writeLine("Rozpoczęto nagrywanie akcji.");
                 keyboardHook = new GlobalKeyboardHook(false);
                 keyboardHook.addKeyListener(new GlobalKeyAdapter() {
                     @Override
@@ -689,6 +690,7 @@ public class MainWindowController implements Initializable {
                 out.println("stoprecord");
                 saveAction();
                 isRecording = false;
+                outputConsole.writeLine("Zakończono nagrywanie akcji");
                 keyboardHook.shutdownHook();
             } else
                 outputConsole.writeErrorLine("[Koniec nagrywania] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
