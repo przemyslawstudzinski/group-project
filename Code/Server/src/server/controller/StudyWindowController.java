@@ -61,7 +61,8 @@ public class StudyWindowController implements Initializable, ChangeListener<Numb
         if (study.blockPeripherals) {
             for (Receiver r : study.blockedPeripheralsOnReceivers) {
                 PrintWriter out = new PrintWriter(MainWindowController.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
-                out.println("unlockMouseAndKeyboard");
+                if (out != null)
+                    out.println("unlockMouseAndKeyboard");
             }
         }
     }

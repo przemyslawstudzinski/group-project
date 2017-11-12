@@ -44,7 +44,7 @@ public class ClientHandler extends Thread {
                 }
             } catch (SocketException e) {
                 System.out.println("Closing clientlistener socket");
-                Server.connectedClientsMap.remove(IP);
+                running = false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,7 +79,7 @@ public class ClientHandler extends Thread {
             while (running) {
                 Thread.sleep(1);
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e) {`
             e.printStackTrace();
         } finally {
             if (!socket.isClosed()) {
@@ -88,6 +88,7 @@ public class ClientHandler extends Thread {
                     out.println("close");
                     System.out.println("Closing client socket");
                     socket.close();
+                    Server.connectedClientsMap.remove(IP);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

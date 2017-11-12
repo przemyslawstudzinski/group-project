@@ -71,6 +71,7 @@ public class StudyThread implements Runnable {
             newStage.getIcons().add(appIcon);
             newStage.setScene(new Scene(root, 600, 340));
             newStage.show();
+            newStage.setIconified(true);
             newStage.setOnCloseRequest(event -> {
                 newStage.close();
                 studyController.shutdown();

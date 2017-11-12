@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <action>
-    <description>test</description>
-    <name>Test</name>
+    <description>A</description>
+    <name>A</name>
     <nodes>
         <node>
-            <corX>2480</corX>
-            <corY>837</corY>
-            <delay>1272</delay>
+            <corX>1371</corX>
+            <corY>467</corY>
+            <delay>941</delay>
             <isDouble>false</isDouble>
         </node>
         <node>
-            <corX>801</corX>
-            <corY>433</corY>
-            <delay>1156</delay>
+            <corX>1327</corX>
+            <corY>323</corY>
+            <delay>737</delay>
             <isDouble>false</isDouble>
         </node>
     </nodes>

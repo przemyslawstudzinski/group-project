@@ -1,0 +1,9 @@
+----------------------- LOG BADANIA ----------------------- 
+Data rozpoczęcia: 2017.11.12
+Godzina rozpoczęcia: 18.21.43
+Opiekun badania: ﻿dr inż. Michał Wróbel
+Badana osoba: kod: WW, płeć: Kobieta, wiek: 12
+Scenariusz: B
+Data zakończenia: 2017.11.12
+Godzina zakończenia: 18.21.54
+----------------------- LOG BADANIA -----------------------

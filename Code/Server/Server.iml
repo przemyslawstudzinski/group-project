@@ -11,5 +11,6 @@
     <orderEntry type="library" name="FXValidation" level="project" />
     <orderEntry type="library" name="commons-io-2.6" level="project" />
     <orderEntry type="library" name="commons-lang3-3.6" level="project" />
+    <orderEntry type="library" name="system-hook-3.1" level="project" />
   </component>
 </module>

@@ -1,2 +1,0 @@
-﻿- nagrywanie akcji - czy zakładamy, że użytkownik wykona tylko te kroki, które ma wykonać? (bez żadnych dodatkowych) - RACZEJ TAK
-- czy będzie jakaś inna akcja oprócz kliknięcia? RACZEJ NIE
