@@ -5,6 +5,9 @@
       <element id="module-output" name="Server" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Dependencies/FXValidation.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/Dependencies/controlsfx-8.40.13.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependencies/commons-io-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependencies/commons-lang3-3.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Dependencies/system-hook-3.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

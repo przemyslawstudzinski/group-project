@@ -1,0 +1,9 @@
+----------------------- LOG BADANIA ----------------------- 
+Data rozpoczêcia: 2017.11.12
+Godzina rozpoczêcia: 19.18.19
+Opiekun badania: ?dr in¿. Micha³ Wróbel
+Badana osoba: kod: WD, p³eæ: Kobieta, wiek: 12
+Scenariusz: B
+Data zakoñczenia: 2017.11.12
+Godzina zakoñczenia: 19.18.28
+----------------------- LOG BADANIA -----------------------

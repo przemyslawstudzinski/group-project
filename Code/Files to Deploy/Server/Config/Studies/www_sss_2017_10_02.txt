@@ -1,9 +1,0 @@
------------------------ LOG BADANIA ----------------------- 
-Data rozpoczêcia: 2017.10.02
-Godzina rozpoczêcia: 20.22.25
-Opiekun badania: dr in¿. Jan Kowalski
-Badana osoba: www sss, 44 lat 
-Scenariusz: ccc
-Data zakoñczenia: 2017.10.02
-Godzina zakoñczenia: 20.22.33
------------------------ LOG BADANIA -----------------------
