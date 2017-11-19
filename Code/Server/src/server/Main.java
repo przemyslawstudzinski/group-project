@@ -1,5 +1,6 @@
 package server;
 
+import javafx.application.Platform;
 import server.controller.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/MainWindow.fxml"));
+        Platform.setImplicitExit( false );
         Parent root = loader.load();
         controller = loader.getController();
         appIcon = new Image(getClass().getResourceAsStream("view/Images/icon.png"));
@@ -33,6 +35,7 @@ public class Main extends Application {
         primaryStage.setOnCloseRequest(event -> {
             try {
                 controller.shutdown();
+                Platform.exit();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {

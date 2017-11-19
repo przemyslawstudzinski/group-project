@@ -1,5 +1,6 @@
 package server.utils;
 
+import javafx.application.Platform;
 import server.model.Node;
 
 import java.io.BufferedReader;
@@ -22,6 +23,8 @@ public class ClientHandler extends Thread {
 
     public boolean running = true;
 
+    private OutputConsole outputConsole;
+
     private Thread clientListener = new Thread() {
         public void run() {
             try {
@@ -43,16 +46,16 @@ public class ClientHandler extends Thread {
                     }
                 }
             } catch (SocketException e) {
-                System.out.println("Closing clientlistener socket");
-                Server.connectedClientsMap.remove(IP);
+                running = false;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     };
 
-    ClientHandler(Socket s) {
+    ClientHandler(Socket s, OutputConsole console) {
         socket = s;
+        outputConsole = console;
         recordedClicks = new ArrayList<>();
         try {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -86,8 +89,11 @@ public class ClientHandler extends Thread {
                 try {
                     PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                     out.println("close");
-                    System.out.println("Closing client socket");
+                    Platform.runLater(() -> {
+                        outputConsole.writeLine("Klient o IP " + IP + " właśnie się rozłączył");
+                    });
                     socket.close();
+                    Server.connectedClientsMap.remove(IP);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

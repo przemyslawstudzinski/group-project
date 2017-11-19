@@ -155,7 +155,7 @@ public class Study {
                     "Data rozpoczęcia: " + startDates[0] + "." + startDates[1] + "." + startDates[2] + "\n" +
                     "Godzina rozpoczęcia: " + startDates[3] + "." + startDates[4] + "." + startDates[5] + "\n" +
                     "Opiekun badania: " + this.teacher + "\n" +
-                    "Badana osoba: " + this.code + " " + this.sex + ", " + this.age + " lat \n" +
+                    "Badana osoba: kod: " + this.code + ", płeć: " + this.sex + ", wiek: " + this.age + "\n" +
                     "Scenariusz: " + this.chosenScenario.getName() + "\n" +
                     "Data zakończenia: " + endDates[0] + "." + endDates[1] + "." + endDates[2] + "\n" +
                     "Godzina zakończenia: " + endDates[3] + "." + endDates[4] + "." + endDates[5] + "\n" +

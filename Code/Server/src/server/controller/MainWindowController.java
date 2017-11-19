@@ -1,10 +1,15 @@
 package server.controller;
 
 import com.pixelduke.javafx.validation.RequiredField;
+import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import lc.kra.system.keyboard.GlobalKeyboardHook;
+import lc.kra.system.keyboard.event.GlobalKeyAdapter;
+import lc.kra.system.keyboard.event.GlobalKeyEvent;
 import server.model.*;
 import server.utils.*;
 import javafx.beans.value.ChangeListener;
@@ -104,9 +109,6 @@ public class MainWindowController implements Initializable {
     private ComboBox<String> teachersComboBox;
 
     @FXML
-    private Button showTeacherFieldButton;
-
-    @FXML
     private Button addTeacherButton;
 
     @FXML
@@ -135,9 +137,6 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private ScrollPane logScrollPanel;
-
-    @FXML
-    private Button chooseActionButton;
 
     @FXML
     private Label chosenActionLabel;
@@ -170,6 +169,8 @@ public class MainWindowController implements Initializable {
 
     private static final String scenariosPath = configDirectory + "scenarios" + File.separator;
 
+    private static final String scenarioFileExtension = ".cfg";
+
     private final Map<String, Action> availableActions = new HashMap();
 
     private final Map<String, Scenario> availableScenarios = new HashMap();
@@ -179,6 +180,8 @@ public class MainWindowController implements Initializable {
     private boolean isRecording;
 
     public static Server server;
+
+    GlobalKeyboardHook keyboardHook;
 
     public String actionClient = "";
 
@@ -205,6 +208,8 @@ public class MainWindowController implements Initializable {
     File chosenActionToEdit;
 
     List<File> actionsFiles;
+
+    List<File> scenarioFiles;
 
     ObservableList<NodeTableData> nodes = FXCollections.observableArrayList();
 
@@ -246,7 +251,7 @@ public class MainWindowController implements Initializable {
         tooltip.setText("Uruchom badanie");
         runScenarioButton.setTooltip(tooltip);
         tooltip = new Tooltip();
-        tooltip.setText("StudiController v1.0 beta");
+        tooltip.setText("StudiController v1.0");
         infoButton.setTooltip(tooltip);
         tooltip = new Tooltip();
         tooltip.setText("Dodaj akcję do scenariusza");
@@ -260,30 +265,6 @@ public class MainWindowController implements Initializable {
         tooltip = new Tooltip();
         tooltip.setText("Przesuń akcję w dół");
         moveDownButton.setTooltip(tooltip);
-
-        allScenariosListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            public ListCell<String> call(ListView<String> param) {
-                Tooltip tooltip = new Tooltip();
-                final ListCell<String> cell = new ListCell<String>() {
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item);
-                            String tooltipText = "";
-                            int index = 1;
-                            for (Action a : availableScenarios.get(item).getChosenActions()) {
-                                tooltipText += Integer.toString(index) + ". Akcja: " + a.getName() + ", odbiorca: " + a.getReceiver().getName() + "\n";
-                                index++;
-                            }
-                            tooltip.setText(tooltipText);
-                            setTooltip(tooltip);
-                        }
-                    }
-                };
-                return cell;
-            }
-        });
     }
 
     private void updateReceiversToBlock() {
@@ -292,7 +273,7 @@ public class MainWindowController implements Initializable {
         String selected = allScenariosListView.getSelectionModel().getSelectedItem();
         if (selected != null) {
             for (Action a : availableScenarios.get(selected).getChosenActions()) {
-                if (!receiversToBlock.contains(a.getReceiver()))
+                if (!receiversToBlock.contains(a.getReceiver()) && !a.getReceiver().getName().equals("Localhost"))
                     receiversToBlock.add(a.getReceiver());
             }
         }
@@ -441,9 +422,9 @@ public class MainWindowController implements Initializable {
     }
 
     private void loadScenarioFiles(String path, Map<String, Scenario> map) throws IOException {
-        List<File> scenarioFiles = Files.walk(Paths.get(path))
+        scenarioFiles = Files.walk(Paths.get(path))
                 .filter(Files::isRegularFile)
-                .filter(f -> f.getFileName().toString().endsWith(".cfg"))
+                .filter(f -> f.getFileName().toString().endsWith(scenarioFileExtension))
                 .map(Path::toFile)
                 .collect(Collectors.toList());
         for (File file : scenarioFiles) {
@@ -470,6 +451,9 @@ public class MainWindowController implements Initializable {
             int pos = file.getName().lastIndexOf(".");
             String filename = pos > 0 ? file.getName().substring(0, pos) : file.getName();
             map.putIfAbsent(filename, scenario);
+            fis.close();
+            isr.close();
+            br.close();
         }
     }
 
@@ -523,7 +507,7 @@ public class MainWindowController implements Initializable {
             if (index > 0) {
                 Collections.swap(chosenActions, index, index - 1);
                 chosenActionsListView.getSelectionModel().select(index - 1);
-                outputConsole.writeLine("Zmieniono kolejność akcji: przesunięto w górę");
+                outputConsole.writeLine("Zmieniono kolejność akcji - przesunięto w górę");
             }
         }
     }
@@ -536,7 +520,7 @@ public class MainWindowController implements Initializable {
             if (index < chosenActions.size() - 1) {
                 Collections.swap(chosenActions, index, index + 1);
                 chosenActionsListView.getSelectionModel().select(index + 1);
-                outputConsole.writeLine("Zmieniono kolejność akcji: przesunięto w dół");
+                outputConsole.writeLine("Zmieniono kolejność akcji - przesunięto w dół");
             }
         }
     }
@@ -621,6 +605,8 @@ public class MainWindowController implements Initializable {
             chosenActions.removeAll();
             chosenActionsListView.getItems().clear();
             allActionsListView.getSelectionModel().selectFirst();
+            outputConsole.writeLine("[Zapisywanie scenariusza] Zapisano scenariusz: " + scenario.getName() + ".");
+
         }
     }
 
@@ -659,15 +645,38 @@ public class MainWindowController implements Initializable {
         return false;
     }
 
+
     @FXML
     void startRecording(ActionEvent event) throws IOException {
         if (actionClientAvailable()) {
             boolean validateEmptyFields = validateEmptyFieldsOnActionTab();
             boolean validateTheSameNames = validateTheSameNameOfActions();
             if (validateEmptyFields && validateTheSameNames) {
+                if (receiversComboBox.getSelectionModel().getSelectedItem().getName().equals("Localhost")) {
+                    Stage s = (Stage) startRecordingButton.getScene().getWindow();
+                    s.setIconified(true);
+                }
+
                 PrintWriter out = new PrintWriter(server.connectedClientsMap.get(actionClient).getSocket().getOutputStream(), true);
                 out.println("record");
                 isRecording = true;
+                outputConsole.writeLine("Rozpoczęto nagrywanie akcji.");
+                keyboardHook = new GlobalKeyboardHook(false);
+                keyboardHook.addKeyListener(new GlobalKeyAdapter() {
+                    @Override
+                    public void keyPressed(GlobalKeyEvent event) {
+                        if (event.getVirtualKeyCode() == GlobalKeyEvent.VK_OEM_3)
+                            Platform.runLater(() -> {
+                                try {
+                                    stopRecording(new ActionEvent());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Stage s = (Stage) startRecordingButton.getScene().getWindow();
+                                s.setIconified(false);
+                            });
+                    }
+                });
             }
         } else
             outputConsole.writeErrorLine("[Nagrywanie] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
@@ -681,6 +690,8 @@ public class MainWindowController implements Initializable {
                 out.println("stoprecord");
                 saveAction();
                 isRecording = false;
+                outputConsole.writeLine("Zakończono nagrywanie akcji");
+                keyboardHook.shutdownHook();
             } else
                 outputConsole.writeErrorLine("[Koniec nagrywania] Wybrany odbiorca nie jest aktualnie połączony z serwerem!");
         }
@@ -718,11 +729,11 @@ public class MainWindowController implements Initializable {
         study.setTeacher(teachersComboBox.getSelectionModel().getSelectedItem());
         study.setChosenScenario(availableScenarios.get(allScenariosListView.getSelectionModel().getSelectedItem()));
         study.setBlockPeripherals(blockPeripheralsSwitch.isSelected());
-        ArrayList<Receiver> copy = new ArrayList<>();
+        ArrayList<Receiver> receiversR = new ArrayList<>();
         for (Receiver r : receiversToBlockMultiComboBox.getCheckModel().getCheckedItems()) {
-            copy.add(r);
+            receiversR.add(r);
         }
-        study.setBlockedPeripheralsOnReceivers(copy);
+        study.setBlockedPeripheralsOnReceivers(receiversR);
     }
 
     void clearStudyFields() {
@@ -785,7 +796,7 @@ public class MainWindowController implements Initializable {
         delayColumn.setOnEditCommit(event -> {
             final Long value = event.getNewValue() != null
                     ? event.getNewValue() : event.getOldValue();
-            NodeTableData node =  event.getTableView().getItems()
+            NodeTableData node = event.getTableView().getItems()
                     .get(event.getTablePosition().getRow());
             node.setDelay(value);
             nodeTableView.refresh();
@@ -806,11 +817,13 @@ public class MainWindowController implements Initializable {
     @FXML
     private void removeNode() throws IOException {
         NodeTableData nodeTableData = nodeTableView.getSelectionModel().getSelectedItem();
-        Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
-        nodes.removeIf( x -> x.getId().equals(nodeTableData.getId()));
+        if (nodeTableData != null) {
+            Action action = availableActions.get(FilenameUtils.removeExtension(chosenActionLabel.getText()));
+            nodes.removeIf(x -> x.getId().equals(nodeTableData.getId()));
 
-        nodeTableView.refresh();
-        outputConsole.writeLine("[Edycja akcji] Usunięto kliknięcie z akcji: " + action.getName());
+            nodeTableView.refresh();
+            outputConsole.writeLine("[Edycja akcji] Usunięto kliknięcie z akcji: " + action.getName());
+        }
     }
 
     @FXML
@@ -826,7 +839,7 @@ public class MainWindowController implements Initializable {
             loadActionFiles(actionsPath, availableActions);
 
             clearEditActonTab();
-            outputConsole.writeLine("[Edycja akcji] Zapisano nową wersji akcji: " + action.getName());
+            outputConsole.writeLine("[Edycja akcji] Zapisano nową wersję akcji: " + action.getName());
         }
     }
 
@@ -836,4 +849,23 @@ public class MainWindowController implements Initializable {
         chosenActionToEdit = null;
         nodeTableView.refresh();
     }
+
+    @FXML
+    private void removeScenarioFile() throws IOException {
+        String scenarioName = allScenariosListView.getSelectionModel().getSelectedItem();
+        Scenario scenario = availableScenarios.get(scenarioName);
+
+        File file = Paths.get(scenariosPath + scenarioName + scenarioFileExtension).toFile();
+        if (scenarioName != null && scenario != null && file != null) {
+            if (file.delete()) {
+                scenarioFiles.remove(file);
+                availableScenarios.remove(scenarioName, scenario);
+                allScenarios.remove(scenarioName);
+                allScenariosListView.refresh();
+                outputConsole.writeLine("[Usuwanie scenariusza] Usunięto scenariusz: " + scenarioName + ".");
+            }
+        }
+    }
+
+
 }

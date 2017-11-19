@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="controlsfx-8.40.13">
+  <library name="system-hook-3.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Dependencies/controlsfx-8.40.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Dependencies/system-hook-3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

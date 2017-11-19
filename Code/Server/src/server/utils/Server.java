@@ -40,7 +40,7 @@ public class Server extends Thread {
                 public void run() {
                     try {
                         while (true) {
-                            ClientHandler handler = new ClientHandler(listener.accept());
+                            ClientHandler handler = new ClientHandler(listener.accept(), outputConsole);
                             String clientIP = handler.getSocket().getRemoteSocketAddress().toString().replaceAll("/", "").split(":")[0];
                             handler.setIP(clientIP);
                             connectedClientsMap.put(clientIP, handler);
@@ -52,7 +52,6 @@ public class Server extends Thread {
                             });
                         }
                     } catch (SocketException e) {
-                        System.out.println("Closing serverlistener socket");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -69,7 +68,6 @@ public class Server extends Thread {
                 for (ClientHandler handler : connectedClientsMap.values()) {
                     handler.running = false;
                 }
-            System.out.println("Closing server");
             try {
                 listener.close();
             } catch (IOException e) {
