@@ -34,7 +34,6 @@ public class Study {
         this.blockedPeripheralsOnReceivers = new ArrayList<Receiver>();
     }
 
-
     public void setCode(String code) {
         this.code = code;
     }

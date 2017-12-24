@@ -10,7 +10,7 @@ import javafx.scene.text.TextFlow;
 
 public class OutputConsole {
 
-    private final String fontFamily = "Helvetica";
+    private static final String fontFamily = "Helvetica";
 
     private final int size = 15;
 
