@@ -130,7 +130,7 @@
                                     <fx:reference source="requiredScenarioNameTextField"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
-                                <ErrorLabel layoutX="21.0" layoutY="110.0" message="Taki scenariusz już istnieje, kliknij jeszcze aby go zastąpić.">
+                                <ErrorLabel layoutX="21.0" layoutY="110.0" message="Taki scenariusz już istnieje, kliknij ponownie aby go zastąpić.">
                                     <validator>
                                         <fx:reference source="existScenarioNameTextField"></fx:reference>
                                     </validator>
