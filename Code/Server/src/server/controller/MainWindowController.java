@@ -1,14 +1,20 @@
 package server.controller;
 
 import com.pixelduke.javafx.validation.RequiredField;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import lc.kra.system.keyboard.GlobalKeyboardHook;
 import lc.kra.system.keyboard.event.GlobalKeyAdapter;
 import lc.kra.system.keyboard.event.GlobalKeyEvent;
+import org.apache.commons.lang3.ObjectUtils;
+import server.Main;
 import server.model.*;
 import server.utils.*;
 import javafx.beans.value.ChangeListener;
@@ -56,7 +62,10 @@ public class MainWindowController implements Initializable {
     private Button runScenarioButton;
 
     @FXML
-    private Button infoButton;
+    private Button PGButton;
+
+    @FXML
+    private Button ETIButton;
 
     @FXML
     private Button moveRightButton;
@@ -138,6 +147,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private Label chosenActionLabel;
+
+    @FXML
+    private Label infoLabel;
 
     private final ObservableList<String> allActions
             = FXCollections.observableArrayList();
@@ -323,33 +335,39 @@ public class MainWindowController implements Initializable {
         }
     }
 
+    private Tooltip createTooltip(String text) {
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText(text);
+        return tooltip;
+    }
+
     private void assignTooltips() {
         updateTooltipBehavior(50, 10000, 50, true);
 
-        Tooltip tooltip = new Tooltip();
-        tooltip.setText("Rozpocznij nagrywanie akcji");
-        startRecordingButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("Zakończ nagrywanie akcji");
-        stopRecordingButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("Uruchom badanie");
-        runScenarioButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("StudiController v1.0");
-        infoButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("Dodaj akcję do scenariusza");
-        moveRightButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("Usuń akcję ze scenariusza");
-        moveLeftButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("Przesuń akcję w górę");
-        moveUpButton.setTooltip(tooltip);
-        tooltip = new Tooltip();
-        tooltip.setText("Przesuń akcję w dół");
-        moveDownButton.setTooltip(tooltip);
+        startRecordingButton.setTooltip(createTooltip("Rozpocznij nagrywanie akcji"));
+        stopRecordingButton.setTooltip(createTooltip("Zakończ nagrywanie akcji\nAby zakończyć nagrywanie, możesz również użyć \nprzycisku \"~\" (tylda) na klawiaturze"));
+        runScenarioButton.setTooltip(createTooltip("Uruchom badanie"));
+        PGButton.setTooltip(createTooltip("Politechnika Gdańska"));
+        ETIButton.setTooltip(createTooltip("Wydział ETI"));
+        moveRightButton.setTooltip(createTooltip("Dodaj akcję do scenariusza"));
+        moveLeftButton.setTooltip(createTooltip("Usuń akcję ze scenariusza"));
+        moveUpButton.setTooltip(createTooltip("Przesuń akcję w górę"));
+        moveDownButton.setTooltip(createTooltip("Przesuń akcję w dół"));
+
+        infoLabel.setText("Aplikacja \"StudiController\" została stworzona z myślą o wygodnym definiowaniu scenariuszy na potrzeby badań koła naukowego Affective Computing. " +
+        "Umożliwia ona automatyzację prostych akcji na komputerze, jak również integrację pracy na kilku komputerach w czasie przeprowadzenia konkretnego, uprzednio zdefiniowanego scenariusza. \n\n" +
+        "Opiekun projektu: \n" +
+        "\t dr inż. Michał Wróbel \n" +
+        "Autorzy projektu:\n " +
+        "\t inż. Natalia Niewdzięczna \n" +
+        "\t inż. Wadim Sokołowski \n" +
+        "\t inż. Przemysław studziński \n\n" +
+        "Wersja programu: " + Main.programVersion + "\n" +
+        "Data wydania: Styczeń 2018 \n" +
+        "Licencja: GNU General Public License");
+
+        infoLabel.setWrapText(true);
+        infoLabel.setTextAlignment(TextAlignment.JUSTIFY);
     }
 
     private void updateReceiversToBlock() {
@@ -357,10 +375,22 @@ public class MainWindowController implements Initializable {
         receiversToBlock.clear();
         String selected = allScenariosListView.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            for (Action a : availableScenarios.get(selected).getChosenActions()) {
-                if (!receiversToBlock.contains(a.getReceiver()) && !a.getReceiver().getName().equals("Localhost"))
-                    receiversToBlock.add(a.getReceiver());
+            try {
+                for (Action a : availableScenarios.get(selected).getChosenActions()) {
+                    if (!receiversToBlock.contains(a.getReceiver()) && !a.getReceiver().getName().equals("Localhost"))
+                        receiversToBlock.add(a.getReceiver());
+                }
+            } catch (NullPointerException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                alert.setTitle("Ups! Mamy problem!");
+                alert.setHeaderText("Wykryto problem z konfiguracją scenariusza " + availableScenarios.get(selected).getName());
+                alert.setContentText("Wygląda na to, że scenariusz " + availableScenarios.get(selected).getName() + " zawiera akcję, która nie ma swojego odpowiednika w pliku. " +
+                        "Upewnij się, że plik z akcją istnieje, a następnie ponownie uruchom program serwera.");
+                alert.showAndWait();
+                System.exit(0);
             }
+
         }
         receiversToBlockMultiComboBox.getItems().addAll(receiversToBlock);
     }
@@ -575,9 +605,11 @@ public class MainWindowController implements Initializable {
             availableScenarios.remove(scenario.getName());
             loadScenarioFiles(scenariosPath, availableScenarios);
 
-            allScenarios.add(scenario.getName());
+            if (!allScenarios.contains(scenario.getName()))
+                allScenarios.add(scenario.getName());
             allActions.addAll(chosenActions);
             clearScenarioFields();
+            allScenariosListView.refresh();
             outputConsole.writeLine("[Zapisywanie scenariusza] Zapisano scenariusz: " + scenario.getName() + ".");
         }
     }

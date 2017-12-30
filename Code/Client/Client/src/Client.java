@@ -24,7 +24,6 @@ public class Client extends Thread {
     private Process lockerProcess = null;
     private boolean closeSystem = false;
     private String serverIP = "";
-    private static Image icon;
     private static final String configDirectory = "Config" + File.separator;
     private static final String serverIPFilename = configDirectory + File.separator + "server_ip.ini";
 

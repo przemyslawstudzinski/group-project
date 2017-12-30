@@ -46,8 +46,16 @@
     -fx-background-repeat: no-repeat;
 }
 
-#infoButton {
-    -fx-background-image: url('Images/info.png');
+#PGButton {
+    -fx-background-image: url('Images/PG.png');
+    -fx-background-color: transparent;
+    -fx-background-size: 150 150;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+#ETIButton {
+    -fx-background-image: url('Images/ETI.png');
     -fx-background-color: transparent;
     -fx-background-size: 100 100;
     -fx-background-position: center;

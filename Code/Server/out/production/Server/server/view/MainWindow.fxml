@@ -81,25 +81,27 @@
                     </content>
                 </Tab>
 
-                <Tab text="Dodaj scenariusz">
+                <Tab text="Scenariusz">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="471.0" prefWidth="884.0">
                             <children>
-                                <Label layoutX="21.0" layoutY="28.0" prefHeight="25.0" prefWidth="98.0" text="Nazwa" />
-                                <TextField fx:id="scenarioNameTextField" layoutX="21.0" layoutY="60.0" prefHeight="25.0" prefWidth="300.0" />
-                                <Button fx:id="moveRightButton" layoutX="235.0" layoutY="204.0" mnemonicParsing="false" onAction="#moveActionToRight" prefHeight="44.0" prefWidth="51.0" />
-                                <Button fx:id="moveLeftButton" layoutX="233.0" layoutY="266.0" mnemonicParsing="false" onAction="#moveActionToLeft" prefHeight="46.0" prefWidth="54.0" />
-                                <ListView fx:id="allActionsListView" layoutX="21.0" layoutY="152.0" prefHeight="230.0" prefWidth="185.0" />
-                                <Label layoutX="311.0" layoutY="123.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania" />
-                                <ListView fx:id="chosenActionsListView" layoutX="311.0" layoutY="152.0" prefHeight="230.0" prefWidth="179.0" />
-                                <Button fx:id="moveDownButton" layoutX="511.0" layoutY="266.0" mnemonicParsing="false" onAction="#moveActionToDown" prefHeight="46.0" prefWidth="51.0" />
-                                <Button fx:id="moveUpButton" layoutX="509.0" layoutY="203.0" mnemonicParsing="false" onAction="#moveActionToUp" prefHeight="44.0" prefWidth="52.0" />
+                                <Button layoutX="21.0" layoutY="25.0" mnemonicParsing="false" onAction="#readScenario" prefHeight="24.0" prefWidth="120.0" text="Wczytaj scenariusz" />
+                                <Label layoutX="21.0" layoutY="56.0" prefHeight="25.0" prefWidth="98.0" text="Nazwa" />
+                                <TextField fx:id="scenarioNameTextField" layoutX="21.0" layoutY="82.0" prefHeight="25.0" prefWidth="300.0" />
+                                <Button fx:id="moveRightButton" layoutX="320.0" layoutY="204.0" mnemonicParsing="false" onAction="#moveActionToRight" prefHeight="44.0" prefWidth="51.0" />
+                                <Button fx:id="moveLeftButton" layoutX="319.0" layoutY="266.0" mnemonicParsing="false" onAction="#moveActionToLeft" prefHeight="46.0" prefWidth="54.0" />
+                                <ListView fx:id="allActionsListView" layoutX="21.0" layoutY="148.0" prefHeight="230.0" prefWidth="250.0" />
+                                <Label layoutX="415.0" layoutY="123.0" prefHeight="25.0" prefWidth="140.0" text="Akcje do wykonania" />
+                                <ListView fx:id="chosenActionsListView" layoutX="415.0" layoutY="148.0" prefHeight="230.0" prefWidth="250.0" />
+                                <Button fx:id="moveDownButton" layoutX="711.0" layoutY="266.0" mnemonicParsing="false" onAction="#moveActionToDown" prefHeight="46.0" prefWidth="51.0" />
+                                <Button fx:id="moveUpButton" layoutX="710.0" layoutY="204.0" mnemonicParsing="false" onAction="#moveActionToUp" prefHeight="44.0" prefWidth="52.0" />
                                 <Button layoutX="195.0" layoutY="419.0" mnemonicParsing="false" onAction="#saveScenario" prefHeight="32.0" prefWidth="150.0" text="Zapisz scenariusz">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Button>
-                                <Label layoutX="436.0" layoutY="28.0" prefHeight="25.0" prefWidth="138.0" text="Opis" />
-                                <TextArea fx:id="scenarioDescriptionTextArea" layoutX="436.0" layoutY="55.0" prefHeight="60.0" prefWidth="300.0" />
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                                <Label layoutX="416.0" layoutY="28.0" prefHeight="25.0" prefWidth="138.0" text="Opis" />
+                                <TextArea fx:id="scenarioDescriptionTextArea" layoutX="415.0" layoutY="53.0" prefHeight="54.0" prefWidth="300.0" />
                                 <Label layoutX="23.0" layoutY="123.0" prefHeight="25.0" prefWidth="140.0" text="Dostępne akcje" />
                                 <fx:define>
                                     <RequiredField fx:id="requiredScenarioNameTextField">
@@ -123,22 +125,22 @@
                                         </srcControl>
                                     </RequiredField>
                                 </fx:define>
-                                <ErrorLabel layoutX="21.0" layoutY="80.0" message="Proszę uzupełnij nazwę scenariusza!">
+                                <ErrorLabel layoutX="21.0" layoutY="110.0" message="Proszę uzupełnij nazwę scenariusza!">
                                 <validator>
                                     <fx:reference source="requiredScenarioNameTextField"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
-                                <ErrorLabel layoutX="21.0" layoutY="80.0" message="Taka nazwa scenariusza już istnieje!">
+                                <ErrorLabel layoutX="21.0" layoutY="110.0" message="Taki scenariusz już istnieje, kliknij jeszcze aby go zastąpić.">
                                     <validator>
                                         <fx:reference source="existScenarioNameTextField"></fx:reference>
                                     </validator>
                                 </ErrorLabel>
-                                <ErrorLabel layoutX="436.0" layoutY="110.0" message="Proszę uzupełnij opis scenariusza!">
+                                <ErrorLabel layoutX="415.0" layoutY="110.0" message="Proszę uzupełnij opis scenariusza!">
                                 <validator>
                                     <fx:reference source="requiredScenarioDescriptionTextArea"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
-                                <ErrorLabel layoutX="311.0" layoutY="380.0" message="Proszę wybierz akcję!">
+                                <ErrorLabel layoutX="415.0" layoutY="380.0" message="Proszę wybierz akcję!">
                                 <validator>
                                     <fx:reference source="requiredChosenActionsListView"></fx:reference>
                                 </validator>
@@ -182,7 +184,7 @@
                                     <fx:reference source="requiredActionNameTextField"></fx:reference>
                                 </validator>
                                 </ErrorLabel>
-                                <ErrorLabel layoutX="25.0" layoutY="85.0" message="Taka nazwa akcji już istnieje!">
+                                <ErrorLabel layoutX="25.0" layoutY="85.0" message="Taka nazwa akcji już istnieje, wybierz inną!">
                                     <validator>
                                         <fx:reference source="existActionNameTextField"></fx:reference>
                                     </validator>
@@ -239,7 +241,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField alignment="CENTER" disable="true" editable="false" layoutX="281.0" layoutY="108.0" prefHeight="178.0" prefWidth="280.0" text="StudiController v1.0 beta">
+                                <TextField alignment="CENTER" disable="true" editable="false" layoutX="281.0" layoutY="40.0" prefHeight="50.0" prefWidth="250.0" text="StudiController">
                                     <font>
                                         <Font size="23.0" />
                                     </font>
@@ -247,7 +249,9 @@
                                         <DropShadow />
                                     </effect>
                                 </TextField>
-                                <Button fx:id="infoButton" layoutX="39.0" layoutY="30.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="131.0" />
+                                <Label fx:id="infoLabel" alignment="TOP_LEFT" disable="true" layoutX="100.0" layoutY="150.0" prefHeight="340.0" prefWidth="600.0" text=""/>
+                                <Button fx:id="PGButton" layoutX="55.0" layoutY="20.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="131.0" />
+                                <Button fx:id="ETIButton" layoutX="620.0" layoutY="20.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="131.0" />
                             </children>
                         </AnchorPane>
                     </content>

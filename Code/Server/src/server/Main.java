@@ -17,14 +17,17 @@ public class Main extends Application {
 
     private static Image appIcon;
 
+    public static String programVersion = "v1.0";
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/MainWindow.fxml"));
         Platform.setImplicitExit( false );
         Parent root = loader.load();
         controller = loader.getController();
         appIcon = new Image(getClass().getResourceAsStream("view/Images/icon.png"));
-        primaryStage.setTitle("StudiController v1.0 - Serwer");
+        primaryStage.setTitle("StudiController " + programVersion + " - Serwer");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(appIcon);
         Scene scene = new Scene(root, 800, 700);

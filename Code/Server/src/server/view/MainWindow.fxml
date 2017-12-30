@@ -85,7 +85,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="471.0" prefWidth="884.0">
                             <children>
-                                <Button layoutX="21.0" layoutY="25.0" mnemonicParsing="false" onAction="#readScenario" prefHeight="24.0" prefWidth="82.0" text="Wczytaj" />
+                                <Button layoutX="21.0" layoutY="25.0" mnemonicParsing="false" onAction="#readScenario" prefHeight="24.0" prefWidth="120.0" text="Wczytaj scenariusz" />
                                 <Label layoutX="21.0" layoutY="56.0" prefHeight="25.0" prefWidth="98.0" text="Nazwa" />
                                 <TextField fx:id="scenarioNameTextField" layoutX="21.0" layoutY="82.0" prefHeight="25.0" prefWidth="300.0" />
                                 <Button fx:id="moveRightButton" layoutX="320.0" layoutY="204.0" mnemonicParsing="false" onAction="#moveActionToRight" prefHeight="44.0" prefWidth="51.0" />
@@ -241,7 +241,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField alignment="CENTER" disable="true" editable="false" layoutX="281.0" layoutY="108.0" prefHeight="178.0" prefWidth="280.0" text="StudiController v1.0 beta">
+                                <TextField alignment="CENTER" disable="true" editable="false" layoutX="281.0" layoutY="40.0" prefHeight="50.0" prefWidth="250.0" text="StudiController">
                                     <font>
                                         <Font size="23.0" />
                                     </font>
@@ -249,7 +249,9 @@
                                         <DropShadow />
                                     </effect>
                                 </TextField>
-                                <Button fx:id="infoButton" layoutX="39.0" layoutY="30.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="131.0" />
+                                <Label fx:id="infoLabel" alignment="TOP_LEFT" disable="true" layoutX="100.0" layoutY="150.0" prefHeight="340.0" prefWidth="600.0" text=""/>
+                                <Button fx:id="PGButton" layoutX="55.0" layoutY="20.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="131.0" />
+                                <Button fx:id="ETIButton" layoutX="620.0" layoutY="20.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="131.0" />
                             </children>
                         </AnchorPane>
                     </content>
