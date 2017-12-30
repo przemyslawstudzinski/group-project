@@ -179,11 +179,15 @@ public class MainWindowController implements Initializable {
 
     private static final String scenariosPath = configDirectory + "scenarios" + File.separator;
 
+    public static final String studiesPath = configDirectory + "studies" + File.separator;
+
     private static final String scenarioFileExtension = ".cfg";
 
     private final Map<String, Action> availableActions = new HashMap();
 
     private final Map<String, Scenario> availableScenarios = new HashMap();
+
+    private ObservableList<NodeTableData> nodes = FXCollections.observableArrayList();
 
     private OutputConsole outputConsole;
 
@@ -191,7 +195,7 @@ public class MainWindowController implements Initializable {
 
     public static Server server;
 
-    GlobalKeyboardHook keyboardHook;
+    public GlobalKeyboardHook keyboardHook;
 
     public String actionClient = "";
 
@@ -222,10 +226,6 @@ public class MainWindowController implements Initializable {
     private List<File> actionsFiles;
 
     private List<File> scenarioFiles;
-
-    private ObservableList<NodeTableData> nodes = FXCollections.observableArrayList();
-
-    public static final String studiesPath = configDirectory + "studies" + File.separator;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -928,6 +928,8 @@ public class MainWindowController implements Initializable {
                         .stream()
                         .map(Action::getName)
                         .collect(Collectors.toList()));
+                allActions.clear();
+                allActions.addAll(availableActions.keySet());
                 allActions.removeAll(chosenActions);
                 outputConsole.writeLine("[Scenariusz] Wczytano scenariusz: " + scenario.getName() + ".");
             } else {
