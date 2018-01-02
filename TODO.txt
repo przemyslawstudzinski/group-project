@@ -1,5 +1,5 @@
 ﻿TODO:
-1. poprawienie edycji scenariusza - PRZEMEK
+
 
 
 DONE:
@@ -16,5 +16,6 @@ DONE:
 11. obsluga bledu, gdy usuniemy jakas akcje, a scenariusz wciaz ja zawiera - WADIM
 12. fix dodawania scenariuszy do okna ze scenariuszami (usuwanie duplikatow) - WADIM
 13. dodanie informacji jakim przyciskiem mozna zakonczyc nagrywanie - WADIM
+14. poprawienie edycji scenariusza - PRZEMEK
 
 
