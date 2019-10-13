@@ -59,10 +59,12 @@ public class StudyWindowController implements Initializable, ChangeListener<Numb
 
     private void unlockPeripherals() throws IOException {
         if (study.blockPeripherals) {
-            for (Receiver r : study.blockedPeripheralsOnReceivers) {
-                PrintWriter out = new PrintWriter(MainWindowController.server.connectedClientsMap.get(r.getIpAddress()).getSocket().getOutputStream(), true);
-                if (out != null)
+            for (Receiver receiver : study.blockedPeripheralsOnReceivers) {
+                PrintWriter out = new PrintWriter(MainWindowController.server.connectedClientsMap.get(
+                        receiver.getIpAddress()).getSocket().getOutputStream(), true);
+                if (out != null) {
                     out.println("unlockMouseAndKeyboard");
+                }
             }
         }
     }

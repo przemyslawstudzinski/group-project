@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,23 +37,20 @@ public class StudyThread implements Runnable {
 
     @Override
     public void run() {
-
-                try {
-                    study.setStartTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
-                    study.runThisStudy(console);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (canRunStudy) {
-                    closeCurrentWindow();
-                    createStudyWindow(study, console);
-                }
-                canRunStudy = true;
+        try {
+            study.setStartTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()));
+            study.runThisStudy(console);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (canRunStudy) {
+            closeCurrentWindow();
+            createStudyWindow(study, console);
+        }
+        canRunStudy = true;
     }
-
-
 
     public void createStudyWindow(Study study, OutputConsole console) {
         try {

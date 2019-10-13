@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Badanie">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Przeporwadź Badanie" />
+                        <MenuItem mnemonicParsing="false" text="Dodaj" />
+                        <MenuItem mnemonicParsing="false" text="Edytuj" />
+                        <MenuItem mnemonicParsing="false" text="Usuń" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Akcje">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Zdefinuj nową akcję" />
+                        <MenuItem mnemonicParsing="false" text="Edytuj" />
+                        <MenuItem mnemonicParsing="false" text="Usuń" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Pomoc">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="O programie" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField layoutX="38.0" layoutY="75.0" prefHeight="25.0" prefWidth="223.0" />
+                  <Label fx:id="labelFileInputEncryptMode" layoutX="39.0" layoutY="38.0" prefHeight="25.0" prefWidth="98.0" text="Nazwa ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelReceiverEncryptMode" layoutX="488.0" layoutY="372.0" prefHeight="25.0" prefWidth="257.0" text="Czynności wykonywane po zakończeniu:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                  </Label>
+                  <Button fx:id="buttonEncrypt" layoutX="325.0" layoutY="492.0" mnemonicParsing="false" onAction="#encryptFile" prefHeight="32.0" prefWidth="150.0" text="Zapisz" />
+                  <Label fx:id="labelFileInputEncryptMode1" layoutX="417.0" layoutY="63.0" prefHeight="25.0" prefWidth="138.0" text="Opis">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelFileInputEncryptMode1111" layoutX="39.0" layoutY="263.0" prefHeight="25.0" prefWidth="67.0" text="Typ:" />
+                  <ComboBox fx:id="comboBoxEncryptMode1" layoutX="150.0" layoutY="262.0" onAction="#chooseEncrpytFileMode" prefHeight="25.0" prefWidth="104.0" promptText="Kliknięcie" />
+                  <Separator layoutX="345.0" layoutY="44.0" orientation="VERTICAL" prefHeight="182.0" prefWidth="6.0" />
+                  <TextArea layoutX="413.0" layoutY="94.0" prefHeight="89.0" prefWidth="283.0" />
+                  <CheckBox fx:id="checkBoxShowPassword" layoutX="644.0" layoutY="424.0" mnemonicParsing="false" onAction="#showPassward" text="Zamnij system " />
+                  <CheckBox fx:id="checkBoxShowPassword1" layoutX="488.0" layoutY="424.0" mnemonicParsing="false" onAction="#showPassward" text="Zamnij program" />
+                  <ComboBox fx:id="comboBoxEncryptMode11" layoutX="156.0" layoutY="171.0" onAction="#chooseEncrpytFileMode" prefHeight="25.0" prefWidth="104.0" promptText="PC 1" />
+                  <Label fx:id="labelFileInputEncryptMode11111" layoutX="39.0" layoutY="171.0" prefHeight="25.0" prefWidth="67.0" text="Obiorca:" />
+                  <Label fx:id="labelFileInputEncryptMode111111" layoutX="39.0" layoutY="122.0" prefHeight="25.0" prefWidth="67.0" text="Badanie:" />
+                  <ComboBox fx:id="comboBoxEncryptMode111" layoutX="156.0" layoutY="122.0" onAction="#chooseEncrpytFileMode" prefHeight="25.0" prefWidth="104.0" promptText="Badanie 1" />
+                  <Label fx:id="labelFileInputEncryptMode11112" layoutX="73.0" layoutY="372.0" prefHeight="25.0" prefWidth="205.0" text="Blokuj interfejs podczas trwania: ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                  </Label>
+                  <Slider layoutX="147.0" layoutY="426.0" prefHeight="14.0" prefWidth="53.0" />
+                  <Label fx:id="labelFileInputEncryptMode11113" layoutX="97.0" layoutY="420.0" prefHeight="25.0" prefWidth="23.0" text="ON" />
+                  <Label fx:id="labelFileInputEncryptMode111131" layoutX="227.0" layoutY="421.0" prefHeight="25.0" prefWidth="27.0" text="OFF" />
+                  <Label fx:id="labelFileInputEncryptMode11114" layoutX="335.0" layoutY="263.0" prefHeight="25.0" prefWidth="20.0" text="X:" />
+                  <Label fx:id="labelFileInputEncryptMode111141" layoutX="423.0" layoutY="263.0" prefHeight="25.0" prefWidth="20.0" text="Y:" />
+               </children>
+            </AnchorPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
